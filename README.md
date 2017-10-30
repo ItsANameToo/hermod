@@ -1,11 +1,11 @@
-# Noah
+# noah
 
 > Automated Rebuilds for [ark-node](https://github.com/ArkEcosystem/ark-node).
 
 ## Installation
 
 ```bash
-git clone git@github.com:faustbrian/Noah.git
+git clone git@github.com:faustbrian/noah.git
 ```
 
 ## Configuration
@@ -22,13 +22,13 @@ NOTIFICATION_DRIVER="LOG"
 NOTIFICATION_LOG=${DIRECTORY_NOAH}/noah.log
 
 NOTIFICATION_EMAIL_TO="your@email.com"
-NOTIFICATION_EMAIL_SUBJECT="Noah"
+NOTIFICATION_EMAIL_SUBJECT="noah"
 
 NOTIFICATION_SLACK_CHANNEL="@your_username"
-NOTIFICATION_SLACK_FROM="Noah"
+NOTIFICATION_SLACK_FROM="noah"
 NOTIFICATION_SLACK_ICON="middle_finger"
 
-NOTIFICATION_SMS_FROM="Noah"
+NOTIFICATION_SMS_FROM="noah"
 NOTIFICATION_SMS_TO=""
 NOTIFICATION_SMS_API_KEY=""
 NOTIFICATION_SMS_API_SECRET=""
