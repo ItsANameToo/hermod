@@ -19,7 +19,7 @@ If you wish to use a different notification driver then the default one you will
 
 NOTIFICATION_DRIVER="LOG"
 
-NOTIFICATION_LOG=${DIRECTORY_NOAH}/rebuild.log
+NOTIFICATION_LOG=${DIRECTORY_NOAH}/noah.log
 
 NOTIFICATION_EMAIL_TO="your@email.com"
 NOTIFICATION_EMAIL_SUBJECT="Noah"
@@ -48,11 +48,11 @@ If you wish to use **Slack** as your notification driver you will need to instal
 
 ## Usage
 
-Start **noah** by executing `forever start --pidFile ~/noah/rebuild.pid -c bash ~/noah/rebuild.sh` in your terminal.
+Start **noah** by executing `forever start --pidFile ~/noah/noah.pid -c bash ~/noah/noah.sh` in your terminal.
 
 This will guarantee that the script will run forever which means even if it crashes it will be automatically restarted.
 
-Run `ps ax | grep '/home/ark/noah/rebuild.sh' && ps ax | grep '~/noah/rebuild.sh'` and make sure there are only 2 processes related to the `rebuild.sh`.
+Run `ps ax | grep '/home/ark/noah/noah.sh' && ps ax | grep '~/noah/noah.sh'` and make sure there are only 2 processes related to the `noah.sh`.
 
 ## Security
 
