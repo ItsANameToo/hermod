@@ -5,7 +5,7 @@
 ## Installation
 
 ```bash
-git clone git@github.com:faustbrian/noah.git
+git clone https://github.com/faustbrian/noah.git
 ```
 
 ## Configuration
