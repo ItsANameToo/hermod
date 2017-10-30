@@ -47,7 +47,7 @@ DIRECTORY_NOAH="$HOME/noah"
 # Notifications
 # --------------------------------------------------------------------------------------------------
 
-NOTIFICATION_DRIVER="LOG" # LOG, EMAIL, SLACK, SMS
+NOTIFICATION_DRIVER=(LOG) # LOG, EMAIL, SLACK, SMS
 
 NOTIFICATION_LOG=${DIRECTORY_NOAH}/noah.log
 
@@ -98,23 +98,26 @@ notify_via_slack() {
 }
 
 notify() {
-    case $NOTIFICATION_DRIVER in
-    "LOG")
-        notify_via_log "$1"
-        ;;
-    "EMAIL")
-        notify_via_email "$1"
-        ;;
-    "SMS")
-        notify_via_sms "$1"
-        ;;
-    "SLACK")
-        notify_via_slack "$1"
-        ;;
-    *)
-        notify_via_log "$1"
-        ;;
-    esac
+    for driver in "${NOTIFICATION_DRIVER[@]}"
+    do
+        case $driver in
+        "LOG")
+            notify_via_log "$1"
+            ;;
+        "EMAIL")
+            notify_via_email "$1"
+            ;;
+        "SMS")
+            notify_via_sms "$1"
+            ;;
+        "SLACK")
+            notify_via_slack "$1"
+            ;;
+        *)
+            notify_via_log "$1"
+            ;;
+        esac
+    done
 }
 
 node_stop() {
