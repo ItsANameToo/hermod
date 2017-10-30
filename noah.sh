@@ -4,6 +4,11 @@
 # Copyright (c) Brian Faust <hello@brianfaust.me>
 # --------------------------------------------------------------------------------------------------
 
+if [[ $BASH_VERSINFO < 4 ]]; then
+    echo "Sorry, you need at least bash-4.0 to run this script."
+    exit 1
+fi
+
 # --------------------------------------------------------------------------------------------------
 # Initialization
 # --------------------------------------------------------------------------------------------------
@@ -30,17 +35,13 @@ PROCESS_FOREVER=$(forever --plain list | grep ${PROCESS_NODE} | sed -nr 's/.*\[(
 # --------------------------------------------------------------------------------------------------
 
 NETWORK='mainnet'
-SNAPSHOT_SOURCE='https://snapshots.ark.io/current'
 
-# NETWORK='devnet'
-# SNAPSHOT_SOURCE='https://dsnapshots.ark.io/current'
+declare -A SNAPSHOT_SOURCES=(
+    ['mainnet']="https://snapshots.ark.io/current"
+    ['devnet']="https://dsnapshots.ark.io/current"
+)
 
-# --------------------------------------------------------------------------------------------------
-# Timeouts / Sleeps
-# --------------------------------------------------------------------------------------------------
-
-WAIT_BETWEEN_REBUILD="15m" # Waits for 2 Forging Rounds...
-WAIT_BETWEEN_LOG_CHECK=5
+SNAPSHOT_SOURCE=${SNAPSHOT_SOURCES[$NETWORK]}
 
 # --------------------------------------------------------------------------------------------------
 # Directories
@@ -49,6 +50,13 @@ WAIT_BETWEEN_LOG_CHECK=5
 DIRECTORY_ARK="$HOME/ark-node"
 DIRECTORY_SNAPSHOT="$HOME/snapshots"
 DIRECTORY_NOAH="$HOME/noah"
+
+# --------------------------------------------------------------------------------------------------
+# Timeouts / Sleeps
+# --------------------------------------------------------------------------------------------------
+
+WAIT_BETWEEN_REBUILD=15m # Waits for 2 Forging Rounds...
+WAIT_BETWEEN_LOG_CHECK=5
 
 # --------------------------------------------------------------------------------------------------
 # Notifications
