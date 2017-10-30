@@ -36,6 +36,13 @@ SNAPSHOT_SOURCE='https://snapshots.ark.io/current'
 # SNAPSHOT_SOURCE='https://dsnapshots.ark.io/current'
 
 # --------------------------------------------------------------------------------------------------
+# Timeouts / Sleeps
+# --------------------------------------------------------------------------------------------------
+
+WAIT_BETWEEN_REBUILD="15m" # Waits for 2 Forging Rounds...
+WAIT_BETWEEN_LOG_CHECK=5
+
+# --------------------------------------------------------------------------------------------------
 # Directories
 # --------------------------------------------------------------------------------------------------
 
@@ -205,12 +212,11 @@ do
 
         node_start
 
-        # Wait for 2 Forging Rounds...
-        sleep 15m
+        sleep $WAIT_BETWEEN_REBUILD
 
         break
     fi
 
     # Reduce CPU Overhead
-    sleep 5
+    sleep $WAIT_BETWEEN_LOG_CHECK
 done
