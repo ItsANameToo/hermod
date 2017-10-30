@@ -1,6 +1,4 @@
-# noah
-
-> Automated Rebuilds for [ark-node](https://github.com/ArkEcosystem/ark-node).
+# noah ~ Automated Rebuilds for [ark-node](https://github.com/ArkEcosystem/ark-node).
 
 ## Installation
 
