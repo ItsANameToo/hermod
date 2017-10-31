@@ -37,7 +37,7 @@ WAIT_BETWEEN_LOG_CHECK=5                         # waiting time between log chec
 # --------------------------------------------------------------------------------------------------
 
 NOTIFICATION_DRIVER=(LOG)                        # notification method...
-                                                 # values: none, log, email, slack, sms, pushover
+                                                 # values: NONE, LOG, EMAIL, SLACK, SMS, PUSHOVER
 
 NOTIFICATION_LOG=${DIRECTORY_NOAH}/noah.log      # log file...
 
