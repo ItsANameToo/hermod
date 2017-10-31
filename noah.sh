@@ -23,28 +23,15 @@ export PATH
 USER=$(whoami)
 
 # --------------------------------------------------------------------------------------------------
-# Processes
-# --------------------------------------------------------------------------------------------------
-
-PROCESS_POSTGRES=$(pgrep -a "postgres" | awk '{print $1}')
-PROCESS_ARK_NODE=$(pgrep -a "node" | grep ark-node | awk '{print $1}')
-
-if [ -z "$PROCESS_ARK_NODE" ]; then
-    node_start
-fi
-
-PROCESS_FOREVER=$(forever --plain list | grep ${PROCESS_ARK_NODE} | sed -nr 's/.*\[(.*)\].*/\1/p')
-
-# --------------------------------------------------------------------------------------------------
 # Configuration
 # --------------------------------------------------------------------------------------------------
 
-if [ ! -f noah.conf ]; then
-    cp noah.conf.example noah.conf;
+if [ ! -f ./noah.conf ]; then
+    cp ./noah.conf.example ./noah.conf;
 fi
 
-if [[ -e noah.conf ]]; then
-    . noah.conf
+if [[ -e ./noah.conf ]]; then
+    . ./noah.conf
 fi
 
 # --------------------------------------------------------------------------------------------------
@@ -69,7 +56,34 @@ if [[ $NIGHT_MODE_ENABLED = true ]]; then
 fi
 
 # --------------------------------------------------------------------------------------------------
-# Functions
+# Functions - ARK Node
+# --------------------------------------------------------------------------------------------------
+
+node_start() {
+    cd ${DIRECTORY_ARK}
+    forever start app.js --genesis genesisBlock.${NETWORK}.json --config config.${NETWORK}.json >&- 2>&-
+}
+
+node_stop() {
+    cd ${DIRECTORY_ARK}
+    forever stop ${PROCESS_FOREVER} >&- 2>&-
+}
+
+# --------------------------------------------------------------------------------------------------
+# Processes
+# --------------------------------------------------------------------------------------------------
+
+PROCESS_POSTGRES=$(pgrep -a "postgres" | awk '{print $1}')
+PROCESS_ARK_NODE=$(pgrep -a "node" | grep ark-node | awk '{print $1}')
+
+if [ -z "$PROCESS_ARK_NODE" ]; then
+    node_start
+fi
+
+PROCESS_FOREVER=$(forever --plain list | grep ${PROCESS_ARK_NODE} | sed -nr 's/.*\[(.*)\].*/\1/p')
+
+# --------------------------------------------------------------------------------------------------
+# Functions - Notifications
 # --------------------------------------------------------------------------------------------------
 
 notify_via_log() {
@@ -127,10 +141,9 @@ notify() {
     done
 }
 
-node_stop() {
-    cd ${DIRECTORY_ARK}
-    forever stop ${PROCESS_FOREVER} >&- 2>&-
-}
+# --------------------------------------------------------------------------------------------------
+# Functions - Database
+# --------------------------------------------------------------------------------------------------
 
 database_drop_user() {
     if [ -z "$PROCESS_POSTGRES" ]; then
@@ -161,6 +174,10 @@ database_create() {
     createdb ark_${NETWORK}
 }
 
+# --------------------------------------------------------------------------------------------------
+# Functions - Snapshots
+# --------------------------------------------------------------------------------------------------
+
 snapshot_download() {
     rm ${DIRECTORY_SNAPSHOT}/current
     wget -nv ${SNAPSHOT_SOURCE} -O ${DIRECTORY_SNAPSHOT}/current
@@ -174,10 +191,9 @@ snapshot_restore() {
     pg_restore -O -j 8 -d ark_${NETWORK} ${DIRECTORY_SNAPSHOT}/current 2>/dev/null
 }
 
-node_start() {
-    cd ${DIRECTORY_ARK}
-    forever start app.js --genesis genesisBlock.${NETWORK}.json --config config.${NETWORK}.json >&- 2>&-
-}
+# --------------------------------------------------------------------------------------------------
+# Functions - Rebuild
+# --------------------------------------------------------------------------------------------------
 
 rebuild() {
     if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
@@ -222,6 +238,10 @@ rebuild() {
 
     node_start
 }
+
+# --------------------------------------------------------------------------------------------------
+# Functions - Observe
+# --------------------------------------------------------------------------------------------------
 
 observe() {
     while true;
