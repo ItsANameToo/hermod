@@ -27,8 +27,13 @@ USER=$(whoami)
 # --------------------------------------------------------------------------------------------------
 
 PROCESS_POSTGRES=$(pgrep -a "postgres" | awk '{print $1}')
-PROCESS_NODE=$(pgrep -a "node" | grep ark-node | awk '{print $1}')
-PROCESS_FOREVER=$(forever --plain list | grep ${PROCESS_NODE} | sed -nr 's/.*\[(.*)\].*/\1/p')
+PROCESS_ARK_NODE=$(pgrep -a "node" | grep ark-node | awk '{print $1}')
+
+if [ -z "$PROCESS_ARK_NODE" ]; then
+    node_start
+fi
+
+PROCESS_FOREVER=$(forever --plain list | grep ${PROCESS_ARK_NODE} | sed -nr 's/.*\[(.*)\].*/\1/p')
 
 # --------------------------------------------------------------------------------------------------
 # Network
