@@ -48,6 +48,25 @@ if [[ -e noah.conf ]]; then
 fi
 
 # --------------------------------------------------------------------------------------------------
+# Day / Night Handling of Triggers
+# --------------------------------------------------------------------------------------------------
+
+TRIGGER_METHOD_NOTIFY=true  # notify if we have a match in the log...
+TRIGGER_METHOD_REBUILD=true # rebuild if we have a match in the log...
+
+if [[ $NIGHT_MODE_ENABLED = true ]]; then
+    NIGHT_MODE_CURRENT_HOUR=$(date +"%H")
+
+    if [ ${NIGHT_MODE_CURRENT_HOUR} -ge ${NIGHT_MODE_END} -a ${NIGHT_MODE_CURRENT_HOUR} -le ${NIGHT_MODE_START} ]; then
+        TRIGGER_METHOD_NOTIFY=true
+        TRIGGER_METHOD_REBUILD=false
+    else
+        TRIGGER_METHOD_NOTIFY=false
+        TRIGGER_METHOD_REBUILD=true
+    fi
+fi
+
+# --------------------------------------------------------------------------------------------------
 # Functions
 # --------------------------------------------------------------------------------------------------
 
@@ -107,15 +126,11 @@ notify() {
 }
 
 node_stop() {
-    notify "Stopping ARK Process...";
-
     cd ${DIRECTORY_ARK}
     forever stop ${PROCESS_FOREVER} >&- 2>&-
 }
 
 database_drop_user() {
-    notify "Dropping Database User...";
-
     if [ -z "$PROCESS_POSTGRES" ]; then
         sudo service postgresql start
     fi
@@ -124,8 +139,6 @@ database_drop_user() {
 }
 
 database_destroy() {
-    notify "Dropping Database...";
-
     if [ -z "$PROCESS_POSTGRES" ]; then
         sudo service postgresql start
     fi
@@ -134,8 +147,6 @@ database_destroy() {
 }
 
 database_create() {
-    notify "Creating Database...";
-
     if [ -z "$PROCESS_POSTGRES" ]; then
         sudo service postgresql start
     fi
@@ -149,15 +160,11 @@ database_create() {
 }
 
 snapshot_download() {
-    notify "Downloading Current Snapshot...";
-
     rm ${DIRECTORY_SNAPSHOT}/current
     wget -nv ${SNAPSHOT_SOURCE} -O ${DIRECTORY_SNAPSHOT}/current
 }
 
 snapshot_restore() {
-    notify "Restoring Database...";
-
     if [ -z "$PROCESS_POSTGRES" ]; then
         sudo service postgresql start
     fi
@@ -166,27 +173,65 @@ snapshot_restore() {
 }
 
 node_start() {
-    notify "Starting ARK Process...";
-
     cd ${DIRECTORY_ARK}
     forever start app.js --genesis genesisBlock.${NETWORK}.json --config config.${NETWORK}.json >&- 2>&-
 }
 
 rebuild() {
-    notify "Initializing Rebuild...";
+    if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
+        notify "Stopping ARK Process...";
+    fi
 
-    node_stop
+    if [[ $TRIGGER_METHOD_REBUILD = true ]]; then
+        node_stop
+    fi
 
-    database_destroy
-    database_drop_user
-    database_create
+    if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
+        notify "Dropping Database User...";
+    fi
 
-    snapshot_download
-    snapshot_restore
+    if [[ $TRIGGER_METHOD_REBUILD = true ]]; then
+        database_destroy
+    fi
 
-    node_start
+    if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
+        notify "Dropping Database...";
+    fi
 
-    notify "Completed Rebuild...";
+    if [[ $TRIGGER_METHOD_REBUILD = true ]]; then
+        database_drop_user
+    fi
+
+    if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
+        notify "Creating Database...";
+    fi
+
+    if [[ $TRIGGER_METHOD_REBUILD = true ]]; then
+        database_create
+    fi
+
+    if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
+        notify "Downloading Current Snapshot...";
+    fi
+
+    if [[ $TRIGGER_METHOD_REBUILD = true ]]; then
+        snapshot_download
+    fi
+
+    if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
+        notify "Restoring Database...";
+
+    if [[ $TRIGGER_METHOD_REBUILD = true ]]; then
+        snapshot_restore
+    fi
+
+    if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
+        notify "Starting ARK Process...";
+    fi
+
+    if [[ $TRIGGER_METHOD_REBUILD = true ]]; then
+        node_start
+    fi
 }
 
 observe() {
@@ -210,9 +255,8 @@ observe() {
 # Parse Arguments and Start
 # --------------------------------------------------------------------------------------------------
 
-if [[ "$#" -eq "0" ]]
-    then
-        observe
-    else
-        rebuild
+if [[ "$#" -eq "0" ]]; then
+    observe
+else
+    rebuild
 fi
