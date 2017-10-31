@@ -39,8 +39,12 @@ PROCESS_FOREVER=$(forever --plain list | grep ${PROCESS_ARK_NODE} | sed -nr 's/.
 # Configuration
 # --------------------------------------------------------------------------------------------------
 
-if [[ -e "./noah.conf" ]]; then
-    . "./noah.conf"
+if [ ! -f noah.conf ]; then
+    cp noah.conf.example noah.conf;
+fi
+
+if [[ -e noah.conf ]]; then
+    . noah.conf
 fi
 
 # --------------------------------------------------------------------------------------------------
