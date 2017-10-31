@@ -29,11 +29,15 @@ If you wish to use a different configuration then the default one you will need 
 
 ### E-Mail
 
-If you wish to use **EMAIL** as your notification driver you will need to install and configure [Postfix](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-postfix-on-ubuntu-16-04).
+If you wish to use **EMAIL** as your notification driver you will need to install and configure [Postfix](https://digitalocean.com/community/tutorials/how-to-install-and-configure-postfix-on-ubuntu-16-04).
 
 ### SMS
 
-If you wish to use **SMS** as your notification driver you will need to sign up for [Nexmo](https://www.nexmo.com).
+If you wish to use **SMS** as your notification driver you will need to sign up for [Nexmo](https://nexmo.com).
+
+### Pushover
+
+If you wish to use **Pushover** as your notification driver you will need to sign up for [Pushover](https://pushover.net).
 
 ### Slack
 
@@ -41,11 +45,19 @@ If you wish to use **Slack** as your notification driver you will need to instal
 
 ## Usage
 
-Start **noah** by executing `forever start --pidFile ~/noah/noah.pid -c bash ~/noah/noah.sh` in your terminal.
+### 1. Observe
 
-This will guarantee that the script will run forever which means even if it crashes it will be automatically restarted.
+```bash
+forever start --pidFile ~/noah/noah.pid -c bash ~/noah/noah.sh
+```
 
 Run `ps ax | grep '/home/ark/noah/noah.sh' && ps ax | grep '~/noah/noah.sh'` and make sure there are only 2 processes related to the `noah.sh`.
+
+### 2. Force
+
+```bash
+bash ~/noah/noah.sh -f
+```
 
 ## Security
 
