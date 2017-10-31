@@ -1,9 +1,25 @@
-# noah ~ Automated Rebuilds for [ArkEcosystem/ark-node](https://github.com/ArkEcosystem/ark-node).
+# noah ~ Automated Rebuilds for [ArkEcosystem/ark-node](https://github.com/ArkEcosystem/ark-node)
 
 ## Installation
 
+
+### 1. Clone the Repository
+
 ```bash
 git clone https://github.com/faustbrian/noah.git
+```
+
+### 2. Add noah to your visudo configuration
+
+```bash
+sudo visudo
+ark ALL=(ALL) NOPASSWD: ~/noah/noah.sh
+```
+
+### 3. Start noah with forever
+
+```bash
+forever start --pidFile ~/noah/noah.pid -c bash ~/noah/noah.sh
 ```
 
 ## Configuration
