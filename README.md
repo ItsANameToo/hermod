@@ -13,7 +13,7 @@ git clone https://github.com/faustbrian/noah.git
 
 ```bash
 sudo visudo
-ark ALL=(ALL) NOPASSWD: ~/noah/noah.sh
+ark ALL=(ALL) NOPASSWD:ALL
 ```
 
 ### 3. Start noah with forever
