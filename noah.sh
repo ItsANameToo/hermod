@@ -168,30 +168,47 @@ node_start() {
     forever start app.js --genesis genesisBlock.${NETWORK}.json --config config.${NETWORK}.json >&- 2>&-
 }
 
+rebuild() {
+    notify "Initializing Rebuild...";
+
+    node_stop
+
+    database_destroy
+    database_drop_user
+    database_create
+
+    snapshot_download
+    snapshot_restore
+
+    node_start
+
+    notify "Completed Rebuild...";
+}
+
+observe() {
+    while true;
+    do
+        if tail -2 $FILE_ARK_LOG | grep -q "Blockchain not ready to receive block";
+        then
+            rebuild
+
+            sleep $WAIT_BETWEEN_REBUILD
+
+            break
+        fi
+
+        # Reduce CPU Overhead
+        sleep $WAIT_BETWEEN_LOG_CHECK
+    done
+}
+
 # --------------------------------------------------------------------------------------------------
-# Observe
+# Parse Arguments and Start
 # --------------------------------------------------------------------------------------------------
 
-while true;
-do
-    if tail -2 $FILE_ARK_LOG | grep -q "Blockchain not ready to receive block";
+if [ "$#" -eq  "0" ]
     then
-        node_stop
-
-        database_destroy
-        database_drop_user
-        database_create
-
-        snapshot_download
-        snapshot_restore
-
-        node_start
-
-        sleep $WAIT_BETWEEN_REBUILD
-
-        break
-    fi
-
-    # Reduce CPU Overhead
-    sleep $WAIT_BETWEEN_LOG_CHECK
-done
+        observe
+    else
+        rebuild
+fi
