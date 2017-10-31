@@ -111,6 +111,15 @@ notify_via_sms() {
       -d "api_secret=$NOTIFICATION_SMS_API_SECRET"
 }
 
+notify_via_pushover() {
+    CURRENT_DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
+
+    curl -s -F "token=$NOTIFICATION_PUSHOVER_TOKEN" \
+        -F "user=$NOTIFICATION_PUSHOVER_USER" \
+        -F "title=$NOTIFICATION_PUSHOVER_TITLE" \
+        -F "message=[$CURRENT_DATETIME] $1" https://api.pushover.net/1/messages.json
+}
+
 notify_via_slack() {
     CURRENT_DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
 
