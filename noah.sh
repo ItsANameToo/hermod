@@ -44,6 +44,12 @@ declare -A SNAPSHOT_SOURCES=(
 SNAPSHOT_SOURCE=${SNAPSHOT_SOURCES[$NETWORK]}
 
 # --------------------------------------------------------------------------------------------------
+# Files
+# --------------------------------------------------------------------------------------------------
+
+FILE_ARK_LOG="$DIRECTORY_ARK/logs/ark.log"
+
+# --------------------------------------------------------------------------------------------------
 # Directories
 # --------------------------------------------------------------------------------------------------
 
@@ -207,7 +213,7 @@ node_start() {
 
 while true;
 do
-    if tail -2 ${DIRECTORY_ARK}/logs/ark.log | grep -q "Blockchain not ready to receive block";
+    if tail -2 $FILE_ARK_LOG | grep -q "Blockchain not ready to receive block";
     then
         node_stop
 
