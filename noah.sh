@@ -142,6 +142,9 @@ notify() {
         "SLACK")
             notify_via_slack "$1"
             ;;
+        "PUSHOVER")
+            notify_via_pushover "$1"
+            ;;
         "NONE")
             :
             ;;
