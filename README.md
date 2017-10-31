@@ -10,6 +10,8 @@ git clone https://github.com/faustbrian/noah.git
 
 ### 2. Add noah to your visudo configuration
 
+> This step is required to guarantee that noah can execute all `sudo` commands required to get rebuild your node.
+
 ```bash
 sudo visudo
 ark ALL=(ALL) NOPASSWD:ALL
