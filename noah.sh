@@ -58,9 +58,11 @@ if [[ $NIGHT_MODE_ENABLED = true ]]; then
     NIGHT_MODE_CURRENT_HOUR=$(date +"%H")
 
     if [ ${NIGHT_MODE_CURRENT_HOUR} -ge ${NIGHT_MODE_END} -a ${NIGHT_MODE_CURRENT_HOUR} -le ${NIGHT_MODE_START} ]; then
+        # Day
         TRIGGER_METHOD_NOTIFY=true
         TRIGGER_METHOD_REBUILD=false
     else
+        # Night
         TRIGGER_METHOD_NOTIFY=false
         TRIGGER_METHOD_REBUILD=true
     fi
@@ -182,56 +184,43 @@ rebuild() {
         notify "Stopping ARK Process...";
     fi
 
-    if [[ $TRIGGER_METHOD_REBUILD = true ]]; then
-        node_stop
-    fi
+    node_stop
 
     if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
         notify "Dropping Database User...";
     fi
 
-    if [[ $TRIGGER_METHOD_REBUILD = true ]]; then
-        database_destroy
-    fi
+    database_destroy
 
     if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
         notify "Dropping Database...";
     fi
 
-    if [[ $TRIGGER_METHOD_REBUILD = true ]]; then
-        database_drop_user
-    fi
+    database_drop_user
 
     if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
         notify "Creating Database...";
     fi
 
-    if [[ $TRIGGER_METHOD_REBUILD = true ]]; then
-        database_create
-    fi
+    database_create
 
     if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
         notify "Downloading Current Snapshot...";
     fi
 
-    if [[ $TRIGGER_METHOD_REBUILD = true ]]; then
-        snapshot_download
-    fi
+    snapshot_download
 
     if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
         notify "Restoring Database...";
-
-    if [[ $TRIGGER_METHOD_REBUILD = true ]]; then
-        snapshot_restore
     fi
+
+    snapshot_restore
 
     if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
         notify "Starting ARK Process...";
     fi
 
-    if [[ $TRIGGER_METHOD_REBUILD = true ]]; then
-        node_start
-    fi
+    node_start
 }
 
 observe() {
@@ -239,7 +228,15 @@ observe() {
     do
         if tail -2 $FILE_ARK_LOG | grep -q "Blockchain not ready to receive block";
         then
-            rebuild
+            # Day >>> Only Notify
+            if [[ $TRIGGER_METHOD_NOTIFY = true && $TRIGGER_METHOD_REBUILD = false ]]; then
+                notify "ARK Node out of sync - Rebuild required...";
+            fi
+
+            # Night >>> Only Rebuild
+            if [[ $TRIGGER_METHOD_REBUILD = true ]]; then
+                rebuild
+            fi
 
             sleep $WAIT_BETWEEN_REBUILD
 
