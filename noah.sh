@@ -36,59 +36,12 @@ fi
 PROCESS_FOREVER=$(forever --plain list | grep ${PROCESS_ARK_NODE} | sed -nr 's/.*\[(.*)\].*/\1/p')
 
 # --------------------------------------------------------------------------------------------------
-# Network
+# Configuration
 # --------------------------------------------------------------------------------------------------
 
-NETWORK='mainnet'
-
-declare -A SNAPSHOT_SOURCES=(
-    ['mainnet']="https://snapshots.ark.io/current"
-    ['devnet']="https://dsnapshots.ark.io/current"
-)
-
-SNAPSHOT_SOURCE=${SNAPSHOT_SOURCES[$NETWORK]}
-
-# --------------------------------------------------------------------------------------------------
-# Directories
-# --------------------------------------------------------------------------------------------------
-
-DIRECTORY_ARK="$HOME/ark-node"
-DIRECTORY_SNAPSHOT="$HOME/snapshots"
-DIRECTORY_NOAH="$HOME/noah"
-
-# --------------------------------------------------------------------------------------------------
-# Files
-# --------------------------------------------------------------------------------------------------
-
-FILE_ARK_LOG="$DIRECTORY_ARK/logs/ark.log"
-
-# --------------------------------------------------------------------------------------------------
-# Timeouts / Sleeps
-# --------------------------------------------------------------------------------------------------
-
-WAIT_BETWEEN_REBUILD=15m # Waits for 2 Forging Rounds...
-WAIT_BETWEEN_LOG_CHECK=5
-
-# --------------------------------------------------------------------------------------------------
-# Notifications
-# --------------------------------------------------------------------------------------------------
-
-NOTIFICATION_DRIVER=(LOG) # LOG, EMAIL, SLACK, SMS
-
-NOTIFICATION_LOG=${DIRECTORY_NOAH}/noah.log
-
-NOTIFICATION_EMAIL_TO="your@email.com"
-NOTIFICATION_EMAIL_SUBJECT="Noah"
-
-NOTIFICATION_SLACK_CHANNEL="@your_username"
-NOTIFICATION_SLACK_FROM="Noah"
-NOTIFICATION_SLACK_ICON="middle_finger"
-NOTIFICATION_SLACK_SLACKTEE=$(which slacktee.sh)
-
-NOTIFICATION_SMS_FROM="Noah"
-NOTIFICATION_SMS_TO=""
-NOTIFICATION_SMS_API_KEY=""
-NOTIFICATION_SMS_API_SECRET=""
+if [[ -e "./noah.conf" ]]; then
+    . "./noah.conf"
+fi
 
 # --------------------------------------------------------------------------------------------------
 # Functions

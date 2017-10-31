@@ -2,7 +2,6 @@
 
 ## Installation
 
-
 ### 1. Clone the Repository
 
 ```bash
@@ -24,29 +23,7 @@ forever start --pidFile ~/noah/noah.pid -c bash ~/noah/noah.sh
 
 ## Configuration
 
-If you wish to use a different notification driver then the default one you will need to open `~/noah/noah.sh` and change the following variables to your liking.
-
-```bash
-# --------------------------------------------------------------------------------------------------
-# Notifications
-# --------------------------------------------------------------------------------------------------
-
-NOTIFICATION_DRIVER="LOG"
-
-NOTIFICATION_LOG=${DIRECTORY_NOAH}/noah.log
-
-NOTIFICATION_EMAIL_TO="your@email.com"
-NOTIFICATION_EMAIL_SUBJECT="noah"
-
-NOTIFICATION_SLACK_CHANNEL="@your_username"
-NOTIFICATION_SLACK_FROM="noah"
-NOTIFICATION_SLACK_ICON="middle_finger"
-
-NOTIFICATION_SMS_FROM="noah"
-NOTIFICATION_SMS_TO=""
-NOTIFICATION_SMS_API_KEY=""
-NOTIFICATION_SMS_API_SECRET=""
-```
+If you wish to use a different configuration then the default one you will need to open `~/noah/noah.conf` and change it to suit your needs.
 
 ### E-Mail
 
