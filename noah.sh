@@ -134,6 +134,9 @@ notify() {
         "SLACK")
             notify_via_slack "$1"
             ;;
+        "NONE")
+            :
+            ;;
         *)
             notify_via_log "$1"
             ;;
