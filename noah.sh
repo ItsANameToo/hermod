@@ -26,12 +26,14 @@ USER=$(whoami)
 # Configuration
 # --------------------------------------------------------------------------------------------------
 
-if [ ! -f ./noah.conf ]; then
-    cp ./noah.conf.example ./noah.conf;
+DIRECTORY_NOAH="$HOME/noah"
+
+if [ ! -f "$DIRECTORY_NOAH/noah.conf" ]; then
+    cp "$DIRECTORY_NOAH/noah.conf.example" "$DIRECTORY_NOAH/noah.conf";
 fi
 
-if [[ -e ./noah.conf ]]; then
-    . ./noah.conf
+if [[ -e "$DIRECTORY_NOAH/noah.conf" ]]; then
+    . "$DIRECTORY_NOAH/noah.conf"
 fi
 
 # --------------------------------------------------------------------------------------------------
