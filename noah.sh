@@ -324,6 +324,7 @@ noah_install() {
 noah_alias() {
     echo "Setup alias..."
     echo "alias noah='bash ~/noah/noah.sh'" | tee -a ~/.bashrc
+    source ~/.bashrc
 }
 
 # --------------------------------------------------------------------------------------------------
