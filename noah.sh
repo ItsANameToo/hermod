@@ -292,15 +292,19 @@ observe() {
 # --------------------------------------------------------------------------------------------------
 
 noah_start() {
-    forever start -c bash "$DIRECTORY_NOAH/noah.sh" --pidFile "$DIRECTORY_NOAH/noah.pid"
+    forever start --pidFile "$DIRECTORY_NOAH/noah.pid" -c bash "$DIRECTORY_NOAH/noah.sh"
 }
 
 noah_restart() {
-    forever restart -c bash "$DIRECTORY_NOAH/noah.sh" --pidFile "$DIRECTORY_NOAH/noah.pid"
+    forever restart --pidFile "$DIRECTORY_NOAH/noah.pid" -c bash "$DIRECTORY_NOAH/noah.sh"
 }
 
 noah_stop() {
     forever stop "$DIRECTORY_NOAH/noah.sh"
+}
+
+noah_log() {
+    tail -f $NOTIFICATION_LOG
 }
 
 noah_install() {
@@ -336,6 +340,9 @@ case "$1" in
     ;;
     install)
         noah_install
+    ;;
+    log)
+        noah_log
     ;;
     *)
         observe
