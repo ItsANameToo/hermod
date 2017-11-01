@@ -1,7 +1,5 @@
 #!/bin/bash
 
-. _colors.sh
-
 # --------------------------------------------------------------------------------------------------
 # This file is part of noah.
 #
@@ -42,6 +40,12 @@ fi
 if [[ -e "$DIRECTORY_NOAH/noah.conf" ]]; then
     . "$DIRECTORY_NOAH/noah.conf"
 fi
+
+# --------------------------------------------------------------------------------------------------
+# Includes
+# --------------------------------------------------------------------------------------------------
+
+. "$DIRECTORY_NOAH/_colors.sh"
 
 # --------------------------------------------------------------------------------------------------
 # Day / Night Handling of Triggers
@@ -338,9 +342,9 @@ noah_log() {
 noah_install() {
     heading "Starting Installation..."
 
+    heading "Installing Configuration..."
     DIRECTORY_NOAH="$HOME/noah"
 
-    heading "Installing Configuration..."
     if [ ! -f "$DIRECTORY_NOAH/noah.conf" ]; then
         cp "$DIRECTORY_NOAH/noah.conf.example" "$DIRECTORY_NOAH/noah.conf";
     else
@@ -353,6 +357,7 @@ noah_install() {
     success "Installed OK."
 
     # heading "Installing pm2..."
+    # npm list -g | grep pm2
     # npm install pm2 -g
     # success "Installed OK."
 
