@@ -1,7 +1,12 @@
 #!/bin/bash
 
 # --------------------------------------------------------------------------------------------------
-# Copyright (c) Brian Faust <hello@brianfaust.me>
+# This file is part of noah.
+#
+# (c) Brian Faust <hello@brianfaust.me>
+#
+# For the full copyright and license information, please view the LICENSE
+# file that was distributed with this source code.
 # --------------------------------------------------------------------------------------------------
 
 if [[ $BASH_VERSINFO < 4 ]]; then
