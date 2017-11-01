@@ -135,26 +135,26 @@ notify() {
     for driver in "${NOTIFICATION_DRIVER[@]}"
     do
         case $driver in
-        "LOG")
-            notify_via_log "$1"
+            "LOG")
+                notify_via_log "$1"
             ;;
-        "EMAIL")
-            notify_via_email "$1"
+            "EMAIL")
+                notify_via_email "$1"
             ;;
-        "SMS")
-            notify_via_sms "$1"
+            "SMS")
+                notify_via_sms "$1"
             ;;
-        "SLACK")
-            notify_via_slack "$1"
+            "SLACK")
+                notify_via_slack "$1"
             ;;
-        "PUSHOVER")
-            notify_via_pushover "$1"
+            "PUSHOVER")
+                notify_via_pushover "$1"
             ;;
-        "NONE")
-            :
+            "NONE")
+                :
             ;;
-        *)
-            notify_via_log "$1"
+            *)
+                notify_via_log "$1"
             ;;
         esac
     done
@@ -265,7 +265,7 @@ rebuild() {
 observe() {
     while true;
     do
-        if tail -2 $FILE_ARK_LOG | grep -q "Blockchain not ready to receive block";
+        if tail -n $OBSERVE_LINES $FILE_ARK_LOG | grep -q "Blockchain not ready to receive block";
         then
             # Day >>> Only Notify
             if [[ $TRIGGER_METHOD_NOTIFY = true && $TRIGGER_METHOD_REBUILD = false ]]; then
@@ -288,11 +288,55 @@ observe() {
 }
 
 # --------------------------------------------------------------------------------------------------
+# Functions - noah
+# --------------------------------------------------------------------------------------------------
+
+noah_start() {
+    forever start --pidFile "$DIRECTORY_NOAH/noah.pid" -c bash "$DIRECTORY_NOAH/noah.sh"
+}
+
+noah_start() {
+    forever stop "$DIRECTORY_NOAH/noah.sh"
+}
+
+noah_install() {
+    DIRECTORY_NOAH="$HOME/noah"
+
+    if [ ! -f "$DIRECTORY_NOAH/noah.conf" ]; then
+        echo "Setup Configuration..."
+        cp "$DIRECTORY_NOAH/noah.conf.example" "$DIRECTORY_NOAH/noah.conf";
+    else
+        echo "Configuration already exists..."
+    fi
+
+    echo "Setup visudo..."
+    echo 'ark ALL=(ALL) NOPASSWD:ALL' | sudo EDITOR='tee -a' visudo
+}
+
+# --------------------------------------------------------------------------------------------------
 # Parse Arguments and Start
 # --------------------------------------------------------------------------------------------------
 
-if [[ "$#" -eq "0" ]]; then
-    observe
-else
-    rebuild
-fi
+case "$1" in
+    start)
+        noah_start
+    ;;
+    stop)
+        noah_stop
+    ;;
+    restart)
+        noah_stop
+        noah_start
+    ;;
+    force|flood)
+        rebuild
+    ;;
+    install)
+        noah_install
+    ;;
+    *)
+        observe
+        # echo "Usage: ~/noah/noah.sh start|stop|restart|force|flood"
+        # exit 1
+    ;;
+esac
