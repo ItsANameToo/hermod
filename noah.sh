@@ -334,24 +334,31 @@ noah_alias() {
 case "$1" in
     start)
         noah_start
+        exit 0
     ;;
     stop)
         noah_stop
+        exit 0
     ;;
     restart)
         noah_restart
+        exit 0
     ;;
     force|flood)
         rebuild
+        exit 0
     ;;
     install)
         noah_install
+        exit 0
     ;;
     log)
         noah_log
+        exit 0
     ;;
     alias)
         noah_alias
+        exit 0
     ;;
     help)
         echo "Usage: ~/noah/noah.sh start|stop|restart|force|flood"
