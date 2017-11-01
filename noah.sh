@@ -1,5 +1,7 @@
 #!/bin/bash
 
+. _colors.sh
+
 # --------------------------------------------------------------------------------------------------
 # This file is part of noah.
 #
@@ -135,22 +137,22 @@ notify() {
     for driver in "${NOTIFICATION_DRIVER[@]}"
     do
         case $driver in
-            "LOG")
+            log|LOG)
                 notify_via_log "$1"
             ;;
-            "EMAIL")
+            email|EMAIL)
                 notify_via_email "$1"
             ;;
-            "SMS")
+            sms|SMS)
                 notify_via_sms "$1"
             ;;
-            "SLACK")
+            slack|SLACK)
                 notify_via_slack "$1"
             ;;
-            "PUSHOVER")
+            pushover|PUSHOVER)
                 notify_via_pushover "$1"
             ;;
-            "NONE")
+            none|NONE)
                 :
             ;;
             *)
@@ -215,47 +217,65 @@ snapshot_restore() {
 # --------------------------------------------------------------------------------------------------
 
 rebuild() {
+    heading "Starting Rebuild..."
+
+    info "Stopping ARK Process..."
+
     if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
-        notify "Stopping ARK Process...";
+        notify "Stopping ARK Process..."
     fi
 
     node_stop
 
+    info "Dropping Database User..."
+
     if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
-        notify "Dropping Database User...";
+        notify "Dropping Database User..."
     fi
 
     database_destroy
 
+    info "Dropping Database..."
+
     if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
-        notify "Dropping Database...";
+        notify "Dropping Database..."
     fi
 
     database_drop_user
 
+    info "Creating Database..."
+
     if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
-        notify "Creating Database...";
+        notify "Creating Database..."
     fi
 
     database_create
 
+    info "Downloading Current Snapshot..."
+
     if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
-        notify "Downloading Current Snapshot...";
+        notify "Downloading Current Snapshot..."
     fi
 
     snapshot_download
 
+    info "Restoring Database..."
+
     if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
-        notify "Restoring Database...";
+        notify "Restoring Database..."
     fi
 
     snapshot_restore
 
+    info "Starting ARK Process..."
+
     if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
-        notify "Starting ARK Process...";
+        notify "Starting ARK Process..."
     fi
 
     node_start
+
+    success "Rebuild completed!"
 }
 
 # --------------------------------------------------------------------------------------------------
@@ -263,6 +283,8 @@ rebuild() {
 # --------------------------------------------------------------------------------------------------
 
 observe() {
+    heading "Starting Observer..."
+
     while true;
     do
         if tail -n $OBSERVE_LINES $FILE_ARK_LOG | grep -q "Blockchain not ready to receive block";
@@ -292,15 +314,21 @@ observe() {
 # --------------------------------------------------------------------------------------------------
 
 noah_start() {
+    heading "Starting noah..."
     forever start --pidFile "$DIRECTORY_NOAH/noah.pid" -c bash "$DIRECTORY_NOAH/noah.sh" observe
-}
-
-noah_restart() {
-    forever restart --pidFile "$DIRECTORY_NOAH/noah.pid" -c bash "$DIRECTORY_NOAH/noah.sh" observe
+    success "Start complete!"
 }
 
 noah_stop() {
+    heading "Stopping noah..."
     forever stop "$DIRECTORY_NOAH/noah.sh"
+    success "Stop complete!"
+}
+
+noah_restart() {
+    heading "Restarting noah..."
+    forever restart --pidFile "$DIRECTORY_NOAH/noah.pid" -c bash "$DIRECTORY_NOAH/noah.sh" observe
+    success "Restart complete!"
 }
 
 noah_log() {
@@ -308,23 +336,34 @@ noah_log() {
 }
 
 noah_install() {
+    heading "Starting Installation..."
+
     DIRECTORY_NOAH="$HOME/noah"
 
+    heading "Installing Configuration..."
     if [ ! -f "$DIRECTORY_NOAH/noah.conf" ]; then
-        echo "Setup Configuration..."
         cp "$DIRECTORY_NOAH/noah.conf.example" "$DIRECTORY_NOAH/noah.conf";
     else
-        echo "Configuration already exists..."
+        info "Configuration already exists..."
     fi
+    success "Installed OK."
 
-    echo "Setup visudo..."
+    heading "Installing visudo..."
     echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo EDITOR='tee -a' visudo
+    success "Installed OK."
+
+    # heading "Installing pm2..."
+    # npm install pm2 -g
+    # success "Installed OK."
+
+    success "Installation complete!"
 }
 
 noah_alias() {
-    echo "Setup alias..."
+    heading "Installing alias..."
     echo "alias noah='bash ~/noah/noah.sh'" | tee -a ~/.bashrc
     source ~/.bashrc
+    success "Installation complete!"
 }
 
 # --------------------------------------------------------------------------------------------------
@@ -357,7 +396,7 @@ case "$1" in
         noah_alias
     ;;
     *)
-        echo "Usage: ~/noah/noah.sh start|stop|restart|force|flood|observe|pray|install|log|alias|help"
+        error "Usage: ~/noah/noah.sh start|stop|restart|force|flood|observe|pray|install|log|alias|help"
         exit 1
     ;;
 esac
