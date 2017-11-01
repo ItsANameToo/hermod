@@ -292,10 +292,14 @@ observe() {
 # --------------------------------------------------------------------------------------------------
 
 noah_start() {
-    forever start --pidFile "$DIRECTORY_NOAH/noah.pid" -c bash "$DIRECTORY_NOAH/noah.sh"
+    forever start -c bash "$DIRECTORY_NOAH/noah.sh" --pidFile "$DIRECTORY_NOAH/noah.pid"
 }
 
-noah_start() {
+noah_restart() {
+    forever restart -c bash "$DIRECTORY_NOAH/noah.sh" --pidFile "$DIRECTORY_NOAH/noah.pid"
+}
+
+noah_stop() {
     forever stop "$DIRECTORY_NOAH/noah.sh"
 }
 
@@ -325,8 +329,7 @@ case "$1" in
         noah_stop
     ;;
     restart)
-        noah_stop
-        noah_start
+        noah_restart
     ;;
     force|flood)
         rebuild
