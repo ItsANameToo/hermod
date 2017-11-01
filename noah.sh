@@ -292,11 +292,11 @@ observe() {
 # --------------------------------------------------------------------------------------------------
 
 noah_start() {
-    forever start --pidFile "$DIRECTORY_NOAH/noah.pid" -c bash "$DIRECTORY_NOAH/noah.sh"
+    forever start --pidFile "$DIRECTORY_NOAH/noah.pid" -c bash "$DIRECTORY_NOAH/noah.sh" observe
 }
 
 noah_restart() {
-    forever restart --pidFile "$DIRECTORY_NOAH/noah.pid" -c bash "$DIRECTORY_NOAH/noah.sh"
+    forever restart --pidFile "$DIRECTORY_NOAH/noah.pid" -c bash "$DIRECTORY_NOAH/noah.sh" observe
 }
 
 noah_stop() {
@@ -334,37 +334,30 @@ noah_alias() {
 case "$1" in
     start)
         noah_start
-        exit 0
     ;;
     stop)
         noah_stop
-        exit 0
     ;;
     restart)
         noah_restart
-        exit 0
     ;;
-    force|flood)
+    rebuild|flood)
         rebuild
-        exit 0
+    ;;
+    observe|pray)
+        observe
     ;;
     install)
         noah_install
-        exit 0
     ;;
     log)
         noah_log
-        exit 0
     ;;
     alias)
         noah_alias
-        exit 0
-    ;;
-    help)
-        echo "Usage: ~/noah/noah.sh start|stop|restart|force|flood|install|log|alias|help"
-        exit 1
     ;;
     *)
-        observe
+        echo "Usage: ~/noah/noah.sh start|stop|restart|force|flood|observe|pray|install|log|alias|help"
+        exit 1
     ;;
 esac

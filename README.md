@@ -42,20 +42,58 @@ If you wish to use **Pushover** as your notification driver you will need to sig
 
 If you wish to use **Slack** as your notification driver you will need to install and configure [slacktee](https://github.com/course-hero/slacktee).
 
-## Usage
+## Commands
 
-### 1. Observe
+### 1. Start using Forever
 
 ```bash
-forever start --pidFile ~/noah/noah.pid -c bash ~/noah/noah.sh
+bash ~/noah/noah.sh start
 ```
 
 Run `ps ax | grep '/home/ark/noah/noah.sh' && ps ax | grep '~/noah/noah.sh'` and make sure there are only 2 processes related to the `noah.sh`.
 
-### 2. Force
+### 2. Stop using Forever
 
 ```bash
-bash ~/noah/noah.sh -f
+bash ~/noah/noah.sh stop
+```
+
+### 3. Restart using Forever
+
+```bash
+bash ~/noah/noah.sh restart
+```
+
+### 2. Perform a Rebuild
+
+```bash
+bash ~/noah/noah.sh rebuild
+bash ~/noah/noah.sh flood
+```
+
+### 2. Start Observing
+
+```bash
+bash ~/noah/noah.sh observe
+bash ~/noah/noah.sh pray
+```
+
+### 2. Install
+
+```bash
+bash ~/noah/noah.sh install
+```
+
+### 2. Show Log
+
+```bash
+bash ~/noah/noah.sh log
+```
+
+### 2. Create bash alias
+
+```bash
+bash ~/noah/noah.sh alias
 ```
 
 ## Security
