@@ -353,9 +353,11 @@ case "$1" in
     alias)
         noah_alias
     ;;
+    help)
+        echo "Usage: ~/noah/noah.sh start|stop|restart|force|flood"
+        exit 1
+    ;;
     *)
         observe
-        # echo "Usage: ~/noah/noah.sh start|stop|restart|force|flood"
-        # exit 1
     ;;
 esac
