@@ -321,6 +321,11 @@ noah_install() {
     echo 'ark ALL=(ALL) NOPASSWD:ALL' | sudo EDITOR='tee -a' visudo
 }
 
+noah_alias() {
+    echo "Setup alias..."
+    echo "alias noah='bash ~/noah/noah.sh'" | tee -a ~/.bashrc
+}
+
 # --------------------------------------------------------------------------------------------------
 # Parse Arguments and Start
 # --------------------------------------------------------------------------------------------------
@@ -343,6 +348,9 @@ case "$1" in
     ;;
     log)
         noah_log
+    ;;
+    alias)
+        noah_alias
     ;;
     *)
         observe
