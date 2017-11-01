@@ -318,7 +318,7 @@ noah_install() {
     fi
 
     echo "Setup visudo..."
-    echo 'ark ALL=(ALL) NOPASSWD:ALL' | sudo EDITOR='tee -a' visudo
+    echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo EDITOR='tee -a' visudo
 }
 
 noah_alias() {
