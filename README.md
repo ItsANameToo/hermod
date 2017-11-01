@@ -8,19 +8,18 @@
 git clone https://github.com/faustbrian/noah.git
 ```
 
-### 2. Add noah to your visudo configuration
+### 2. Install noah
 
 > This step is required to guarantee that noah can execute all `sudo` commands required to rebuild your node without your intervention.
 
 ```bash
-sudo visudo
-ark ALL=(ALL) NOPASSWD:ALL
+bash ~/noah/noah.sh install
 ```
 
-### 3. Start noah with forever
+### 3. Start noah
 
 ```bash
-forever start --pidFile ~/noah/noah.pid -c bash ~/noah/noah.sh
+bash ~/noah/noah.sh start
 ```
 
 ## Configuration
