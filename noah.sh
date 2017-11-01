@@ -361,7 +361,7 @@ case "$1" in
         exit 0
     ;;
     help)
-        echo "Usage: ~/noah/noah.sh start|stop|restart|force|flood"
+        echo "Usage: ~/noah/noah.sh start|stop|restart|force|flood|install|log|alias|help"
         exit 1
     ;;
     *)
