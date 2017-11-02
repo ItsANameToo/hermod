@@ -111,15 +111,15 @@ notify_via_email() {
     echo "[$current_datetime] $1" | mail -s "$notification_email_subject" "$notification_email_to"
 }
 
-notify_via_sms() {
+notify_via_nexmo() {
     local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
 
     curl -X "POST" "https://rest.nexmo.com/sms/json" \
-      -d "from=$notification_sms_from" \
+      -d "from=$notification_nexmo_from" \
       -d "text=[$current_datetime] $1" \
-      -d "to=$notification_sms_to" \
-      -d "api_key=$notification_sms_api_key" \
-      -d "api_secret=$notification_sms_api_secret"
+      -d "to=$notification_nexmo_to" \
+      -d "api_key=$notification_nexmo_api_key" \
+      -d "api_secret=$notification_nexmo_api_secret"
 }
 
 notify_via_pushover() {
@@ -147,8 +147,8 @@ notify() {
             email|EMAIL)
                 notify_via_email "$1"
             ;;
-            sms|SMS)
-                notify_via_sms "$1"
+            nexmo|NEXMO)
+                notify_via_nexmo "$1"
             ;;
             slack|SLACK)
                 notify_via_slack "$1"
