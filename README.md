@@ -1,5 +1,7 @@
 # noah ~ Automated Rebuilds for [ArkEcosystem/ark-node](https://github.com/ArkEcosystem/ark-node)
 
+> `noah` is still in its early stages which means it is undergoing constant changes so make sure to check the commit history for any changes before updating.
+
 ## Installation
 
 ### 1. Clone the Repository
