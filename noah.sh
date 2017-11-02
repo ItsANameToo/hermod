@@ -205,7 +205,7 @@ database_create() {
 
 snapshot_download() {
     rm ${DIRECTORY_SNAPSHOT}/current
-    wget -nv ${SNAPSHOT_SOURCE} -O ${DIRECTORY_SNAPSHOT}/current
+    wget -nv ${SNAPSHOT_SOURCE} -O ${DIRECTORY_SNAPSHOT}/current &> /dev/null
 }
 
 snapshot_restore() {
@@ -213,7 +213,7 @@ snapshot_restore() {
         sudo service postgresql start
     fi
 
-    pg_restore -O -j 8 -d ark_${NETWORK} ${DIRECTORY_SNAPSHOT}/current 2>/dev/null
+    pg_restore -O -j 8 -d ark_${NETWORK} ${DIRECTORY_SNAPSHOT}/current &> /dev/null
 }
 
 # --------------------------------------------------------------------------------------------------
@@ -319,19 +319,19 @@ observe() {
 
 noah_start() {
     heading "Starting noah..."
-    forever start --pidFile "$DIRECTORY_NOAH/noah.pid" -c bash "$DIRECTORY_NOAH/noah.sh" observe
+    forever start --pidFile "$DIRECTORY_NOAH/noah.pid" -c bash "$DIRECTORY_NOAH/noah.sh" observe &> /dev/null
     success "Start complete!"
 }
 
 noah_stop() {
     heading "Stopping noah..."
-    forever stop "$DIRECTORY_NOAH/noah.sh"
+    forever stop "$DIRECTORY_NOAH/noah.sh" &> /dev/null
     success "Stop complete!"
 }
 
 noah_restart() {
     heading "Restarting noah..."
-    forever restart --pidFile "$DIRECTORY_NOAH/noah.pid" -c bash "$DIRECTORY_NOAH/noah.sh" observe
+    forever restart --pidFile "$DIRECTORY_NOAH/noah.pid" -c bash "$DIRECTORY_NOAH/noah.sh" observe &> /dev/null
     success "Restart complete!"
 }
 
