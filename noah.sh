@@ -100,19 +100,19 @@ PROCESS_FOREVER=$(forever --plain list | grep ${PROCESS_ARK_NODE} | sed -nr 's/.
 # --------------------------------------------------------------------------------------------------
 
 notify_via_log() {
-    CURRENT_DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
+    local CURRENT_DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
 
     printf "[$CURRENT_DATETIME] $1\n" >> $NOTIFICATION_LOG
 }
 
 notify_via_email() {
-    CURRENT_DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
+    local CURRENT_DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
 
     echo "[$CURRENT_DATETIME] $1" | mail -s "$NOTIFICATION_EMAIL_SUBJECT" "$NOTIFICATION_EMAIL_TO"
 }
 
 notify_via_sms() {
-    CURRENT_DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
+    local CURRENT_DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
 
     curl -X "POST" "https://rest.nexmo.com/sms/json" \
       -d "from=$NOTIFICATION_SMS_FROM" \
@@ -123,7 +123,7 @@ notify_via_sms() {
 }
 
 notify_via_pushover() {
-    CURRENT_DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
+    local CURRENT_DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
 
     curl -s -F "token=$NOTIFICATION_PUSHOVER_TOKEN" \
         -F "user=$NOTIFICATION_PUSHOVER_USER" \
@@ -132,7 +132,7 @@ notify_via_pushover() {
 }
 
 notify_via_slack() {
-    CURRENT_DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
+    local CURRENT_DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
 
     echo "[$CURRENT_DATETIME] $1" | $NOTIFICATION_SLACK_SLACKTEE -c "$NOTIFICATION_SLACK_CHANNEL" -u "$NOTIFICATION_SLACK_FROM" -i "$NOTIFICATION_SLACK_ICON"
 }
@@ -291,8 +291,7 @@ observe() {
 
     while true;
     do
-        if tail -n $OBSERVE_LINES $FILE_ARK_LOG | grep -q "Blockchain not ready to receive block";
-        then
+        if tail -n $OBSERVE_LINES $FILE_ARK_LOG | grep -q "Blockchain not ready to receive block"; then
             # Day >>> Only Notify
             if [[ $TRIGGER_METHOD_NOTIFY = true && $TRIGGER_METHOD_REBUILD = false ]]; then
                 notify "ARK Node out of sync - Rebuild required...";
