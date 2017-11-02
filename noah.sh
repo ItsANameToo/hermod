@@ -384,7 +384,7 @@ Usage: $me [options]
 options:
     -h, --help, --pray              Show this help.
     -b, --start, --board            Start the noah process.
-    -l, --stop, --leave             Stop the noah process.
+    -m, --stop, --martyr            Stop the noah process.
     -f, --restart, --flood          Restart the noah process.
     -r, --rebuild, --rebirth        Start the rebuild process.
     -o, --observe, --guard          Show this help.
