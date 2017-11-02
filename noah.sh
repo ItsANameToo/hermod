@@ -131,6 +131,16 @@ notify_via_pushover() {
         -F "message=[$current_datetime] $1" https://api.pushover.net/1/messages.json
 }
 
+notify_via_pushbullet() {
+    local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
+
+    curl --header "Access-Token: <$notification_pushbullet_access_token>" \
+         --header 'Content-Type: application/json' \
+         --data-binary "{\"body\":\"[$current_datetime] $1\",\"title\":\"$notification_pushbullet_title\",\"type\":\"note\"}" \
+         --request POST \
+         https://api.pushbullet.com/v2/pushes
+}
+
 notify_via_slack() {
     local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
 
@@ -141,22 +151,25 @@ notify() {
     for driver in "${notification_driver[@]}"
     do
         case $driver in
-            log|LOG)
+            log)
                 notify_via_log "$1"
             ;;
-            email|EMAIL)
+            email)
                 notify_via_email "$1"
             ;;
-            nexmo|NEXMO)
+            nexmo)
                 notify_via_nexmo "$1"
             ;;
-            slack|SLACK)
+            slack)
                 notify_via_slack "$1"
             ;;
-            pushover|PUSHOVER)
+            pushover)
                 notify_via_pushover "$1"
             ;;
-            none|NONE)
+            pushbullet)
+                notify_via_pushbullet "$1"
+            ;;
+            none)
                 :
             ;;
             *)
