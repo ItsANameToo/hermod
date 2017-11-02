@@ -435,7 +435,7 @@ case "$1" in
         noah_alias
     ;;
     -t|--test)
-        $1 "$2"
+        $2 "$3"
     ;;
     -h|\?|--help|*)
         noah_help
