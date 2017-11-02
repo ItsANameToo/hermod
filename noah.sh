@@ -223,6 +223,10 @@ snapshot_restore() {
 rebuild() {
     heading "Starting Rebuild..."
 
+    if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
+        notify "Starting Rebuild..."
+    fi
+
     info "Stopping ARK Process..."
 
     if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
@@ -280,6 +284,10 @@ rebuild() {
     node_start
 
     success "Rebuild completed!"
+
+    if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
+        notify "Rebuild completed!"
+    fi
 }
 
 # --------------------------------------------------------------------------------------------------
