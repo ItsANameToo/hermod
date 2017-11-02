@@ -349,8 +349,6 @@ noah_install() {
     heading "Starting Installation..."
 
     heading "Installing Configuration..."
-    directory_noah="$HOME/noah"
-
     if [ ! -f "$directory_noah/noah.conf" ]; then
         cp "$directory_noah/noah.conf.example" "$directory_noah/noah.conf";
     else
