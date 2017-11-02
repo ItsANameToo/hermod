@@ -13,7 +13,7 @@
 
 network='mainnet'                               # network we operate on...
 
-declare -a snapshot_sources=(
+declare -A snapshot_sources=(
     ['mainnet']='https://snapshots.ark.io/current'
     ['devnet']='https://dsnapshots.ark.io/current'
 )
