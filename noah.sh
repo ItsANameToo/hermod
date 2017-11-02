@@ -364,6 +364,12 @@ noah_install() {
     success "Installation complete!"
 }
 
+noah_update() {
+    heading "Starting Update..."
+    git pull
+    success "Update complete!"
+}
+
 noah_alias() {
     heading "Installing alias..."
     echo "alias noah='bash ~/noah/noah.sh'" | tee -a ~/.bashrc
@@ -394,6 +400,9 @@ case "$1" in
     install)
         noah_install
     ;;
+    update)
+        noah_update
+    ;;
     log)
         noah_log
     ;;
@@ -401,7 +410,7 @@ case "$1" in
         noah_alias
     ;;
     *)
-        error "Usage: ~/noah/noah.sh start|stop|restart|force|flood|observe|pray|install|log|alias|help"
+        error "Usage: ~/noah/noah.sh start|stop|restart|force|flood|observe|pray|install|update|log|alias|help"
         exit 1
     ;;
 esac
