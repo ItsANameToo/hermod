@@ -397,6 +397,7 @@ options:
     -i, --install                   Setup noah interactively.
     -u, --update                    Update the noah installation.
     -l, --log                       Show the noah log.
+    -t, --test                      Test the specified method.
     -a, --alias                     Create a bash alias for noah.
 EOF
 }
@@ -432,6 +433,9 @@ case "$1" in
     ;;
     -a|--alias)
         noah_alias
+    ;;
+    -t|--test)
+        $1 "$2"
     ;;
     -h|\?|--help|*)
         noah_help
