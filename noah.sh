@@ -435,7 +435,9 @@ case "$1" in
         noah_alias
     ;;
     -t|--test)
+        heading "Starting Test..."
         $2 "$3"
+        success "Test complete!"
     ;;
     -h|\?|--help|*)
         noah_help
