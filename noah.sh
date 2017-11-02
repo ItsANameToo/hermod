@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # --------------------------------------------------------------------------------------------------
 # This file is part of noah.
@@ -25,120 +25,120 @@ export PATH
 # Environment
 # --------------------------------------------------------------------------------------------------
 
-USER=$(whoami)
+user=$(whoami)
 
 # --------------------------------------------------------------------------------------------------
 # Configuration
 # --------------------------------------------------------------------------------------------------
 
-DIRECTORY_NOAH="$HOME/noah"
+directory_noah="$HOME/noah"
 
-if [ ! -f "$DIRECTORY_NOAH/noah.conf" ]; then
-    cp "$DIRECTORY_NOAH/noah.conf.example" "$DIRECTORY_NOAH/noah.conf";
+if [ ! -f "$directory_noah/noah.conf" ]; then
+    cp "$directory_noah/noah.conf.example" "$directory_noah/noah.conf";
 fi
 
-if [[ -e "$DIRECTORY_NOAH/noah.conf" ]]; then
-    . "$DIRECTORY_NOAH/noah.conf"
+if [[ -e "$directory_noah/noah.conf" ]]; then
+    . "$directory_noah/noah.conf"
 fi
 
 # --------------------------------------------------------------------------------------------------
 # Includes
 # --------------------------------------------------------------------------------------------------
 
-. "$DIRECTORY_NOAH/_colors.sh"
+. "$directory_noah/_colors.sh"
 
 # --------------------------------------------------------------------------------------------------
 # Day / Night Handling of Triggers
 # --------------------------------------------------------------------------------------------------
 
-TRIGGER_METHOD_NOTIFY=true  # notify if we have a match in the log...
-TRIGGER_METHOD_REBUILD=true # rebuild if we have a match in the log...
+trigger_method_notify=true  # notify if we have a match in the log...
+trigger_method_rebuild=true # rebuild if we have a match in the log...
 
-if [[ $NIGHT_MODE_ENABLED = true ]]; then
-    NIGHT_MODE_CURRENT_HOUR=$(date +"%H")
+if [[ $night_mode_enabled = true ]]; then
+    night_mode_current_hour=$(date +"%H")
 
-    if [ ${NIGHT_MODE_CURRENT_HOUR} -ge ${NIGHT_MODE_END} -a ${NIGHT_MODE_CURRENT_HOUR} -le ${NIGHT_MODE_START} ]; then
+    if [ ${night_mode_current_hour} -ge ${night_mode_end} -a ${night_mode_current_hour} -le ${night_mode_start} ]; then
         # Day
-        TRIGGER_METHOD_NOTIFY=true
-        TRIGGER_METHOD_REBUILD=false
+        trigger_method_notify=true
+        trigger_method_rebuild=false
     else
         # Night
-        TRIGGER_METHOD_NOTIFY=false
-        TRIGGER_METHOD_REBUILD=true
+        trigger_method_notify=false
+        trigger_method_rebuild=true
     fi
 fi
+
+# --------------------------------------------------------------------------------------------------
+# Processes
+# --------------------------------------------------------------------------------------------------
+
+process_postgres=$(pgrep -a "postgres" | awk '{print $1}')
+process_ark_node=$(pgrep -a "node" | grep ark-node | awk '{print $1}')
+
+if [ -z "$process_ark_node" ]; then
+    node_start
+fi
+
+process_forever=$(forever --plain list | grep ${process_ark_node} | sed -nr 's/.*\[(.*)\].*/\1/p')
 
 # --------------------------------------------------------------------------------------------------
 # Functions - ARK Node
 # --------------------------------------------------------------------------------------------------
 
 node_start() {
-    cd ${DIRECTORY_ARK}
-    forever start app.js --genesis genesisBlock.${NETWORK}.json --config config.${NETWORK}.json >&- 2>&-
+    cd ${directory_ark}
+    forever start app.js --genesis genesisBlock.${network}.json --config config.${network}.json >&- 2>&-
 }
 
 node_stop() {
-    cd ${DIRECTORY_ARK}
-    forever stop ${PROCESS_FOREVER} >&- 2>&-
+    cd ${directory_ark}
+    forever stop ${process_forever} >&- 2>&-
 }
-
-# --------------------------------------------------------------------------------------------------
-# Processes
-# --------------------------------------------------------------------------------------------------
-
-PROCESS_POSTGRES=$(pgrep -a "postgres" | awk '{print $1}')
-PROCESS_ARK_NODE=$(pgrep -a "node" | grep ark-node | awk '{print $1}')
-
-if [ -z "$PROCESS_ARK_NODE" ]; then
-    node_start
-fi
-
-PROCESS_FOREVER=$(forever --plain list | grep ${PROCESS_ARK_NODE} | sed -nr 's/.*\[(.*)\].*/\1/p')
 
 # --------------------------------------------------------------------------------------------------
 # Functions - Notifications
 # --------------------------------------------------------------------------------------------------
 
 notify_via_log() {
-    local CURRENT_DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
+    local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
 
-    printf "[$CURRENT_DATETIME] $1\n" >> $NOTIFICATION_LOG
+    printf "[$current_datetime] $1\n" >> $notification_log
 }
 
 notify_via_email() {
-    local CURRENT_DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
+    local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
 
-    echo "[$CURRENT_DATETIME] $1" | mail -s "$NOTIFICATION_EMAIL_SUBJECT" "$NOTIFICATION_EMAIL_TO"
+    echo "[$current_datetime] $1" | mail -s "$notification_email_subject" "$notification_email_to"
 }
 
 notify_via_sms() {
-    local CURRENT_DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
+    local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
 
     curl -X "POST" "https://rest.nexmo.com/sms/json" \
-      -d "from=$NOTIFICATION_SMS_FROM" \
-      -d "text=[$CURRENT_DATETIME] $1" \
-      -d "to=$NOTIFICATION_SMS_TO" \
-      -d "api_key=$NOTIFICATION_SMS_API_KEY" \
-      -d "api_secret=$NOTIFICATION_SMS_API_SECRET"
+      -d "from=$notification_sms_from" \
+      -d "text=[$current_datetime] $1" \
+      -d "to=$notification_sms_to" \
+      -d "api_key=$notification_sms_api_key" \
+      -d "api_secret=$notification_sms_api_secret"
 }
 
 notify_via_pushover() {
-    local CURRENT_DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
+    local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
 
-    curl -s -F "token=$NOTIFICATION_PUSHOVER_TOKEN" \
-        -F "user=$NOTIFICATION_PUSHOVER_USER" \
-        -F "title=$NOTIFICATION_PUSHOVER_TITLE" \
-        -F "message=[$CURRENT_DATETIME] $1" https://api.pushover.net/1/messages.json
+    curl -s -F "token=$notification_pushover_token" \
+        -F "user=$notification_pushover_user" \
+        -F "title=$notification_pushover_title" \
+        -F "message=[$current_datetime] $1" https://api.pushover.net/1/messages.json
 }
 
 notify_via_slack() {
-    local CURRENT_DATETIME=$(date '+%Y-%m-%d %H:%M:%S')
+    local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
 
-    echo "[$CURRENT_DATETIME] $1" | $NOTIFICATION_SLACK_SLACKTEE -c "$NOTIFICATION_SLACK_CHANNEL" -u "$NOTIFICATION_SLACK_FROM" -i "$NOTIFICATION_SLACK_ICON"
+    echo "[$current_datetime] $1" | $notification_slack_slacktee -c "$notification_slack_channel" -u "$notification_slack_from" -i "$notification_slack_icon"
 }
 
 notify() {
-    for driver in "${NOTIFICATION_DRIVER[@]}"
+    for driver in "${notification_driver[@]}"
     do
         case $driver in
             log|LOG)
@@ -171,32 +171,32 @@ notify() {
 # --------------------------------------------------------------------------------------------------
 
 database_drop_user() {
-    if [ -z "$PROCESS_POSTGRES" ]; then
+    if [ -z "$process_postgres" ]; then
         sudo service postgresql start
     fi
 
-    sudo -u postgres dropuser --if-exists $USER
+    sudo -u postgres dropuser --if-exists $user
 }
 
 database_destroy() {
-    if [ -z "$PROCESS_POSTGRES" ]; then
+    if [ -z "$process_postgres" ]; then
         sudo service postgresql start
     fi
 
-    dropdb --if-exists ark_${NETWORK}
+    dropdb --if-exists ark_${network}
 }
 
 database_create() {
-    if [ -z "$PROCESS_POSTGRES" ]; then
+    if [ -z "$process_postgres" ]; then
         sudo service postgresql start
     fi
 
     sleep 1
     sudo -u postgres psql -c "update pg_database set encoding = 6, datcollate = 'en_US.UTF8', datctype = 'en_US.UTF8' where datname = 'template0';" >&- 2>&-
     sudo -u postgres psql -c "update pg_database set encoding = 6, datcollate = 'en_US.UTF8', datctype = 'en_US.UTF8' where datname = 'template1';" >&- 2>&-
-    sudo -u postgres psql -c "CREATE USER $USER WITH PASSWORD 'password' CREATEDB;" >&- 2>&-
+    sudo -u postgres psql -c "CREATE USER $user WITH PASSWORD 'password' CREATEDB;" >&- 2>&-
     sleep 1
-    createdb ark_${NETWORK}
+    createdb ark_${network}
 }
 
 # --------------------------------------------------------------------------------------------------
@@ -204,16 +204,16 @@ database_create() {
 # --------------------------------------------------------------------------------------------------
 
 snapshot_download() {
-    rm ${DIRECTORY_SNAPSHOT}/current
-    wget -nv ${SNAPSHOT_SOURCE} -O ${DIRECTORY_SNAPSHOT}/current &> /dev/null
+    rm ${directory_snapshot}/current
+    wget -nv ${snapshot_source} -O ${directory_snapshot}/current &> /dev/null
 }
 
 snapshot_restore() {
-    if [ -z "$PROCESS_POSTGRES" ]; then
+    if [ -z "$process_postgres" ]; then
         sudo service postgresql start
     fi
 
-    pg_restore -O -j 8 -d ark_${NETWORK} ${DIRECTORY_SNAPSHOT}/current &> /dev/null
+    pg_restore -O -j 8 -d ark_${network} ${directory_snapshot}/current &> /dev/null
 }
 
 # --------------------------------------------------------------------------------------------------
@@ -223,13 +223,13 @@ snapshot_restore() {
 rebuild() {
     heading "Starting Rebuild..."
 
-    if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
+    if [[ $trigger_method_notify = true ]]; then
         notify "Starting Rebuild..."
     fi
 
     info "Stopping ARK Process..."
 
-    if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
+    if [[ $trigger_method_notify = true ]]; then
         notify "Stopping ARK Process..."
     fi
 
@@ -237,7 +237,7 @@ rebuild() {
 
     info "Dropping Database User..."
 
-    if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
+    if [[ $trigger_method_notify = true ]]; then
         notify "Dropping Database User..."
     fi
 
@@ -245,7 +245,7 @@ rebuild() {
 
     info "Dropping Database..."
 
-    if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
+    if [[ $trigger_method_notify = true ]]; then
         notify "Dropping Database..."
     fi
 
@@ -253,7 +253,7 @@ rebuild() {
 
     info "Creating Database..."
 
-    if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
+    if [[ $trigger_method_notify = true ]]; then
         notify "Creating Database..."
     fi
 
@@ -261,7 +261,7 @@ rebuild() {
 
     info "Downloading Current Snapshot..."
 
-    if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
+    if [[ $trigger_method_notify = true ]]; then
         notify "Downloading Current Snapshot..."
     fi
 
@@ -269,7 +269,7 @@ rebuild() {
 
     info "Restoring Database..."
 
-    if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
+    if [[ $trigger_method_notify = true ]]; then
         notify "Restoring Database..."
     fi
 
@@ -277,7 +277,7 @@ rebuild() {
 
     info "Starting ARK Process..."
 
-    if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
+    if [[ $trigger_method_notify = true ]]; then
         notify "Starting ARK Process..."
     fi
 
@@ -285,7 +285,7 @@ rebuild() {
 
     success "Rebuild completed!"
 
-    if [[ $TRIGGER_METHOD_NOTIFY = true ]]; then
+    if [[ $trigger_method_notify = true ]]; then
         notify "Rebuild completed!"
     fi
 }
@@ -298,24 +298,24 @@ observe() {
     heading "Starting Observer..."
 
     while true; do
-        if tail -n $OBSERVE_LINES $FILE_ARK_LOG | grep -q "Blockchain not ready to receive block"; then
+        if tail -n $observe_lines $file_ark_log | grep -q "Blockchain not ready to receive block"; then
             # Day >>> Only Notify
-            if [[ $TRIGGER_METHOD_NOTIFY = true && $TRIGGER_METHOD_REBUILD = false ]]; then
+            if [[ $trigger_method_notify = true && $trigger_method_rebuild = false ]]; then
                 notify "ARK Node out of sync - Rebuild required...";
             fi
 
             # Night >>> Only Rebuild
-            if [[ $TRIGGER_METHOD_REBUILD = true ]]; then
+            if [[ $trigger_method_rebuild = true ]]; then
                 rebuild
             fi
 
-            sleep $WAIT_BETWEEN_REBUILD
+            sleep $wait_between_rebuild
 
             break
         fi
 
         # Reduce CPU Overhead
-        sleep $WAIT_BETWEEN_LOG_CHECK
+        sleep $wait_between_log_check
     done
 }
 
@@ -325,41 +325,41 @@ observe() {
 
 noah_start() {
     heading "Starting noah..."
-    forever start --pidFile "$DIRECTORY_NOAH/noah.pid" -c bash "$DIRECTORY_NOAH/noah.sh" -o &> /dev/null
+    forever start --pidFile "$directory_noah/noah.pid" -c bash "$directory_noah/noah.sh" -o &> /dev/null
     success "Start complete!"
 }
 
 noah_stop() {
     heading "Stopping noah..."
-    forever stop "$DIRECTORY_NOAH/noah.sh" &> /dev/null
+    forever stop "$directory_noah/noah.sh" &> /dev/null
     success "Stop complete!"
 }
 
 noah_restart() {
     heading "Restarting noah..."
-    forever restart --pidFile "$DIRECTORY_NOAH/noah.pid" -c bash "$DIRECTORY_NOAH/noah.sh" -o &> /dev/null
+    forever restart --pidFile "$directory_noah/noah.pid" -c bash "$directory_noah/noah.sh" -o &> /dev/null
     success "Restart complete!"
 }
 
 noah_log() {
-    tail -f $NOTIFICATION_LOG
+    tail -f $file_noah_log
 }
 
 noah_install() {
     heading "Starting Installation..."
 
     heading "Installing Configuration..."
-    DIRECTORY_NOAH="$HOME/noah"
+    directory_noah="$HOME/noah"
 
-    if [ ! -f "$DIRECTORY_NOAH/noah.conf" ]; then
-        cp "$DIRECTORY_NOAH/noah.conf.example" "$DIRECTORY_NOAH/noah.conf";
+    if [ ! -f "$directory_noah/noah.conf" ]; then
+        cp "$directory_noah/noah.conf.example" "$directory_noah/noah.conf";
     else
         info "Configuration already exists..."
     fi
     success "Installed OK."
 
     heading "Installing visudo..."
-    echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo EDITOR='tee -a' visudo
+    echo "$user ALL=(ALL) NOPASSWD:ALL" | sudo EDITOR='tee -a' visudo
     success "Installed OK."
 
     # heading "Installing pm2..."
@@ -435,11 +435,7 @@ case "$1" in
     -a|--alias)
         noah_alias
     ;;
-    -h|\?|--help)
-        noah_help
-        exit 1
-    ;;
-    *)
+    -h|\?|--help|*)
         noah_help
         exit 1
     ;;
