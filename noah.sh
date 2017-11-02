@@ -403,7 +403,7 @@ case "$1" in
     -b|--start|--board)
         noah_start
     ;;
-    -l|--stop|--leave)
+    -m|--stop|--martyr)
         noah_stop
     ;;
     -f|--restart|--flood)
