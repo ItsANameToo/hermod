@@ -134,7 +134,7 @@ notify_via_pushover() {
 notify_via_pushbullet() {
     local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
 
-    curl --header "Access-Token: <$notification_pushbullet_access_token>" \
+    curl --header "Access-Token: $notification_pushbullet_access_token" \
          --header 'Content-Type: application/json' \
          --data-binary "{\"body\":\"[$current_datetime] $1\",\"title\":\"$notification_pushbullet_title\",\"type\":\"note\"}" \
          --request POST \
