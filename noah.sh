@@ -289,8 +289,7 @@ rebuild() {
 observe() {
     heading "Starting Observer..."
 
-    while true;
-    do
+    while true; do
         if tail -n $OBSERVE_LINES $FILE_ARK_LOG | grep -q "Blockchain not ready to receive block"; then
             # Day >>> Only Notify
             if [[ $TRIGGER_METHOD_NOTIFY = true && $TRIGGER_METHOD_REBUILD = false ]]; then
@@ -318,7 +317,7 @@ observe() {
 
 noah_start() {
     heading "Starting noah..."
-    forever start --pidFile "$DIRECTORY_NOAH/noah.pid" -c bash "$DIRECTORY_NOAH/noah.sh" observe &> /dev/null
+    forever start --pidFile "$DIRECTORY_NOAH/noah.pid" -c bash "$DIRECTORY_NOAH/noah.sh" -o &> /dev/null
     success "Start complete!"
 }
 
@@ -330,7 +329,7 @@ noah_stop() {
 
 noah_restart() {
     heading "Restarting noah..."
-    forever restart --pidFile "$DIRECTORY_NOAH/noah.pid" -c bash "$DIRECTORY_NOAH/noah.sh" observe &> /dev/null
+    forever restart --pidFile "$DIRECTORY_NOAH/noah.pid" -c bash "$DIRECTORY_NOAH/noah.sh" -o &> /dev/null
     success "Restart complete!"
 }
 
@@ -376,40 +375,64 @@ noah_alias() {
     success "Installation complete!"
 }
 
+noah_help()
+{
+	local me=$(basename "$0")
+
+    cat << EOF
+Usage: $me [options]
+options:
+    -h, --help, --pray              Show this help.
+    -b, --start, --board            Start the noah process.
+    -l, --stop, --leave             Stop the noah process.
+    -f, --restart, --flood          Restart the noah process.
+    -r, --rebuild, --rebirth        Start the rebuild process.
+    -o, --observe, --guard          Show this help.
+    -i, --install                   Setup noah interactively.
+    -u, --update                    Update the noah installation.
+    -l, --log                       Show the noah log.
+    -a, --alias                     Create a bash alias for noah.
+EOF
+}
+
 # --------------------------------------------------------------------------------------------------
 # Parse Arguments and Start
 # --------------------------------------------------------------------------------------------------
 
 case "$1" in
-    start)
+    -b|--start|--board)
         noah_start
     ;;
-    stop)
+    -l|--stop|--leave)
         noah_stop
     ;;
-    restart)
+    -f|--restart|--flood)
         noah_restart
     ;;
-    rebuild|flood)
+    -r|--rebuild|--rebirth)
         rebuild
     ;;
-    observe|pray)
+    -o|--observe|--pray)
         observe
     ;;
-    install)
+    -i|--install)
         noah_install
     ;;
-    update)
+    -u|--update)
         noah_update
     ;;
-    log)
+    -l|--log)
         noah_log
     ;;
-    alias)
+    -a|--alias)
         noah_alias
     ;;
+    -h|\?|--help)
+        noah_help
+        exit 1
+    ;;
     *)
-        error "Usage: ~/noah/noah.sh start|stop|restart|force|flood|observe|pray|install|update|log|alias|help"
+        noah_help
         exit 1
     ;;
 esac
