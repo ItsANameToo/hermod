@@ -46,57 +46,23 @@ If you wish to use **Slack** as your notification driver you will need to instal
 
 ## Commands
 
-### 1. Start using Forever
-
 ```bash
-bash ~/noah/noah.sh start
+Usage: noah.sh [options]
+options:
+    -h, --help, --pray              Show this help.
+    -b, --start, --board            Start the noah process.
+    -m, --stop, --martyr            Stop the noah process.
+    -f, --restart, --flood          Restart the noah process.
+    -r, --rebuild, --rebirth        Start the rebuild process.
+    -o, --observe, --guard          Show this help.
+    -i, --install                   Setup noah interactively.
+    -u, --update                    Update the noah installation.
+    -l, --log                       Show the noah log.
+    -t, --test                      Test the specified method.
+    -a, --alias                     Create a bash alias for noah.
 ```
 
 Run `ps ax | grep '/home/ark/noah/noah.sh' && ps ax | grep '~/noah/noah.sh'` and make sure there are only 2 processes related to the `noah.sh`.
-
-### 2. Stop using Forever
-
-```bash
-bash ~/noah/noah.sh stop
-```
-
-### 3. Restart using Forever
-
-```bash
-bash ~/noah/noah.sh restart
-```
-
-### 2. Perform a Rebuild
-
-```bash
-bash ~/noah/noah.sh rebuild
-bash ~/noah/noah.sh flood
-```
-
-### 2. Start Observing
-
-```bash
-bash ~/noah/noah.sh observe
-bash ~/noah/noah.sh pray
-```
-
-### 2. Install
-
-```bash
-bash ~/noah/noah.sh install
-```
-
-### 2. Show Log
-
-```bash
-bash ~/noah/noah.sh log
-```
-
-### 2. Create bash alias
-
-```bash
-bash ~/noah/noah.sh alias
-```
 
 ## Security
 
