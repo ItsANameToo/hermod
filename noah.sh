@@ -74,6 +74,22 @@ if [[ $night_mode_enabled = true ]]; then
 fi
 
 # -------------------------
+# ARK Node Functions
+# -------------------------
+
+node_start()
+{
+    cd ${directory_ark}
+    forever start app.js --genesis genesisBlock.${network}.json --config config.${network}.json >&- 2>&-
+}
+
+node_stop()
+{
+    cd ${directory_ark}
+    forever stop ${process_forever} >&- 2>&-
+}
+
+# -------------------------
 # Grab Processes
 # -------------------------
 
@@ -89,18 +105,6 @@ process_forever=$(forever --plain list | grep ${process_ark_node} | sed -nr 's/.
 # -------------------------
 # Functions
 # -------------------------
-
-node_start()
-{
-    cd ${directory_ark}
-    forever start app.js --genesis genesisBlock.${network}.json --config config.${network}.json >&- 2>&-
-}
-
-node_stop()
-{
-    cd ${directory_ark}
-    forever stop ${process_forever} >&- 2>&-
-}
 
 notify_via_log()
 {
