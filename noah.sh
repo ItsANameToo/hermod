@@ -444,8 +444,6 @@ EOF
 # Parse Arguments
 # -------------------------
 
-process_vars
-
 case "$1" in
     -b|--start|--board)
         noah_start
@@ -457,9 +455,13 @@ case "$1" in
         noah_restart
     ;;
     -r|--rebuild|--rebirth)
+        process_vars
+
         rebuild
     ;;
     -o|--observe|--pray)
+        process_vars
+
         observe
     ;;
     -i|--install)
