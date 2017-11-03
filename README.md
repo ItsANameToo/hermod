@@ -15,13 +15,13 @@ git clone https://github.com/faustbrian/noah.git
 > This step is required to guarantee that noah can execute all `sudo` commands required to rebuild your node without your intervention.
 
 ```bash
-bash ~/noah/noah.sh install
+bash ~/noah/noah.sh --install
 ```
 
 ### 3. Start noah
 
 ```bash
-bash ~/noah/noah.sh start
+bash ~/noah/noah.sh --start
 ```
 
 ## Configuration
