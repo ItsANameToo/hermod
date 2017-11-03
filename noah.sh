@@ -422,16 +422,24 @@ noah_install()
     else
         info "Configuration already exists..."
     fi
-    success "Installed OK."
+    success "Installation OK."
 
     heading "Installing visudo..."
     echo "$user ALL=(ALL) NOPASSWD:ALL" | sudo EDITOR='tee -a' visudo &> /dev/null
-    success "Installed OK."
+    success "Installation OK."
+
+    heading "Installing jq..."
+    if sudo apt-get -qq install jq; then
+        success "Installation OK."
+    else
+        success "Installation FAILED."
+        exit 1
+    fi
 
     # heading "Installing pm2..."
     # npm list -g | grep pm2
     # npm install pm2 -g
-    # success "Installed OK."
+    # success "Installation OK."
 
     success "Installation complete!"
 }
