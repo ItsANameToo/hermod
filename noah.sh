@@ -427,17 +427,17 @@ options:
     -m, --stop, --martyr            Stop the noah process.
     -f, --restart, --flood          Restart the noah process.
     -r, --rebuild, --rebirth        Start the rebuild process.
-    -o, --observe, --guard          Show this help.
+    -o, --observe, --guard          Temporarily observe the log.
     -i, --install                   Setup noah interactively.
     -u, --update                    Update the noah installation.
     -l, --log                       Show the noah log.
-    -t, --test                      Test the specified method.
+    -t, --test [method] [params]    Test the specified method.
     -a, --alias                     Create a bash alias for noah.
 EOF
 }
 
 # -------------------------
-# Parse Arguments and Start
+# Parse Arguments
 # -------------------------
 
 case "$1" in
