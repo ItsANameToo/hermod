@@ -376,6 +376,8 @@ noah_log() {
 noah_install() {
     heading "Starting Installation..."
 
+    [ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
+
     heading "Installing Configuration..."
     if [ ! -f "$directory_noah/noah.conf" ]; then
         cp "$directory_noah/noah.conf.example" "$directory_noah/noah.conf";
