@@ -254,6 +254,31 @@ snapshot_restore()
     pg_restore -O -j 8 -d ark_${network} ${directory_snapshot}/current &> /dev/null
 }
 
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!! NOT FULLY TESTED - USE AT YOUR OWN RISK !!!!!!!!!!!!!!!!!!!!!!!!!!! #
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #
+
+switch_to_relay()
+{
+    local config="$directory_ark/config.${network}.json"
+    local relay="-p $relay_port $relay_user@$relay_ip"
+
+    # (forge) unset secret
+    jq '.forging.secret = []' <<< cat $config > tmp.$$.json && mv tmp.$$.json $config
+
+    # (relay) set secret
+    ssh ${relay} "jq '.forging.secret = [\"$relay_secret\"]' <<< cat $config > tmp.$$.json && mv tmp.$$.json $config"
+
+    # (forge) rebuild node
+    rebuild
+
+    # (relay) set secret
+    jq ".forging.secret = [\"$relay_secret\"]" <<< cat $config > tmp.$$.json && mv tmp.$$.json $config
+
+    # (relay) unsetunset secret
+    ssh ${relay} "jq '.forging.secret = []' <<< cat $config > tmp.$$.json && mv tmp.$$.json $config"
+}
+
 rebuild()
 {
     heading "Starting Rebuild..."
@@ -338,7 +363,11 @@ observe()
 
             # Night >>> Only Rebuild
             if [[ $trigger_method_rebuild = true ]]; then
-                rebuild
+                if [[ $relay_enabled = true ]]; then
+                    switch_to_relay
+                else
+                    rebuild
+                fi
             fi
 
             if (( $wait_between_rebuild > 0 )); then
