@@ -264,19 +264,43 @@ switch_to_relay()
     local relay="-p $relay_port $relay_user@$relay_ip"
 
     # (forge) unset secret
+    info "Disable Forging Node..."
+
+    if [[ $trigger_method_notify = true ]]; then
+        notify "Disable Forging Node..."
+    fi
+
     jq '.forging.secret = []' <<< cat $config > tmp.$$.json && mv tmp.$$.json $config
 
     # (relay) set secret
+    info "Enable Relay Node..."
+
+    if [[ $trigger_method_notify = true ]]; then
+        notify "Enable Relay Node..."
+    fi
+
     ssh ${relay} "jq '.forging.secret = [\"$relay_secret\"]' <<< cat $config > tmp.$$.json && mv tmp.$$.json $config"
 
     # (forge) rebuild node
     rebuild
 
-    # (relay) set secret
-    jq ".forging.secret = [\"$relay_secret\"]" <<< cat $config > tmp.$$.json && mv tmp.$$.json $config
+    # (relay) unset secret
+    info "Disable Relay Node..."
 
-    # (relay) unsetunset secret
+    if [[ $trigger_method_notify = true ]]; then
+        notify "Disable Relay Node..."
+    fi
+
     ssh ${relay} "jq '.forging.secret = []' <<< cat $config > tmp.$$.json && mv tmp.$$.json $config"
+
+    # (forge) set secret
+    info "Enable Forging Node..."
+
+    if [[ $trigger_method_notify = true ]]; then
+        notify "Enable Forging Node..."
+    fi
+
+    jq ".forging.secret = [\"$relay_secret\"]" <<< cat $config > tmp.$$.json && mv tmp.$$.json $config
 }
 
 rebuild()
