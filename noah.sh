@@ -44,8 +44,7 @@ directory_noah="$HOME/noah"
 # -------------------------
 
 if [ ! -f "$directory_noah/noah.conf" ]; then
-    error "noah has not been configured. Please run noah.sh --install."
-    exit 1
+    cp "$directory_noah/noah.conf.example" "$directory_noah/noah.conf";
 fi
 
 if [[ -e "$directory_noah/noah.conf" ]]; then
@@ -463,8 +462,7 @@ noah_install()
     if sudo apt-get -qq install jq; then
         success "Installation OK."
     else
-        success "Installation FAILED."
-        exit 1
+        error "Installation FAILED."
     fi
 
     # heading "Installing pm2..."
