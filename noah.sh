@@ -285,6 +285,18 @@ switch_to_relay()
     # rebuild forging node...
     rebuild
 
+    # enable forging node...
+    info "Enable Forging Node..."
+
+    if [[ $trigger_method_notify = true ]]; then
+        notify "Enable Forging Node..."
+    fi
+
+    node_stop
+    sleep 3
+    jq ".forging.secret = [\"$relay_secret\"]" <<< cat $config > tmp.$$.json && mv tmp.$$.json $config
+    node_start
+
     # disable relay node...
     info "Disable Relay Node..."
 
@@ -294,15 +306,6 @@ switch_to_relay()
 
     ssh ${relay} "jq '.forging.secret = []' <<< cat $config > tmp.$$.json && mv tmp.$$.json $config"
     ssh ${relay} 'PATH="$HOME/.nvm/versions/node/v6.9.5/bin:$PATH"; export PATH; forever stopall;'
-
-    # enable forging node...
-    info "Enable Forging Node..."
-
-    if [[ $trigger_method_notify = true ]]; then
-        notify "Enable Forging Node..."
-    fi
-
-    jq ".forging.secret = [\"$relay_secret\"]" <<< cat $config > tmp.$$.json && mv tmp.$$.json $config
 }
 
 rebuild()
