@@ -270,9 +270,9 @@ switch_to_relay()
         notify "Disable Forging Node..."
     fi
 
+    jq '.forging.secret = []' <<< cat $config > tmp.$$.json && mv tmp.$$.json $config
     node_stop
     sleep 2
-    jq '.forging.secret = []' <<< cat $config > tmp.$$.json && mv tmp.$$.json $config
 
     # enable relay node...
     info "Enable Relay Node..."
