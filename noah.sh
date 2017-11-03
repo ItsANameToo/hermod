@@ -263,7 +263,7 @@ switch_to_relay()
     local config="$directory_ark/config.${network}.json"
     local relay="-p $relay_port $relay_user@$relay_ip"
 
-    # (forge) unset secret
+    # disable forging node...
     info "Disable Forging Node..."
 
     if [[ $trigger_method_notify = true ]]; then
@@ -272,7 +272,7 @@ switch_to_relay()
 
     jq '.forging.secret = []' <<< cat $config > tmp.$$.json && mv tmp.$$.json $config
 
-    # (relay) set secret
+    # enable relay node...
     info "Enable Relay Node..."
 
     if [[ $trigger_method_notify = true ]]; then
@@ -281,10 +281,10 @@ switch_to_relay()
 
     ssh ${relay} "jq '.forging.secret = [\"$relay_secret\"]' <<< cat $config > tmp.$$.json && mv tmp.$$.json $config"
 
-    # (forge) rebuild node
+    # rebuild forging node...
     rebuild
 
-    # (relay) unset secret
+    # disable relay node...
     info "Disable Relay Node..."
 
     if [[ $trigger_method_notify = true ]]; then
@@ -293,7 +293,7 @@ switch_to_relay()
 
     ssh ${relay} "jq '.forging.secret = []' <<< cat $config > tmp.$$.json && mv tmp.$$.json $config"
 
-    # (forge) set secret
+    # enable forging node...
     info "Enable Forging Node..."
 
     if [[ $trigger_method_notify = true ]]; then
