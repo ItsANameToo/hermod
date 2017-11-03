@@ -341,13 +341,17 @@ observe()
                 rebuild
             fi
 
-            sleep $wait_between_rebuild
+            if (( $wait_between_rebuild > 0 )); then
+                sleep $wait_between_rebuild
+            fi
 
             break
         fi
 
         # Reduce CPU Overhead
-        sleep $wait_between_log_check
+        if (( $wait_between_log_check > 0 )); then
+            sleep $wait_between_log_check
+        fi
     done
 }
 
