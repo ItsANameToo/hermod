@@ -141,6 +141,17 @@ notify_via_pushbullet() {
          https://api.pushbullet.com/v2/pushes
 }
 
+notify_via_mailgun() {
+    local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
+
+    curl -s --user "api:$notifications_mailgun_api_key" \
+        "https://api.mailgun.net/v3/$notifications_mailgun_domain/messages" \
+        -F from="$notifications_mailgun_from <mailgun@$notifications_mailgun_domain>" \
+        -F to="$notifications_mailgun_to" \
+        -F subject="$notifications_mailgun_subject" \
+        -F text="[$current_datetime] $1"
+}
+
 notify_via_slack() {
     local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
 
@@ -168,6 +179,9 @@ notify() {
             ;;
             pushbullet)
                 notify_via_pushbullet "$1"
+            ;;
+            mailgun)
+                notify_via_mailgun "$1"
             ;;
             none)
                 :
