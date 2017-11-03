@@ -270,6 +270,8 @@ switch_to_relay()
         notify "Disable Forging Node..."
     fi
 
+    node_stop
+    sleep 2
     jq '.forging.secret = []' <<< cat $config > tmp.$$.json && mv tmp.$$.json $config
 
     # enable relay node...
@@ -293,7 +295,7 @@ switch_to_relay()
     fi
 
     node_stop
-    sleep 3
+    sleep 2
     jq ".forging.secret = [\"$relay_secret\"]" <<< cat $config > tmp.$$.json && mv tmp.$$.json $config
     node_start
 
@@ -491,7 +493,7 @@ noah_alias()
 
 noah_help()
 {
-	local me=$(basename "$0")
+    local me=$(basename "$0")
 
     cat << EOF
 Usage: $me [options]
