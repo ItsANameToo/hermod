@@ -71,7 +71,7 @@ If you discover a security vulnerability within this package, please send an e-m
 ## Credits
 
 - [Brian Faust](https://github.com/faustbrian)
-- [Dafty](https://github.com/dafty-1)
+- [Dafty](https://github.com/dafty)
 - [All Contributors](../../contributors)
 
 ## License
