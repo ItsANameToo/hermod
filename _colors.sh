@@ -32,60 +32,50 @@ reset=$(tput sgr0)
 
 heading()
 {
-    echo
     echo "${lila}==>${reset}${bold} $1${reset}"
 }
 
 success()
 {
-    echo
     echo "${green}==>${bold} $1${reset}"
 }
 
 info()
 {
-    echo
     echo "${blue}==>${bold} $1${reset}"
 }
 
 warning()
 {
-    echo
     echo "${yellow}==>${bold} $1${reset}"
 }
 
 error()
 {
-    echo
     echo "${red}==>${bold} $1${reset}"
 }
 
 heading_solid()
 {
-    echo
     echo "${bg_black}${lila}==>${reset}${bg_black}${bold} $1${reset}"
 }
 
 success_solid()
 {
-    echo
     echo "${bg_black}${green}==>${bold} $1${reset}"
 }
 
 info_solid()
 {
-    echo
     echo "${bg_black}${blue}==>${bold} $1${reset}"
 }
 
 warning_solid()
 {
-    echo
     echo "${bg_black}${yellow}==>${bold} $1${reset}"
 }
 
 error_solid()
 {
-    echo
     echo "${bg_black}${red}==>${bold} $1${reset}"
 }

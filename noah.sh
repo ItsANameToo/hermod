@@ -86,12 +86,14 @@ process_forever=$(forever --plain list | grep ${process_ark_node} | sed -nr 's/.
 # Functions - ARK Node
 # --------------------------------------------------------------------------------------------------
 
-node_start() {
+node_start()
+{
     cd ${directory_ark}
     forever start app.js --genesis genesisBlock.${network}.json --config config.${network}.json >&- 2>&-
 }
 
-node_stop() {
+node_stop()
+{
     cd ${directory_ark}
     forever stop ${process_forever} >&- 2>&-
 }
@@ -100,19 +102,22 @@ node_stop() {
 # Functions - Notifications
 # --------------------------------------------------------------------------------------------------
 
-notify_via_log() {
+notify_via_log()
+{
     local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
 
     printf "[$current_datetime] $1\n" >> $notification_log
 }
 
-notify_via_email() {
+notify_via_email()
+{
     local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
 
     echo "[$current_datetime] $1" | mail -s "$notification_email_subject" "$notification_email_to"
 }
 
-notify_via_nexmo() {
+notify_via_nexmo()
+{
     local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
 
     curl -X "POST" "https://rest.nexmo.com/sms/json" \
@@ -123,7 +128,8 @@ notify_via_nexmo() {
       -d "api_secret=$notification_nexmo_api_secret"
 }
 
-notify_via_pushover() {
+notify_via_pushover()
+{
     local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
 
     curl -s -F "token=$notification_pushover_token" \
@@ -132,7 +138,8 @@ notify_via_pushover() {
         -F "message=[$current_datetime] $1" https://api.pushover.net/1/messages.json
 }
 
-notify_via_pushbullet() {
+notify_via_pushbullet()
+{
     local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
 
     curl --header "Access-Token: $notification_pushbullet_access_token" \
@@ -142,7 +149,8 @@ notify_via_pushbullet() {
          https://api.pushbullet.com/v2/pushes
 }
 
-notify_via_mailgun() {
+notify_via_mailgun()
+{
     local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
 
     curl -s --user "api:$notifications_mailgun_api_key" \
@@ -153,13 +161,15 @@ notify_via_mailgun() {
         -F text="[$current_datetime] $1"
 }
 
-notify_via_slack() {
+notify_via_slack()
+{
     local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
 
     echo "[$current_datetime] $1" | $notification_slack_slacktee -c "$notification_slack_channel" -u "$notification_slack_from" -i "$notification_slack_icon"
 }
 
-notify() {
+notify()
+{
     for driver in "${notification_driver[@]}"
     do
         case $driver in
@@ -198,7 +208,8 @@ notify() {
 # Functions - Database
 # --------------------------------------------------------------------------------------------------
 
-database_drop_user() {
+database_drop_user()
+{
     if [ -z "$process_postgres" ]; then
         sudo service postgresql start
     fi
@@ -206,7 +217,8 @@ database_drop_user() {
     sudo -u postgres dropuser --if-exists $user
 }
 
-database_destroy() {
+database_destroy()
+{
     if [ -z "$process_postgres" ]; then
         sudo service postgresql start
     fi
@@ -214,7 +226,8 @@ database_destroy() {
     dropdb --if-exists ark_${network}
 }
 
-database_create() {
+database_create()
+{
     if [ -z "$process_postgres" ]; then
         sudo service postgresql start
     fi
@@ -231,12 +244,14 @@ database_create() {
 # Functions - Snapshots
 # --------------------------------------------------------------------------------------------------
 
-snapshot_download() {
+snapshot_download()
+{
     rm ${directory_snapshot}/current
     wget -nv ${snapshot_source} -O ${directory_snapshot}/current &> /dev/null
 }
 
-snapshot_restore() {
+snapshot_restore()
+{
     if [ -z "$process_postgres" ]; then
         sudo service postgresql start
     fi
@@ -248,7 +263,8 @@ snapshot_restore() {
 # Functions - Rebuild
 # --------------------------------------------------------------------------------------------------
 
-rebuild() {
+rebuild()
+{
     heading "Starting Rebuild..."
 
     if [[ $trigger_method_notify = true ]]; then
@@ -322,7 +338,8 @@ rebuild() {
 # Functions - Observe
 # --------------------------------------------------------------------------------------------------
 
-observe() {
+observe()
+{
     heading "Starting Observer..."
 
     while true; do
@@ -351,29 +368,34 @@ observe() {
 # Functions - noah
 # --------------------------------------------------------------------------------------------------
 
-noah_start() {
+noah_start()
+{
     heading "Starting noah..."
     forever start --pidFile "$directory_noah/noah.pid" -c bash "$directory_noah/noah.sh" -o &> /dev/null
     success "Start complete!"
 }
 
-noah_stop() {
+noah_stop()
+{
     heading "Stopping noah..."
     forever stop "$directory_noah/noah.sh" &> /dev/null
     success "Stop complete!"
 }
 
-noah_restart() {
+noah_restart()
+{
     heading "Restarting noah..."
     forever restart --pidFile "$directory_noah/noah.pid" -c bash "$directory_noah/noah.sh" -o &> /dev/null
     success "Restart complete!"
 }
 
-noah_log() {
+noah_log()
+{
     tail -f $file_noah_log
 }
 
-noah_install() {
+noah_install()
+{
     heading "Starting Installation..."
 
     [ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
@@ -398,13 +420,15 @@ noah_install() {
     success "Installation complete!"
 }
 
-noah_update() {
+noah_update()
+{
     heading "Starting Update..."
     git reset --hard && git pull &> /dev/null
     success "Update complete!"
 }
 
-noah_alias() {
+noah_alias()
+{
     heading "Installing alias..."
     echo "alias noah='bash ~/noah/noah.sh'" | tee -a ~/.bashrc
     source ~/.bashrc
