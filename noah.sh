@@ -387,7 +387,7 @@ noah_install() {
     success "Installed OK."
 
     heading "Installing visudo..."
-    echo "$user ALL=(ALL) NOPASSWD:ALL" | sudo EDITOR='tee -a' visudo
+    echo "$user ALL=(ALL) NOPASSWD:ALL" | sudo EDITOR='tee -a' visudo &> /dev/null
     success "Installed OK."
 
     # heading "Installing pm2..."
@@ -400,7 +400,7 @@ noah_install() {
 
 noah_update() {
     heading "Starting Update..."
-    git pull
+    git reset --hard && git pull &> /dev/null
     success "Update complete!"
 }
 
