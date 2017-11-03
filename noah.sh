@@ -88,6 +88,12 @@ node_stop()
     forever stop ${process_forever} >&- 2>&-
 }
 
+node_restart()
+{
+    cd ${directory_ark}
+    forever restart ${process_forever} >&- 2>&-
+}
+
 process_vars()
 {
     process_postgres=$(pgrep -a "postgres" | awk '{print $1}')
