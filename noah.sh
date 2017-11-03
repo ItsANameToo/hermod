@@ -280,6 +280,7 @@ switch_to_relay()
     fi
 
     ssh ${relay} "jq '.forging.secret = [\"$relay_secret\"]' <<< cat $config > tmp.$$.json && mv tmp.$$.json $config"
+    ssh ${relay} 'PATH="$HOME/.nvm/versions/node/v6.9.5/bin:$PATH"; export PATH; forever stopall; cd '$directory_ark'; forever start app.js --genesis genesisBlock.${network}.json --config config.${network}.json >&- 2>&-'
 
     # rebuild forging node...
     rebuild
@@ -292,6 +293,7 @@ switch_to_relay()
     fi
 
     ssh ${relay} "jq '.forging.secret = []' <<< cat $config > tmp.$$.json && mv tmp.$$.json $config"
+    ssh ${relay} 'PATH="$HOME/.nvm/versions/node/v6.9.5/bin:$PATH"; export PATH; forever stopall;'
 
     # enable forging node...
     info "Enable Forging Node..."
