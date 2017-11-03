@@ -89,22 +89,21 @@ node_stop()
     forever stop ${process_forever} >&- 2>&-
 }
 
-# -------------------------
-# Grab Processes
-# -------------------------
+process_vars()
+{
+    process_postgres=$(pgrep -a "postgres" | awk '{print $1}')
+    process_ark_node=$(pgrep -a "node" | grep ark-node | awk '{print $1}')
 
-process_postgres=$(pgrep -a "postgres" | awk '{print $1}')
-process_ark_node=$(pgrep -a "node" | grep ark-node | awk '{print $1}')
+    if [ -z "$process_ark_node" ]; then
+        heading "Starting ARK Node..."
+        node_start
+        sleep 5
+        success "ARK Node started!"
+    fi
 
-if [ -z "$process_ark_node" ]; then
-    node_start
-fi
-
-process_forever=$(forever --plain list | grep ${process_ark_node} | sed -nr 's/.*\[(.*)\].*/\1/p')
-
-# -------------------------
-# Functions
-# -------------------------
+    process_ark_node=$(pgrep -a "node" | grep ark-node | awk '{print $1}')
+    process_forever=$(forever --plain list | grep ${process_ark_node} | sed -nr 's/.*\[(.*)\].*/\1/p')
+}
 
 notify_via_log()
 {
@@ -444,6 +443,8 @@ EOF
 # -------------------------
 # Parse Arguments
 # -------------------------
+
+process_vars
 
 case "$1" in
     -b|--start|--board)
