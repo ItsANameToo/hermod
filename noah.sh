@@ -35,13 +35,13 @@ user=$(whoami)
 # Includes
 # -------------------------
 
+directory_noah="$HOME/noah"
+
 . "$directory_noah/_colors.sh"
 
 # -------------------------
 # Configuration
 # -------------------------
-
-directory_noah="$HOME/noah"
 
 if [ ! -f "$directory_noah/noah.conf" ]; then
     error "noah has not been configured. Please run noah.sh --install."
@@ -403,7 +403,8 @@ noah_install()
 noah_update()
 {
     heading "Starting Update..."
-    git reset --hard && git pull &> /dev/null
+    git reset --hard &> /dev/null
+    git pull &> /dev/null
     success "Update complete!"
 }
 
