@@ -25,6 +25,8 @@ fi
 PATH="$HOME/.nvm/versions/node/v6.9.5/bin:$PATH"
 export PATH
 
+NOAH_VERSION='pre-alpha'
+
 # -------------------------
 # Environment
 # -------------------------
@@ -496,6 +498,11 @@ noah_alias()
     success "Installation complete!"
 }
 
+noah_version()
+{
+    echo $NOAH_VERSION
+}
+
 noah_help()
 {
     local me=$(basename "$0")
@@ -557,6 +564,10 @@ case "$1" in
         heading "Starting Test..."
         $2 "$3"
         success "Test complete!"
+    ;;
+    -v|--version)
+        noah_version
+        exit 1
     ;;
     -h|\?|--help|*)
         noah_help
