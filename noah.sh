@@ -450,7 +450,7 @@ noah_install()
 {
     heading "Starting Installation..."
 
-    [ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
+    # [ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
 
     heading "Installing Configuration..."
     if [ ! -f "$directory_noah/noah.conf" ]; then
