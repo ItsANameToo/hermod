@@ -1,0 +1,10 @@
+{
+    "apps": [{
+        "name": "noah",
+        "script": "~/Projects/noah/test.sh",
+        "args": "-o",
+        "watch": true,
+        "instances": 1,
+        "interpreter": "bash"
+    }]
+}

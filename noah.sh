@@ -409,8 +409,6 @@ observe()
             if (( $wait_between_rebuild > 0 )); then
                 sleep $wait_between_rebuild
             fi
-
-            break
         fi
 
         # Reduce CPU Overhead
@@ -423,21 +421,21 @@ observe()
 noah_start()
 {
     heading "Starting noah..."
-    forever start --pidFile "$directory_noah/noah.pid" -c bash "$directory_noah/noah.sh" -o &> /dev/null
+    pm2 start "$directory_noah/noah.sh" --interpreter="bash" -- -o &> /dev/null
     success "Start complete!"
 }
 
 noah_stop()
 {
     heading "Stopping noah..."
-    forever stop "$directory_noah/noah.sh" &> /dev/null
+    pm2 stop "$directory_noah/noah.sh" &> /dev/null
     success "Stop complete!"
 }
 
 noah_restart()
 {
     heading "Restarting noah..."
-    forever restart --pidFile "$directory_noah/noah.pid" -c bash "$directory_noah/noah.sh" -o &> /dev/null
+    pm2 restart "$directory_noah/noah.sh" --interpreter="bash" -- -o &> /dev/null
     success "Restart complete!"
 }
 
@@ -471,10 +469,13 @@ noah_install()
         error "Installation FAILED."
     fi
 
-    # heading "Installing pm2..."
-    # npm list -g | grep pm2
-    # npm install pm2 -g
-    # success "Installation OK."
+    heading "Installing pm2..."
+    pm2=$(npm list -g | grep pm2)
+
+    if [ -z "$pm2" ]; then
+        npm install pm2 -g
+    fi
+    success "Installation OK."
 
     success "Installation complete!"
 }
