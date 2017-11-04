@@ -1,6 +1,6 @@
 # noah ~ Automated Rebuilds for [ArkEcosystem/ark-node](https://github.com/ArkEcosystem/ark-node)
 
-> `noah` is still in its early stages which means it is undergoing constant changes so make sure to check the commit history for any changes before updating.
+> `noah` is still in its early stages which means it is undergoing constant changes so make sure to check the commit history for any changes before updating **AND** test it on devnet before deploying it to mainnet.
 
 ## Installation
 
@@ -15,7 +15,7 @@ git clone https://github.com/faustbrian/noah.git
 > This step is required to guarantee that noah can execute all `sudo` commands required to rebuild your node without your intervention.
 
 ```bash
-bash ~/noah/noah.sh --install
+sudo bash ~/noah/noah.sh --install
 ```
 
 ### 3. Start noah
