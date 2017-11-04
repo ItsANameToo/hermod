@@ -388,12 +388,12 @@ rebuild()
     fi
 }
 
-observe()
+monitor()
 {
     heading "Starting Observer..."
 
     while true; do
-        if tail -n $observe_lines $file_ark_log | grep -q "Blockchain not ready to receive block"; then
+        if tail -n $monitor_lines $file_ark_log | grep -q "Blockchain not ready to receive block"; then
             # Day >>> Only Notify
             if [[ $trigger_method_notify = true && $trigger_method_rebuild = false ]]; then
                 notify "ARK Node out of sync - Rebuild required...";
@@ -510,17 +510,18 @@ noah_help()
     cat << EOF
 Usage: $me [options]
 options:
-    -h, --help, --pray              Show this help.
-    -b, --start, --board            Start the noah process.
-    -m, --stop, --martyr            Stop the noah process.
-    -f, --restart, --flood          Restart the noah process.
-    -r, --rebuild, --rebirth        Start the rebuild process.
-    -o, --observe, --guard          Temporarily observe the log.
-    -i, --install                   Setup noah interactively.
-    -u, --update                    Update the noah installation.
-    -l, --log                       Show the noah log.
-    -t, --test [method] [params]    Test the specified method.
-    -a, --alias                     Create a bash alias for noah.
+    help                      Show this help.
+    version                   Show this version.
+    start                     Start the noah process.
+    stop                      Stop the noah process.
+    restart                   Restart the noah process.
+    rebuild                   Start the rebuild process.
+    monitor                   Temporarily monitor the log.
+    install                   Setup noah interactively.
+    update                    Update the noah installation.
+    log                       Show the noah log.
+    test [method] [params]    Test the specified method.
+    alias                     Create a bash alias for noah.
 EOF
 }
 
@@ -529,47 +530,47 @@ EOF
 # -------------------------
 
 case "$1" in
-    -b|--start|--board)
+    start)
         noah_start
     ;;
-    -m|--stop|--martyr)
+    stop)
         noah_stop
     ;;
-    -f|--restart|--flood)
+    restart)
         noah_restart
     ;;
-    -r|--rebuild|--rebirth)
+    rebuild)
         process_vars
 
         rebuild
     ;;
-    -o|--observe|--pray)
+    monitor)
         process_vars
 
-        observe
+        monitor
     ;;
-    -i|--install)
+    install)
         noah_install
     ;;
-    -u|--update)
+    update)
         noah_update
     ;;
-    -l|--log)
+    log)
         noah_log
     ;;
-    -a|--alias)
+    alias)
         noah_alias
     ;;
-    -t|--test)
+    test)
         heading "Starting Test..."
         $2 "$3"
         success "Test complete!"
     ;;
-    -v|--version)
+    version)
         noah_version
         exit 1
     ;;
-    -h|\?|--help|*)
+    help|*)
         noah_help
         exit 1
     ;;
