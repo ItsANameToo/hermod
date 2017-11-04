@@ -1,6 +1,6 @@
 # noah ~ Automated Rebuilds for [ArkEcosystem/ark-node](https://github.com/ArkEcosystem/ark-node)
 
-> `noah` is still in its early stages which means it is undergoing constant changes so make sure to check the commit history for any changes before updating.
+> `noah` is still in its early stages which means it is undergoing constant changes so make sure to check the commit history for any changes before updating **AND** test it on devnet before deploying it to mainnet.
 
 ## Installation
 
