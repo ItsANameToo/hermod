@@ -30,7 +30,7 @@ check_configuration()
     #     abort 1 'pm2 is not installed. Please install it first.'
     # fi
 
-    if [[ $network != 'mainnet' || $network != 'devnet' ]]; then
+    if [[ $network != 'mainnet' && $network != 'devnet' ]]; then
         abort 1 'Please setup the network.'
     fi
 }
