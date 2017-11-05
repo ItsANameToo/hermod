@@ -30,11 +30,14 @@ noah_install()
     success "Installation OK."
 
     heading "Installing jq..."
-    if sudo apt-get -qq install jq; then
-        success "Installation OK."
+    jq=$(type jq)
+
+    if [ -z "$jq" ]; then
+        sudo apt-get -qq install jq
     else
-        error "Installation FAILED."
+        info "jq already exists..."
     fi
+    success "Installation OK."
 
     heading "Installing pm2..."
     pm2=$(type pm2)
