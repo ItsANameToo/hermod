@@ -22,7 +22,7 @@ noah_install()
     success "Installation OK."
 
     heading "Installing visudo..."
-    if sudo -l | grep "(ALL) NOPASSWD: ALL"; then
+    if sudo -l | grep -q "(ALL) NOPASSWD: ALL"; then
         info "visudo already exists..."
     else
         echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo EDITOR='tee -a' visudo &> /dev/null
