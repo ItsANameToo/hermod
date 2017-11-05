@@ -32,6 +32,10 @@ noah_restart()
 
 noah_log()
 {
+    if [ ! -f $file_noah_log ]; then
+        touch $file_noah_log
+    fi
+
     tail -f $file_noah_log
 }
 
