@@ -14,7 +14,7 @@
 # -------------------------
 
 if [[ $BASH_VERSINFO < 4 ]]; then
-    echo "Yikes! You need at least bash-4.0 to run this script."
+    echo 'Yikes! You need at least bash-4.0 to run this script.'
     exit 1
 fi
 
@@ -23,8 +23,7 @@ fi
 # -------------------------
 
 if [ "$(id -u)" = "0" ]; then
-    clear
-    error "This script should NOT be started using sudo or as the root user!"
+    error 'Yikes! This script should NOT be started using sudo or as the root user!'
     exit 1
 fi
 
