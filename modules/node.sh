@@ -20,9 +20,3 @@ node_stop()
     cd ${directory_ark}
     forever stop ${process_forever} >&- 2>&-
 }
-
-node_restart()
-{
-    cd ${directory_ark}
-    forever restart ${process_forever} >&- 2>&-
-}
