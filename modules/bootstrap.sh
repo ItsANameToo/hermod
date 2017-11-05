@@ -39,4 +39,4 @@ export PATH
 # Version
 # -------------------------
 
-NOAH_VERSION=$(cat version)
+NOAH_VERSION=$(cat "$directory_noah/version")
