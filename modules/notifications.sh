@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+
+# ---------------------------------------------------------------------------
+# This file is part of noah.
+#
+# (c) Brian Faust <hello@brianfaust.me>
+#
+# For the full copyright and license information, please view the LICENSE
+# file that was distributed with this source code.
+# ---------------------------------------------------------------------------
+
+notify_via_log()
+{
+    local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
+
+    printf "[$current_datetime] $1\n" >> $notification_log
+}
+
+notify_via_email()
+{
+    local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
+
+    echo "[$current_datetime] $1" | mail -s "$notification_email_subject" "$notification_email_to"
+}
+
+notify_via_nexmo()
+{
+    local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
+
+    curl -X "POST" "https://rest.nexmo.com/sms/json" \
+      -d "from=$notification_nexmo_from" \
+      -d "text=[$current_datetime] $1" \
+      -d "to=$notification_nexmo_to" \
+      -d "api_key=$notification_nexmo_api_key" \
+      -d "api_secret=$notification_nexmo_api_secret"
+}
+
+notify_via_pushover()
+{
+    local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
+
+    curl -s -F "token=$notification_pushover_token" \
+        -F "user=$notification_pushover_user" \
+        -F "title=$notification_pushover_title" \
+        -F "message=[$current_datetime] $1" https://api.pushover.net/1/messages.json
+}
+
+notify_via_pushbullet()
+{
+    local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
+
+    curl --header "Access-Token: $notification_pushbullet_access_token" \
+         --header 'Content-Type: application/json' \
+         --data-binary "{\"body\":\"[$current_datetime] $1\",\"title\":\"$notification_pushbullet_title\",\"type\":\"note\"}" \
+         --request POST \
+         https://api.pushbullet.com/v2/pushes
+}
+
+notify_via_mailgun()
+{
+    local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
+
+    curl -s --user "api:$notifications_mailgun_api_key" \
+        "https://api.mailgun.net/v3/$notifications_mailgun_domain/messages" \
+        -F from="$notifications_mailgun_from <mailgun@$notifications_mailgun_domain>" \
+        -F to="$notifications_mailgun_to" \
+        -F subject="$notifications_mailgun_subject" \
+        -F text="[$current_datetime] $1"
+}
+
+notify_via_slack()
+{
+    local current_datetime=$(date '+%Y-%m-%d %H:%M:%S')
+
+    echo "[$current_datetime] $1" | $notification_slack_slacktee -c "$notification_slack_channel" -u "$notification_slack_from" -i "$notification_slack_icon"
+}
+
+notify()
+{
+    for driver in ${notification_drivers[@]}; do
+        case $driver in
+            log)
+                notify_via_log "$1"
+            ;;
+            email)
+                notify_via_email "$1"
+            ;;
+            nexmo)
+                notify_via_nexmo "$1"
+            ;;
+            slack)
+                notify_via_slack "$1"
+            ;;
+            pushover)
+                notify_via_pushover "$1"
+            ;;
+            pushbullet)
+                notify_via_pushbullet "$1"
+            ;;
+            mailgun)
+                notify_via_mailgun "$1"
+            ;;
+            none)
+                :
+            ;;
+            *)
+                notify_via_log "$1"
+            ;;
+        esac
+    done
+}

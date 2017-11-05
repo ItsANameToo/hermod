@@ -1,52 +1,46 @@
-# --------------------------------------------------------------------------------------------------
+#!/usr/bin/env bash
+
+# ---------------------------------------------------------------------------
 # This file is part of noah.
 #
 # (c) Brian Faust <hello@brianfaust.me>
 #
 # For the full copyright and license information, please view the LICENSE
 # file that was distributed with this source code.
-# --------------------------------------------------------------------------------------------------
-
-# --------------------------------------------------------------------------------------------------
-# Network
-# --------------------------------------------------------------------------------------------------
-
-network='mainnet'                               # network we operate on...
+# ---------------------------------------------------------------------------
 
 declare -A snapshot_sources=(
     ['mainnet']='https://snapshots.ark.io/current'
     ['devnet']='https://dsnapshots.ark.io/current'
 )
 
+# -------------------------
+# Network
+# -------------------------
+
+network='mainnet'                               # network we operate on...
 snapshot_source=${snapshot_sources[$network]}   # snapshot source based on network...
 
-# --------------------------------------------------------------------------------------------------
+# -------------------------
 # Directories
-# --------------------------------------------------------------------------------------------------
+# -------------------------
 
 directory_ark="$HOME/ark-node"                   # ark-node directory...
 directory_snapshot="$HOME/snapshots"             # ark-node directory for snapshots...
 directory_noah="$HOME/noah"                      # noah directory...
 
-# --------------------------------------------------------------------------------------------------
+# -------------------------
 # Files
-# --------------------------------------------------------------------------------------------------
+# -------------------------
 
 file_ark_log="$directory_ark/logs/ark.log"       # ark-node log file...
-file_noah_log="$directory_noah/noah.log"         # noah log file...
+file_noah_log="$directory_noah/noah.log"    # ark-node log file...
 
-# --------------------------------------------------------------------------------------------------
-# Timeouts / Sleeps
-# --------------------------------------------------------------------------------------------------
-
-wait_between_rebuild=900                         # waiting time between rebuilds...
-wait_between_log_check=0                         # waiting time between log checks...
-
-# --------------------------------------------------------------------------------------------------
+# -------------------------
 # Notifications
-# --------------------------------------------------------------------------------------------------
+# -------------------------
 
-notification_driver=(log)                        # notification method...
+notification_drivers=(log)                        # notification method...
                                                  # values: none, log, email, slack, sms, pushover, pushbullet
 
 notification_log="$directory_noah/noah.log"      # log file...
@@ -75,25 +69,27 @@ notifications_mailgun_api_key=''                 # mailgun api key...
 notifications_mailgun_domain=''                  # mailgun domain...
 notifications_mailgun_from='noah'                # sender name...
 notifications_mailgun_to=''                      # recipient e-mail...
-notifications_mailgun_subject='noah'             # e-mail subject...
+notifications_mailgun_subject='noah'             # e-mail subject
 
-# --------------------------------------------------------------------------------------------------
+# -------------------------
 # Night Mode
-# --------------------------------------------------------------------------------------------------
+# -------------------------
 
 night_mode_enabled=false                         # enable or disable night mode...
 night_mode_start=22                              # when the night begins...
 night_mode_end=8                                 # when the day begins...
 
-# --------------------------------------------------------------------------------------------------
-# Observer
-# --------------------------------------------------------------------------------------------------
+# -------------------------
+# Monitor
+# -------------------------
 
-monitor_lines=3                                  # number of lines to monitor...
+monitor_lines=5                                   # number of lines to monitor...
+monitor_rebuild=900                               # time to wait after a rebuild in seconds...
+monitor_interval=1                                # time to wait after a log check in seconds...
 
-# --------------------------------------------------------------------------------------------------
+# -------------------------
 # Relay
-# --------------------------------------------------------------------------------------------------
+# -------------------------
 
 relay_enabled=false                              # use relay instead of rebuild only...
 relay_user=''                                    # ssh user...

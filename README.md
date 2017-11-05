@@ -49,17 +49,18 @@ If you wish to use **Slack** as your notification driver you will need to instal
 ```bash
 Usage: noah.sh [options]
 options:
-    -h, --help, --pray              Show this help.
-    -b, --start, --board            Start the noah process.
-    -m, --stop, --martyr            Stop the noah process.
-    -f, --restart, --flood          Restart the noah process.
-    -r, --rebuild, --rebirth        Start the rebuild process.
-    -o, --observe, --guard          Show this help.
-    -i, --install                   Setup noah interactively.
-    -u, --update                    Update the noah installation.
-    -l, --log                       Show the noah log.
-    -t, --test                      Test the specified method.
-    -a, --alias                     Create a bash alias for noah.
+    help                      Show this help.
+    version                   Show the current version.
+    start                     Start the noah process.
+    stop                      Stop the noah process.
+    restart                   Restart the noah process.
+    rebuild                   Start the rebuild process.
+    monitor                   Temporarily monitor the log.
+    install                   Setup noah interactively.
+    update                    Update the noah installation.
+    log                       Show the noah log.
+    test [method] [params]    Test the specified method.
+    alias                     Create a bash alias for noah.
 ```
 
 Run `ps ax | grep '/home/ark/noah/noah.sh' && ps ax | grep '~/noah/noah.sh'` and make sure there are only 2 processes related to the `noah.sh`.
