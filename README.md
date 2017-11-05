@@ -1,5 +1,13 @@
 # noah ~ Automated Rebuilds for [ArkEcosystem/ark-node](https://github.com/ArkEcosystem/ark-node)
 
+---
+
+If **noah** saves you the headache of having to constantly monitor your server and thus saves you sleep maybe support my open-source work by donating some ARK to **AdVSe37niA3uFUPgCgMUH2tMsHF4LpLoiX**.
+
+---
+
+## Disclaimer
+
 > `noah` is still in its early stages which means it is undergoing constant changes so make sure to check the commit history for any changes before updating **AND** test it on devnet before deploying it to mainnet.
 
 ## Installation
