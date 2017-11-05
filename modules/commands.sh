@@ -42,15 +42,19 @@ noah_install()
     # [ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
 
     heading "Installing Configuration..."
-    if [ ! -f "$directory_noah/noah.conf" ]; then
-        cp "$directory_noah/noah.conf.example" "$directory_noah/noah.conf";
-    else
+    if [ -f "$directory_noah/noah.conf" ]; then
         info "Configuration already exists..."
+    else
+        cp "$directory_noah/noah.conf.example" "$directory_noah/noah.conf";
     fi
     success "Installation OK."
 
     heading "Installing visudo..."
-    echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo EDITOR='tee -a' visudo &> /dev/null
+    if [[ sudo -l | grep "(ALL) NOPASSWD: ALL" ]]; then
+        info "visudo already exists..."
+    else
+        echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo EDITOR='tee -a' visudo &> /dev/null
+    fi
     success "Installation OK."
 
     heading "Installing jq..."
