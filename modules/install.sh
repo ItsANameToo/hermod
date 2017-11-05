@@ -37,10 +37,12 @@ noah_install()
     fi
 
     heading "Installing pm2..."
-    pm2=$(npm list -g | grep pm2)
+    pm2=$(type pm2)
 
     if [ -z "$pm2" ]; then
         npm install pm2 -g
+    else
+        info "pm2 already exists..."
     fi
     success "Installation OK."
 
