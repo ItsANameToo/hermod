@@ -14,7 +14,7 @@ noah_install()
     heading "Starting Installation..."
 
     if [ -f "$directory_noah/.noah" ]; then
-        heading "Configuration already exists..."
+        info "Configuration already exists..."
     else
         heading "Installing Configuration..."
         cp "$directory_noah/.noah.example" "$directory_noah/.noah";
@@ -22,7 +22,7 @@ noah_install()
     fi
 
     if sudo -l | grep -q "(ALL) NOPASSWD: ALL"; then
-        heading "visudo already exists..."
+        info "visudo already exists..."
     else
         heading "Installing visudo..."
         echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo EDITOR='tee -a' visudo &> /dev/null
@@ -34,7 +34,7 @@ noah_install()
         sudo apt-get -qq install jq
         success "Installation OK."
     else
-        heading "jq already exists..."
+        info "jq already exists..."
     fi
 
     if ! [ -x "$(command -v pm2)" ]; then
@@ -42,7 +42,7 @@ noah_install()
         npm install pm2 -g &> /dev/null
         success "Installation OK."
     else
-        heading "pm2 already exists..."
+        info "pm2 already exists..."
     fi
 
     success "Installation complete!"
