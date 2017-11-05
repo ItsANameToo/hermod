@@ -13,8 +13,6 @@ noah_install()
 {
     heading "Starting Installation..."
 
-    # [ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
-
     heading "Installing Configuration..."
     if [ -f "$directory_noah/noah.conf" ]; then
         info "Configuration already exists..."
@@ -24,7 +22,7 @@ noah_install()
     success "Installation OK."
 
     heading "Installing visudo..."
-    if [[ sudo -l | grep "(ALL) NOPASSWD: ALL" ]]; then
+    if sudo -l | grep "(ALL) NOPASSWD: ALL"; then
         info "visudo already exists..."
     else
         echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo EDITOR='tee -a' visudo &> /dev/null

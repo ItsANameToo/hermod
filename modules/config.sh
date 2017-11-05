@@ -9,10 +9,10 @@
 # file that was distributed with this source code.
 # ---------------------------------------------------------------------------
 
-if [ ! -f "$directory_noah/noah.conf" ]; then
-    cp "$directory_noah/noah.conf.example" "$directory_noah/noah.conf";
+if [ ! -f "$directory_noah/.noah" ]; then
+    cp "$directory_noah/.noah.example" "$directory_noah/.noah";
 fi
 
-if [[ -e "$directory_noah/noah.conf" ]]; then
-    . "$directory_noah/noah.conf"
+if [[ -e "$directory_noah/.noah" ]]; then
+    . "$directory_noah/.noah"
 fi
