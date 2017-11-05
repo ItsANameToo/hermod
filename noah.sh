@@ -9,24 +9,26 @@
 # file that was distributed with this source code.
 # ---------------------------------------------------------------------------
 
+directory_noah=$(dirname $0)
+
 # -------------------------
 # Modules
 # -------------------------
 
-. modules/colors.sh
-. modules/bootstrap.sh
-. modules/config.sh
-. modules/night-mode.sh
-. modules/node.sh
-. modules/processes.sh
-. modules/notifications.sh
-. modules/database.sh
-. modules/snapshot.sh
-. modules/rebuild.sh
-. modules/relay.sh
-. modules/monitor.sh
-. modules/commands.sh
-. modules/install.sh
+. "$directory_noah/modules/colors.sh"
+. "$directory_noah/modules/bootstrap.sh"
+. "$directory_noah/modules/config.sh"
+. "$directory_noah/modules/night-mode.sh"
+. "$directory_noah/modules/node.sh"
+. "$directory_noah/modules/processes.sh"
+. "$directory_noah/modules/notifications.sh"
+. "$directory_noah/modules/database.sh"
+. "$directory_noah/modules/snapshot.sh"
+. "$directory_noah/modules/rebuild.sh"
+. "$directory_noah/modules/relay.sh"
+. "$directory_noah/modules/monitor.sh"
+. "$directory_noah/modules/commands.sh"
+. "$directory_noah/modules/install.sh"
 
 # -------------------------
 # Parse Arguments

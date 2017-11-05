@@ -40,9 +40,3 @@ export PATH
 # -------------------------
 
 NOAH_VERSION=$(cat version)
-
-# -------------------------
-# Includes
-# -------------------------
-
-directory_noah=$(dirname $0)
