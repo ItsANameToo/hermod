@@ -30,9 +30,7 @@ noah_install()
     success "Installation OK."
 
     heading "Installing jq..."
-    jq=$(type jq &> /dev/null)
-
-    if [ -z "$jq" ]; then
+    if ! [ -x "$(command -v jq)" ]; then
         sudo apt-get -qq install jq
     else
         info "jq already exists..."
@@ -40,9 +38,7 @@ noah_install()
     success "Installation OK."
 
     heading "Installing pm2..."
-    pm2=$(type pm2 &> /dev/null)
-
-    if [ -z "$pm2" ]; then
+    if ! [ -x "$(command -v pm2)" ]; then
         npm install pm2 -g &> /dev/null
     else
         info "pm2 already exists..."
