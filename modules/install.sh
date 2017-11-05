@@ -14,10 +14,10 @@ noah_install()
     heading "Starting Installation..."
 
     heading "Installing Configuration..."
-    if [ -f "$directory_noah/noah.conf" ]; then
+    if [ -f "$directory_noah/.noah" ]; then
         info "Configuration already exists..."
     else
-        cp "$directory_noah/noah.conf.example" "$directory_noah/noah.conf";
+        cp "$directory_noah/.noah.example" "$directory_noah/.noah";
     fi
     success "Installation OK."
 
