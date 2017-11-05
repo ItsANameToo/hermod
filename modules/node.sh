@@ -18,5 +18,6 @@ node_start()
 node_stop()
 {
     cd ${directory_ark}
-    forever stop ${process_forever} >&- 2>&-
+    forever stopall # We use pm2 so we can stop all forever processes (prevent duplication)
+    # forever stop ${process_forever} >&- 2>&-
 }
