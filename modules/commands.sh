@@ -12,7 +12,7 @@
 noah_start()
 {
     heading "Starting noah..."
-    pm2 start "$directory_noah/noah.sh" --interpreter="bash" -- -o &> /dev/null
+    pm2 start "$directory_noah/noah.sh" --interpreter="bash" -- observe &> /dev/null
     success "Start complete!"
 }
 
@@ -26,7 +26,7 @@ noah_stop()
 noah_restart()
 {
     heading "Restarting noah..."
-    pm2 restart "$directory_noah/noah.sh" --interpreter="bash" -- -o &> /dev/null
+    pm2 restart "$directory_noah/noah.sh" --interpreter="bash" -- observe &> /dev/null
     success "Restart complete!"
 }
 
