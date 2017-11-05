@@ -11,7 +11,7 @@
 
 snapshot_download()
 {
-    local target = "${directory_snapshot}/current";
+    local target="${directory_snapshot}/current";
 
     if [[ -e $target ]]; then
         rm ${target}
