@@ -69,31 +69,31 @@ notify()
     for driver in ${notification_drivers[@]}; do
         case $driver in
             log)
-                notify_via_log $message
+                notify_via_log "$message"
             ;;
             email)
-                notify_via_email $message
+                notify_via_email "$message"
             ;;
             nexmo)
-                notify_via_nexmo $message
+                notify_via_nexmo "$message"
             ;;
             slack)
-                notify_via_slack $message
+                notify_via_slack "$message"
             ;;
             pushover)
-                notify_via_pushover $message
+                notify_via_pushover "$message"
             ;;
             pushbullet)
-                notify_via_pushbullet $message
+                notify_via_pushbullet "$message"
             ;;
             mailgun)
-                notify_via_mailgun $message
+                notify_via_mailgun "$message"
             ;;
             none)
                 :
             ;;
             *)
-                notify_via_log $message
+                notify_via_log "$message"
             ;;
         esac
     done
