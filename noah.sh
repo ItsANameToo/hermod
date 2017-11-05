@@ -13,8 +13,8 @@
 # Modules
 # -------------------------
 
-. modules/bootstrap.sh
 . modules/colors.sh
+. modules/bootstrap.sh
 . modules/config.sh
 . modules/night-mode.sh
 . modules/node.sh

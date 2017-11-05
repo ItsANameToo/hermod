@@ -19,6 +19,16 @@ if [[ $BASH_VERSINFO < 4 ]]; then
 fi
 
 # -------------------------
+# Root User === Exit
+# -------------------------
+
+if [ "$(id -u)" = "0" ]; then
+    clear
+    error "This script should NOT be started using sudo or as the root user!"
+    exit 1
+fi
+
+# -------------------------
 # Initialization
 # -------------------------
 
