@@ -32,27 +32,27 @@ reset=$(tput sgr0)
 
 heading()
 {
-    echo "${lila}==>${reset}${bold} $1${reset}"
+    echo "${lila}⠳${reset}${bold} $1${reset}"
 }
 
 success()
 {
-    echo "${green}==>${bold} $1${reset}"
+    echo "${green}⠳${reset}${bold} $1${reset}"
 }
 
 info()
 {
-    echo "${blue}==>${bold} $1${reset}"
+    echo "${blue}⠳${reset}${bold} $1${reset}"
 }
 
 warning()
 {
-    echo "${yellow}==>${bold} $1${reset}"
+    echo "${yellow}⠳${reset}${bold} $1${reset}"
 }
 
 error()
 {
-    echo "${red}==>${bold} $1${reset}"
+    echo "${red}⠳${reset}${bold} $1${reset}"
 }
 
 heading_solid()

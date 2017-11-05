@@ -9,13 +9,15 @@
 # file that was distributed with this source code.
 # ---------------------------------------------------------------------------
 
-directory_noah=$(dirname $0)
+me=$(basename "$0")
+directory_noah=$(dirname "$0")
 
 # -------------------------
 # Modules
 # -------------------------
 
 . "$directory_noah/modules/colors.sh"
+. "$directory_noah/modules/errors.sh"
 . "$directory_noah/modules/bootstrap.sh"
 . "$directory_noah/modules/config.sh"
 . "$directory_noah/modules/night-mode.sh"
@@ -29,54 +31,20 @@ directory_noah=$(dirname $0)
 . "$directory_noah/modules/monitor.sh"
 . "$directory_noah/modules/commands.sh"
 . "$directory_noah/modules/install.sh"
+. "$directory_noah/modules/args.sh"
 
 # -------------------------
-# Parse Arguments
+# Start
 # -------------------------
 
-case "$1" in
-    start)
-        noah_start
-    ;;
-    stop)
-        noah_stop
-    ;;
-    restart)
-        noah_restart
-    ;;
-    rebuild)
-        process_vars
+function main()
+{
+    setup_environment
+    check_configuration
 
-        rebuild_via_command
-    ;;
-    monitor)
-        process_vars
+    parse_args "$@"
 
-        monitor
-    ;;
-    install)
-        noah_install
-    ;;
-    update)
-        noah_update
-    ;;
-    log)
-        noah_log
-    ;;
-    alias)
-        noah_alias
-    ;;
-    test)
-        heading "Starting Test..."
-        $2 "$3"
-        success "Test complete!"
-    ;;
-    version)
-        noah_version
-        exit 1
-    ;;
-    help|*)
-        noah_help
-        exit 1
-    ;;
-esac
+    trap cleanup SIGINT SIGTERM SIGKILL
+}
+
+main "$@"

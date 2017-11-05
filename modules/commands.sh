@@ -57,13 +57,11 @@ noah_alias()
 
 noah_version()
 {
-    echo $NOAH_VERSION
+    echo $(cat "$directory_noah/version")
 }
 
 noah_help()
 {
-    local me=$(basename "$0")
-
     cat << EOF
 Usage: $me [options]
 options:
