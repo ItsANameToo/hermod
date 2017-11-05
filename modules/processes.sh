@@ -15,10 +15,19 @@ process_vars()
     process_ark_node=$(pgrep -a "node" | grep ark-node | awk '{print $1}')
 
     if [ -z "$process_ark_node" ]; then
-        heading "Starting ARK Node..."
-        node_start
-        sleep 5
-        success "ARK Node started!"
+        read -p "ark-node is not running, do you want to start it? [y/n] :" choice
+
+        case "$choice" in
+            y|Y)
+                heading "Starting ARK Node..."
+                node_start
+                sleep 5
+                success "ARK Node started!"
+            ;;
+            *)
+                abort 0 "Aborting..."
+            ;;
+        esac
     fi
 
     process_ark_node=$(pgrep -a "node" | grep ark-node | awk '{print $1}')
