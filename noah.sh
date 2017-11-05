@@ -26,6 +26,7 @@
 . modules/relay.sh
 . modules/monitor.sh
 . modules/commands.sh
+. modules/install.sh
 
 # -------------------------
 # Parse Arguments
