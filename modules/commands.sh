@@ -12,21 +12,21 @@
 noah_start()
 {
     heading "Starting noah..."
-    pm2 start "$directory_noah/noah.sh" --interpreter="bash" -- monitor &> /dev/null
+    pm2 start "$directory_noah/noah.sh" --interpreter="bash" -- monitor >> "$directory_noah_logs/pm2.log" 2>&1
     success "Start complete!"
 }
 
 noah_stop()
 {
     heading "Stopping noah..."
-    pm2 stop "$directory_noah/noah.sh" &> /dev/null
+    pm2 stop "$directory_noah/noah.sh" >> "$directory_noah_logs/pm2.log" 2>&1
     success "Stop complete!"
 }
 
 noah_restart()
 {
     heading "Restarting noah..."
-    pm2 restart "$directory_noah/noah.sh" --interpreter="bash" -- monitor &> /dev/null
+    pm2 restart "$directory_noah/noah.sh" --interpreter="bash" -- monitor >> "$directory_noah_logs/pm2.log" 2>&1
     success "Restart complete!"
 }
 
@@ -42,8 +42,8 @@ noah_log()
 noah_update()
 {
     heading "Starting Update..."
-    git reset --hard &> /dev/null
-    git pull &> /dev/null
+    git reset --hard >> "$directory_noah_logs/update.log" 2>&1
+    git pull >> "$directory_noah_logs/update.log" 2>&1
     success "Update complete!"
 }
 

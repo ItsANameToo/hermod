@@ -25,7 +25,7 @@ noah_install()
         info "visudo already exists..."
     else
         heading "Installing visudo..."
-        echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo EDITOR='tee -a' visudo &> /dev/null
+        echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo EDITOR='tee -a' visudo >> "$directory_noah_logs/install.log" 2>&1
         success "Installation OK."
     fi
 
@@ -39,7 +39,7 @@ noah_install()
 
     if ! [ -x "$(command -v pm2)" ]; then
         heading "Installing pm2..."
-        npm install pm2 -g &> /dev/null
+        npm install pm2 -g >> "$directory_noah_logs/install.log" 2>&1
         success "Installation OK."
     else
         info "pm2 already exists..."
