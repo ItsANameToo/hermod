@@ -11,8 +11,13 @@
 
 snapshot_download()
 {
-    rm ${directory_snapshot}/current
-    wget -nv ${snapshot} -O ${directory_snapshot}/current &> /dev/null
+    local target = "${directory_snapshot}/current";
+
+    if [[ -e $target ]]; then
+        rm ${target}
+    fi
+
+    wget -nv ${snapshot} -O ${target} &> /dev/null
 }
 
 snapshot_restore()

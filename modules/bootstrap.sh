@@ -28,14 +28,6 @@ if [ "$(id -u)" = "0" ]; then
 fi
 
 # -------------------------
-# Initialization
-# -------------------------
-
-# NODE_PATH=$(which node | rev | cut -c6- | rev)
-# PATH="$NODE_PATH:$PATH"
-# export PATH
-
-# -------------------------
 # Version
 # -------------------------
 
