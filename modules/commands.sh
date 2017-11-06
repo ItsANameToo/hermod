@@ -12,52 +12,59 @@
 noah_start()
 {
     heading "Starting noah..."
-    pm2 start "$directory_noah/noah.sh" --interpreter="bash" -- monitor >> "$directory_noah_logs/pm2.log" 2>&1
+    pm2 start ${noah_dir}/noah.sh --interpreter="bash" -- monitor >> ${noah_dir_logs}/pm2.log 2>&1
     success "Start complete!"
 }
 
 noah_stop()
 {
     heading "Stopping noah..."
-    pm2 stop "$directory_noah/noah.sh" >> "$directory_noah_logs/pm2.log" 2>&1
+    pm2 stop ${noah_dir}/noah.sh >> ${noah_dir_logs}/pm2.log 2>&1
     success "Stop complete!"
 }
 
 noah_restart()
 {
     heading "Restarting noah..."
-    pm2 restart "$directory_noah/noah.sh" --interpreter="bash" -- monitor >> "$directory_noah_logs/pm2.log" 2>&1
+    pm2 restart ${noah_dir}/noah.sh --interpreter="bash" -- monitor >> ${noah_dir_logs}/pm2.log 2>&1
     success "Restart complete!"
 }
 
-noah_log()
+noah_tail()
 {
-    if [ ! -f $file_noah_log ]; then
-        touch $file_noah_log
+    if [ ! -e $noah_log ]; then
+        touch $noah_log
     fi
 
-    tail -f $file_noah_log
+    tail -f $noah_log
 }
 
 noah_update()
 {
     heading "Starting Update..."
-    git reset --hard >> "$directory_noah_logs/update.log" 2>&1
-    git pull >> "$directory_noah_logs/update.log" 2>&1
+    git reset --hard >> ${noah_dir_logs}/update.log 2>&1
+    git pull >> ${noah_dir_logs}/update.log 2>&1
     success "Update complete!"
+}
+
+noah_test()
+{
+    heading "Starting Test..."
+    $1 "$2"
+    success "Test complete!"
 }
 
 noah_alias()
 {
     heading "Installing alias..."
-    echo "alias noah='bash ~/noah/noah.sh'" | tee -a ~/.bashrc
-    source ~/.bashrc
+    echo "alias noah='bash ${noah_dir}/noah.sh'" | tee -a ~/.bashrc
+    source ${HOME}/.bashrc
     success "Installation complete!"
 }
 
 noah_version()
 {
-    echo $(cat "$directory_noah/version")
+    echo $(cat ${noah_dir}/version)
 }
 
 noah_help()

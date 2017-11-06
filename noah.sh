@@ -9,29 +9,38 @@
 # file that was distributed with this source code.
 # ---------------------------------------------------------------------------
 
-me=$(basename "$0")
-directory_noah=$(dirname "$0")
+# me=$(basename "$0")
+# noah_dir=$(dirname "$0")
+
+# -------------------------
+# Required Variables
+# -------------------------
+
+noah=$(basename "$0")
+noah_dir=$(dirname "$0")
+noah_dir_logs="${noah_dir}/logs"
+noah_log="${noah_dir_logs}/noah.log"
 
 # -------------------------
 # Modules
 # -------------------------
 
-. "$directory_noah/modules/colors.sh"
-. "$directory_noah/modules/errors.sh"
-. "$directory_noah/modules/bootstrap.sh"
-. "$directory_noah/modules/config.sh"
-. "$directory_noah/modules/night-mode.sh"
-. "$directory_noah/modules/node.sh"
-. "$directory_noah/modules/processes.sh"
-. "$directory_noah/modules/notifications.sh"
-. "$directory_noah/modules/database.sh"
-. "$directory_noah/modules/snapshot.sh"
-. "$directory_noah/modules/rebuild.sh"
-. "$directory_noah/modules/relay.sh"
-. "$directory_noah/modules/monitor.sh"
-. "$directory_noah/modules/commands.sh"
-. "$directory_noah/modules/install.sh"
-. "$directory_noah/modules/args.sh"
+. "$noah_dir/modules/colors.sh"
+. "$noah_dir/modules/errors.sh"
+. "$noah_dir/modules/bootstrap.sh"
+. "$noah_dir/modules/config.sh"
+. "$noah_dir/modules/night-mode.sh"
+. "$noah_dir/modules/ark.sh"
+. "$noah_dir/modules/processes.sh"
+. "$noah_dir/modules/notifications.sh"
+. "$noah_dir/modules/database.sh"
+. "$noah_dir/modules/snapshot.sh"
+. "$noah_dir/modules/rebuild.sh"
+. "$noah_dir/modules/relay.sh"
+. "$noah_dir/modules/monitor.sh"
+. "$noah_dir/modules/commands.sh"
+. "$noah_dir/modules/install.sh"
+. "$noah_dir/modules/args.sh"
 
 # -------------------------
 # Start

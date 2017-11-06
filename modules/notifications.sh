@@ -74,11 +74,8 @@ notify()
             email)
                 notify_via_email "$message"
             ;;
-            nexmo)
-                notify_via_nexmo "$message"
-            ;;
-            slack)
-                notify_via_slack "$message"
+            mailgun)
+                notify_via_mailgun "$message"
             ;;
             pushover)
                 notify_via_pushover "$message"
@@ -86,14 +83,14 @@ notify()
             pushbullet)
                 notify_via_pushbullet "$message"
             ;;
-            mailgun)
-                notify_via_mailgun "$message"
+            nexmo)
+                notify_via_nexmo "$message"
             ;;
-            none)
-                :
+            slack)
+                notify_via_slack "$message"
             ;;
             *)
-                notify_via_log "$message"
+                :
             ;;
         esac
     done

@@ -12,16 +12,21 @@
 trigger_method_notify=true
 trigger_method_rebuild=true
 
-if [[ $night_mode_enabled = true ]]; then
-    night_mode_current_hour=$(date +"%H")
+handle_night_mode()
+{
+    if [[ $night_mode_enabled = true ]]; then
+        local hour=$(date +"%H")
 
-    if [ ${night_mode_current_hour} -ge ${night_mode_end} -a ${night_mode_current_hour} -le ${night_mode_start} ]; then
-        # Day
-        trigger_method_notify=true
-        trigger_method_rebuild=false
-    else
-        # Night
-        trigger_method_notify=false
-        trigger_method_rebuild=true
+        if [ ${hour} -ge ${night_mode_end} -a ${hour} -le ${night_mode_start} ]; then
+            # Day
+            trigger_method_notify=true
+            trigger_method_rebuild=false
+        else
+            # Night
+            trigger_method_notify=false
+            trigger_method_rebuild=true
+        fi
     fi
-fi
+}
+
+handle_night_mode

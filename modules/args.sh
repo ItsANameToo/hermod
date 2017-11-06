@@ -38,15 +38,13 @@ parse_args()
             noah_update
         ;;
         log)
-            noah_log
+            noah_tail
         ;;
         alias)
             noah_alias
         ;;
         test)
-            heading "Starting Test..."
-            $2 "$3"
-            success "Test complete!"
+            noah_test "$2" "$3"
         ;;
         version)
             noah_version

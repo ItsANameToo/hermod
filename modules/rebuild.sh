@@ -19,7 +19,7 @@ rebuild()
         notify "Stopping ARK Process..."
     fi
 
-    node_stop
+    ark_stop
 
     if [[ $trigger_method_notify = true ]]; then
         notify "Dropping Database User..."
@@ -55,7 +55,7 @@ rebuild()
         notify "Starting ARK Process..."
     fi
 
-    node_start
+    ark_start
 
     if [[ $trigger_method_notify = true ]]; then
         notify "Rebuild completed!"
@@ -67,7 +67,7 @@ rebuild_via_command()
     heading "Starting Rebuild..."
 
     info "Stopping ARK Process..."
-    node_stop
+    ark_stop
 
     info "Dropping Database User..."
     database_destroy
@@ -85,7 +85,7 @@ rebuild_via_command()
     snapshot_restore
 
     info "Starting ARK Process..."
-    node_start
+    ark_start
 
     success "Rebuild completed!"
 }

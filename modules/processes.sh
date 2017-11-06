@@ -11,8 +11,8 @@
 
 process_vars()
 {
-    process_postgres=$(pgrep -a "postgres" | awk '{print $1}')
-    process_ark_node=$(pgrep -a "node" | grep ark-node | awk '{print $1}')
+    process_postgres=$(pgrep -a postgres | awk '{print $1}')
+    process_ark_node=$(pgrep -a node | grep ark-node | awk '{print $1}')
 
     if [ -z "$process_ark_node" ]; then
         read -p "ark-node is not running, do you want to start it? [y/n] :" choice
@@ -20,7 +20,7 @@ process_vars()
         case "$choice" in
             y|Y)
                 heading "Starting ARK Node..."
-                node_start
+                ark_start
                 sleep 5
                 success "ARK Node started!"
             ;;
@@ -30,6 +30,6 @@ process_vars()
         esac
     fi
 
-    process_ark_node=$(pgrep -a "node" | grep ark-node | awk '{print $1}')
-    process_forever=$(forever --plain list | grep ${process_ark_node} | sed -nr 's/.*\[(.*)\].*/\1/p')
+    process_ark_node=$(pgrep -a node | grep ark-node | awk '{print $1}')
+    process_forever=$(forever --plain list | grep ${process_ark_node} | awk '{print $2}' | tail -c +2 | head -c -2)
 }

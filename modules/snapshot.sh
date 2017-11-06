@@ -11,13 +11,13 @@
 
 snapshot_download()
 {
-    local target="${directory_snapshot}/current";
+    local target=${snapshot_dir}/current
 
     if [[ -e $target ]]; then
         rm ${target}
     fi
 
-    wget -nv ${snapshot} -O ${target} >> "$directory_noah_logs/rebuild.log" 2>&1
+    wget -nv ${snapshot} -O ${target} >> ${noah_dir_logs}/rebuild.log 2>&1
 }
 
 snapshot_restore()
@@ -26,5 +26,5 @@ snapshot_restore()
         sudo service postgresql start
     fi
 
-    pg_restore -O -j 8 -d ark_${network} ${directory_snapshot}/current >> "$directory_noah_logs/rebuild.log" 2>&1
+    pg_restore -O -j 8 -d ark_${network} ${snapshot_dir}/current >> ${noah_dir_logs}/rebuild.log 2>&1
 }

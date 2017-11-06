@@ -9,14 +9,13 @@
 # file that was distributed with this source code.
 # ---------------------------------------------------------------------------
 
-node_start()
+ark_start()
 {
-    cd ${directory_ark}
+    cd ${ark_dir}
     forever start app.js --genesis genesisBlock.${network}.json --config config.${network}.json >&- 2>&-
 }
 
-node_stop()
+ark_stop()
 {
-    cd ${directory_ark}
     forever stopall
 }

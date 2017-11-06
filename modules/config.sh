@@ -11,12 +11,14 @@
 
 setup_environment()
 {
-    if [ ! -f "$directory_noah/.noah" ]; then
-        cp "$directory_noah/.noah.example" "$directory_noah/.noah"
+    if [ ! -f ${noah_dir}/.noah ]; then
+        cp ${noah_dir}/.noah.example ${noah_dir}/.noah
+
+        warning "Yikes! A default configuration has been created, next you need to run the install command to get started."
     fi
 
-    if [[ -e "$directory_noah/.noah" ]]; then
-        . "$directory_noah/.noah"
+    if [[ -e ${noah_dir}/.noah ]]; then
+        . ${noah_dir}/.noah
     fi
 }
 
@@ -31,6 +33,14 @@ check_configuration()
     # fi
 
     if [[ $network != 'mainnet' && $network != 'devnet' ]]; then
-        abort 1 'Please setup the network.'
+        abort 1 "$network is invalid."
+    fi
+
+    if [[ ! -e $ark_log ]];then
+        abort 1 "$ark_log does not exist."
+    fi
+
+    if [[ ! -r $ark_log ]];then
+        abort 1 "$ark_log is not readable."
     fi
 }

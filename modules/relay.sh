@@ -13,10 +13,10 @@
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!! NOT FULLY TESTED - USE AT YOUR OWN RISK !!!!!!!!!!!!!!!!!!!!!!!!!!! #
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! #
 
-switch_to_relay()
+rebuild_with_relay()
 {
-    local config="$directory_ark/config.${network}.json"
-    local relay="-p $relay_port $relay_user@$relay_ip"
+    local config=${ark_dir}/config.${network}.json
+    local relay="-p ${relay_port} ${relay_user}@${relay_ip}"
 
     # disable forging node...
     info "Disable Forging Node..."
@@ -26,7 +26,7 @@ switch_to_relay()
     fi
 
     jq '.forging.secret = []' <<< cat $config > tmp.$$.json && mv tmp.$$.json $config
-    node_stop
+    ark_stop
     sleep 2
 
     # enable relay node...
@@ -37,7 +37,7 @@ switch_to_relay()
     fi
 
     ssh ${relay} "jq '.forging.secret = [\"$relay_secret\"]' <<< cat $config > tmp.$$.json && mv tmp.$$.json $config"
-    ssh ${relay} 'PATH="$HOME/.nvm/versions/node/v6.9.5/bin:$PATH"; export PATH; forever stopall; cd '$directory_ark'; forever start app.js --genesis genesisBlock.${network}.json --config config.${network}.json >&- 2>&-'
+    ssh ${relay} 'PATH="$HOME/.nvm/versions/node/v6.9.5/bin:$PATH"; export PATH; forever stopall; cd '$ark_dir'; forever start app.js --genesis genesisBlock.${network}.json --config config.${network}.json >&- 2>&-'
 
     # rebuild forging node...
     rebuild
@@ -49,10 +49,10 @@ switch_to_relay()
         notify "Enable Forging Node..."
     fi
 
-    node_stop
+    ark_stop
     sleep 2
     jq ".forging.secret = [\"$relay_secret\"]" <<< cat $config > tmp.$$.json && mv tmp.$$.json $config
-    node_start
+    ark_start
 
     # disable relay node...
     info "Disable Relay Node..."
