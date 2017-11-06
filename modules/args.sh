@@ -21,6 +21,12 @@ parse_args()
         restart)
             noah_restart
         ;;
+        reload)
+            noah_reload
+        ;;
+        delete)
+            noah_delete
+        ;;
         rebuild)
             process_vars
 
