@@ -60,7 +60,7 @@ notify_via_slack()
 {
     curl -X POST -H 'Content-type: application/json' \
     --data "{\"text\":\"$1\", \"username\":\"$notification_slack_from\", \"channel\":\"$notification_slack_channel\", \"icon_emoji\":\"$notification_slack_emoji\"}" \
-     https://hooks.slack.com/services/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
+     "$notification_slack_webhook"
 }
 
 notify()
