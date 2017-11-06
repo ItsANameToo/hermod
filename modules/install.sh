@@ -16,7 +16,7 @@ noah_install()
     if [ -f ${noah_dir}/.noah ]; then
         info "Configuration already exists..."
     else
-        heading Installing Configuration...
+        heading "Installing Configuration..."
         cp ${noah_dir}/.noah.example ${noah_dir}/.noah;
         success "Installation OK."
     fi
