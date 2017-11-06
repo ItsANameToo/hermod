@@ -29,7 +29,7 @@ noah_install()
         success "Installation OK."
     fi
 
-    if ! [ -x "$(command -v jq)" ]; then
+    if [[ -z $(command -v jq) ]]; then
         heading "Installing jq..."
         sudo apt-get -qq install jq >> $noah_log 2>&1
         success "Installation OK."
@@ -37,7 +37,7 @@ noah_install()
         info "jq already exists..."
     fi
 
-    if ! [ -x "$(command -v pm2)" ]; then
+    if [[ -z $(command -v pm2) ]]; then
         heading "Installing pm2..."
         npm install pm2 -g >> $noah_log 2>&1
         success "Installation OK."
