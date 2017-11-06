@@ -15,8 +15,7 @@
 
 noah=$(basename "$0")
 noah_dir=$(dirname "$0")
-noah_dir_logs="${noah_dir}/logs"
-noah_log="${noah_dir_logs}/noah.log"
+noah_log="${noah_dir}/noah.log"
 
 # -------------------------
 # Modules
