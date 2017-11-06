@@ -19,13 +19,13 @@ git clone https://github.com/faustbrian/noah.git
 > This step is required to guarantee that noah can execute all `sudo` commands required to rebuild your node without your intervention.
 
 ```bash
-bash ~/noah/noah.sh --install
+bash ~/noah/noah.sh install
 ```
 
 ### 3. Start noah
 
 ```bash
-bash ~/noah/noah.sh --start
+bash ~/noah/noah.sh start
 ```
 
 ## Configuration
@@ -34,19 +34,27 @@ If you wish to use a different configuration then the default one you will need 
 
 ### E-Mail
 
-If you wish to use **EMAIL** as your notification driver you will need to install and configure [Postfix](https://digitalocean.com/community/tutorials/how-to-install-and-configure-postfix-on-ubuntu-16-04).
+If you wish to use **E-Mail** as your notification driver you will need to install and configure [Postfix](https://digitalocean.com/community/tutorials/how-to-install-and-configure-postfix-on-ubuntu-16-04).
 
-### SMS
+### Nexmo
 
-If you wish to use **SMS** as your notification driver you will need to sign up for [Nexmo](https://nexmo.com).
+If you wish to use **Nexmo** as your notification driver you will need to sign up for [Nexmo](https://nexmo.com).
 
 ### Pushover
 
 If you wish to use **Pushover** as your notification driver you will need to sign up for [Pushover](https://pushover.net).
 
+### Pushbullet
+
+If you wish to use **Pushbullet** as your notification driver you will need to sign up for [Pushbullet](https://pushbullet.com).
+
+### Mailgun
+
+If you wish to use **Mailgun** as your notification driver you will need to sign up for [Mailgun](https://mailgun.com).
+
 ### Slack
 
-If you wish to use **Slack** as your notification driver you will need to install and configure [slacktee](https://github.com/course-hero/slacktee).
+If you wish to use **Slack** as your notification driver you will need to sign up for [Slack](https://slack.com) and create an [Incoming Webhook](https://api.slack.com/incoming-webhooks).
 
 ## Commands
 

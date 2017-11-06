@@ -58,7 +58,9 @@ notify_via_mailgun()
 
 notify_via_slack()
 {
-    echo "$1" | $notification_slack_slacktee -c "$notification_slack_channel" -u "$notification_slack_from" -i "$notification_slack_icon"
+    curl -X POST -H 'Content-type: application/json' \
+    --data "{\"text\":\"$1\", \"username\":\"$notification_slack_from\", \"channel\":\"$notification_slack_channel\", \"icon_emoji\":\"$notification_slack_emoji\"}" \
+     https://hooks.slack.com/services/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
 }
 
 notify()
