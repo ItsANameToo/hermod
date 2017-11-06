@@ -59,8 +59,8 @@ notify_via_mailgun()
 notify_via_slack()
 {
     curl -X POST -H 'Content-type: application/json' \
-    --data "{\"text\":\"$1\", \"username\":\"$notification_slack_from\", \"channel\":\"$notification_slack_channel\", \"icon_emoji\":\"$notification_slack_emoji\"}" \
-     "$notification_slack_webhook"
+         --data "{\"text\":\"$1\", \"username\":\"$notification_slack_from\", \"channel\":\"$notification_slack_channel\", \"icon_emoji\":\"$notification_slack_emoji\"}" \
+         "$notification_slack_webhook"
 }
 
 notify()

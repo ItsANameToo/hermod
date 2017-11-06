@@ -25,13 +25,13 @@ noah_install()
         info "visudo already exists..."
     else
         heading "Installing visudo..."
-        echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo EDITOR='tee -a' visudo >> ${noah_dir_logs}/install.log 2>&1
+        echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo EDITOR='tee -a' visudo >> $noah_log 2>&1
         success "Installation OK."
     fi
 
     if ! [ -x "$(command -v jq)" ]; then
         heading "Installing jq..."
-        sudo apt-get -qq install jq >> ${noah_dir_logs}/install.log 2>&1
+        sudo apt-get -qq install jq >> $noah_log 2>&1
         success "Installation OK."
     else
         info "jq already exists..."
@@ -39,7 +39,7 @@ noah_install()
 
     if ! [ -x "$(command -v pm2)" ]; then
         heading "Installing pm2..."
-        npm install pm2 -g >> ${noah_dir_logs}/install.log 2>&1
+        npm install pm2 -g >> $noah_log 2>&1
         success "Installation OK."
     else
         info "pm2 already exists..."

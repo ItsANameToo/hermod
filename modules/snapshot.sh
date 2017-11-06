@@ -17,7 +17,7 @@ snapshot_download()
         rm ${target}
     fi
 
-    wget -nv ${snapshot} -O ${target} >> ${noah_dir_logs}/rebuild.log 2>&1
+    wget -nv ${snapshot} -O ${target} >> $noah_log 2>&1
 }
 
 snapshot_restore()
@@ -26,5 +26,5 @@ snapshot_restore()
         sudo service postgresql start
     fi
 
-    pg_restore -O -j 8 -d ark_${network} ${snapshot_dir}/current >> ${noah_dir_logs}/rebuild.log 2>&1
+    pg_restore -O -j 8 -d ark_${network} ${snapshot_dir}/current >> $noah_log 2>&1
 }
