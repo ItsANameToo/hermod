@@ -78,8 +78,6 @@ options:
     alias                     Create a bash alias for noah.
 ```
 
-Run `ps ax | grep '/home/ark/noah/noah.sh' && ps ax | grep '~/noah/noah.sh'` and make sure there are only 2 processes related to the `noah.sh`.
-
 ## Security
 
 If you discover a security vulnerability within this package, please send an e-mail to Brian Faust at hello@brianfaust.me. All security vulnerabilities will be promptly addressed.
