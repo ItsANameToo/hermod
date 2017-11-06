@@ -33,14 +33,30 @@ check_configuration()
     # fi
 
     if [[ $network != 'mainnet' && $network != 'devnet' ]]; then
-        abort 1 "$network is invalid."
+        abort 1 "network [$network] is invalid."
     fi
 
     if [[ ! -e $ark_log ]];then
-        abort 1 "$ark_log does not exist."
+        abort 1 "ark_log [$ark_log] does not exist."
     fi
 
     if [[ ! -r $ark_log ]];then
-        abort 1 "$ark_log is not readable."
+        abort 1 "ark_log [$ark_log] is not readable."
+    fi
+
+    if (($monitor_lines <= 0)); then
+        abort 1 "monitor_lines [$monitor_lines] has to be greater than 0."
+    fi
+
+    if (($monitor_rebuild <= 0)); then
+        abort 1 "monitor_rebuild [$monitor_rebuild] has to be greater than 0."
+    fi
+
+    if (($monitor_interval <= 0)); then
+        abort 1 "monitor_interval [$monitor_interval] has to be greater than 0."
+    fi
+
+    if (($relay_port <= 0)); then
+        abort 1 "relay_port [$relay_port] has to be greater than 0."
     fi
 }
