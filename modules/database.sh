@@ -24,7 +24,7 @@ database_destroy()
         sudo service postgresql start
     fi
 
-    sudo -u dropdb --if-exists ark_${network} >> $noah_log 2>&1
+    sudo -u postgres dropdb --if-exists ark_${network} >> $noah_log 2>&1
 }
 
 database_create()
