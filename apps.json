@@ -1,0 +1,10 @@
+{
+    "apps": [{
+        "name": "noah",
+        "script": "noah.sh",
+        "args": ["monitor"],
+        "instances": 1,
+        "exec_mode": "fork",
+        "exec_interpreter": "bash"
+    }]
+}

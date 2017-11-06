@@ -12,22 +12,36 @@
 noah_start()
 {
     heading "Starting noah..."
-    pm2 start ${noah_dir}/noah.sh --interpreter="bash" -- monitor >> $noah_log 2>&1
+    pm2 start ${noah_dir}/apps.json >> $noah_log 2>&1
     success "Start complete!"
 }
 
 noah_stop()
 {
     heading "Stopping noah..."
-    pm2 stop ${noah_dir}/noah.sh >> $noah_log 2>&1
+    pm2 stop ${noah_dir}/apps.json >> $noah_log 2>&1
     success "Stop complete!"
 }
 
 noah_restart()
 {
     heading "Restarting noah..."
-    pm2 restart ${noah_dir}/noah.sh --interpreter="bash" -- monitor >> $noah_log 2>&1
+    pm2 restart ${noah_dir}/apps.json >> $noah_log 2>&1
     success "Restart complete!"
+}
+
+noah_reload()
+{
+    heading "Reloading noah..."
+    pm2 reload ${noah_dir}/apps.json >> $noah_log 2>&1
+    success "Reload complete!"
+}
+
+noah_delete()
+{
+    heading "Deleteing noah..."
+    pm2 delete ${noah_dir}/apps.json >> $noah_log 2>&1
+    success "Delete complete!"
 }
 
 noah_config()
