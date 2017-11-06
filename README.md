@@ -6,10 +6,6 @@ If **noah** saves you the headache of having to constantly monitor your server a
 
 ---
 
-## Disclaimer
-
-> `noah` is still in its early stages which means it is undergoing constant changes so make sure to check the commit history for any changes before updating **AND** test it on devnet before deploying it to mainnet.
-
 ## Installation
 
 ### 1. Clone the Repository
