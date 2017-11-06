@@ -13,11 +13,13 @@ snapshot_download()
 {
     local target=${snapshot_dir}/current
 
-    if [[ -e $target ]]; then
-        rm ${target}
-    fi
+    if [[ $(expr `date +%s` - `stat -c %Y $target`) -gt 900 ]]; then
+        if [[ -e $target ]]; then
+            rm -f ${target} >> $noah_log 2>&1
+        fi
 
-    wget -nv ${snapshot} -O ${target} >> $noah_log 2>&1
+        wget -nv ${snapshot} -O ${target} >> $noah_log 2>&1
+    fi
 }
 
 snapshot_restore()
