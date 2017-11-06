@@ -30,6 +30,11 @@ noah_restart()
     success "Restart complete!"
 }
 
+noah_config()
+{
+    nano ${noah_dir}/.noah
+}
+
 noah_tail()
 {
     if [ ! -e $noah_log ]; then

@@ -37,6 +37,9 @@ parse_args()
         update)
             noah_update
         ;;
+        config)
+            noah_config
+        ;;
         log)
             noah_tail
         ;;
