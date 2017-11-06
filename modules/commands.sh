@@ -39,7 +39,7 @@ noah_reload()
 
 noah_delete()
 {
-    heading "Deleteing noah..."
+    heading "Deleting noah..."
     pm2 delete ${noah_dir}/apps.json >> $noah_log 2>&1
     success "Delete complete!"
 }
