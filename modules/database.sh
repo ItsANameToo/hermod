@@ -15,7 +15,7 @@ database_drop_user()
         sudo service postgresql start
     fi
 
-    sudo -u postgres dropuser --if-exists $USER
+    sudo -u postgres dropuser --if-exists $USER >> $noah_log 2>&1
 }
 
 database_destroy()
@@ -24,7 +24,7 @@ database_destroy()
         sudo service postgresql start
     fi
 
-    dropdb --if-exists ark_${network}
+    sudo -u dropdb --if-exists ark_${network} >> $noah_log 2>&1
 }
 
 database_create()
