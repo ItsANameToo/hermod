@@ -11,6 +11,6 @@
 
 function abort()
 {
-    error "$2"
+    error "Yikes! $2"
     exit $1
 }
