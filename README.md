@@ -2,7 +2,7 @@
 
 ---
 
-If **noah** saves you the headache of having to constantly monitor your server and thus saves you sleep maybe support my open-source work by donating some ARK to **AdVSe37niA3uFUPgCgMUH2tMsHF4LpLoiX**.
+If **noah** saves you the headache of having to constantly monitor your server which results in more sleep for you maybe support my open-source work by donating some ARK to **AdVSe37niA3uFUPgCgMUH2tMsHF4LpLoiX**.
 
 ---
 
