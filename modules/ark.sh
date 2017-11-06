@@ -11,8 +11,8 @@
 
 ark_start()
 {
-    cd ${ark_dir}
-    forever start app.js --genesis genesisBlock.${network}.json --config config.${network}.json >&- 2>&-
+    cd $ark_dir
+    forever start app.js --genesis genesisBlock.${network}.json --config config.${network}.json >> $noah_log 2>&1
 }
 
 ark_stop()
