@@ -1,0 +1,125 @@
+#!/usr/bin/env bash
+
+# ---------------------------------------------------------------------------
+# This file is part of noah.
+#
+# (c) Brian Faust <hello@brianfaust.me>
+#
+# For the full copyright and license information, please view the LICENSE
+# file that was distributed with this source code.
+# ---------------------------------------------------------------------------
+
+declare -A snapshot_sources=(
+    ['mainnet']='https://snapshots.ark.io/current'
+    ['devnet']='https://dsnapshots.ark.io/current'
+)
+
+# -------------------------
+# Network
+# -------------------------
+
+network='mainnet'                                      # network we operate on...
+
+# -------------------------
+# Snapshot
+# -------------------------
+
+snapshot=${snapshot_sources[$network]}                 # snapshot source based on network...
+snapshot_dir=${HOME}/snapshots                         # ark-node directory for snapshots...
+
+# -------------------------
+# ARK
+# -------------------------
+
+ark_dir=$(locate -b ark-node)                          # ark-node directory...
+ark_log=${ark_dir}/logs/ark.log                        # ark-node log file...
+
+# -------------------------
+# [Notifications] Driver
+# -------------------------
+
+notification_drivers=(log)                             # notification methods...
+                                                       # values: none, log, email, mailgun,
+                                                       # slack, nexmo, pushover, pushbullet
+
+# -------------------------
+# [Notifications] Log
+# -------------------------
+
+notification_log=${noah_dir}/noah.log                  # log file...
+
+# -------------------------
+# [Notifications] E-Mail
+# -------------------------
+
+notification_email_to=''                               # e-mail recipient...
+notification_email_subject='noah'                      # e-mail subject...
+
+# -------------------------
+# [Notifications] Slack
+# -------------------------
+
+notification_slack_webhook=''                          # slack incoming webhook...
+notification_slack_channel=''                          # slack channel (@username or #channel)...
+notification_slack_from='noah'                         # slack author...
+notification_slack_emoji='boat'                        # slack icon...
+
+# -------------------------
+# [Notifications] Nexmo
+# -------------------------
+
+notification_nexmo_from='noah'                         # sms author...
+notification_nexmo_to=''                               # recipient phone number...
+notification_nexmo_api_key=''                          # nexmo api key...
+notification_nexmo_api_secret=''                       # nexmo api ...
+
+# -------------------------
+# [Notifications] Pushover
+# -------------------------
+
+notification_pushover_token=''                         # pushover api token...
+notification_pushover_user=''                          # pushover user key...
+notification_pushover_title='noah'                     # push notification title...
+
+# -------------------------
+# [Notifications] Pushbullet
+# -------------------------
+
+notification_pushbullet_access_token=''                # pushbullet access token...
+notification_pushbullet_title='noah'                   # push notification title...
+
+# -------------------------
+# [Notifications] Mailgun
+# -------------------------
+
+notifications_mailgun_api_key=''                       # mailgun api key...
+notifications_mailgun_domain=''                        # mailgun domain...
+notifications_mailgun_from='noah'                      # sender name...
+notifications_mailgun_to=''                            # recipient e-mail...
+notifications_mailgun_subject='noah'                   # e-mail subject
+
+# -------------------------
+# Night Mode
+# -------------------------
+
+night_mode_enabled=false                               # enable or disable night mode...
+night_mode_start=22                                    # when the night begins...
+night_mode_end=8                                       # when the day begins...
+
+# -------------------------
+# Monitor
+# -------------------------
+
+monitor_lines=5                                        # number of lines to monitor...
+monitor_rebuild=900                                    # time to wait after a rebuild in seconds...
+monitor_interval=1                                     # time to wait after a log check in seconds...
+
+# -------------------------
+# Relay
+# -------------------------
+
+relay_enabled=false                                    # use relay instead of rebuild only...
+relay_user=''                                          # ssh user...
+relay_ip=''                                            # ssh ip address...
+relay_port=22                                          # ssh port address...
+relay_secret=''                                        # delegate secret...

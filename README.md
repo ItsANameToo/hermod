@@ -1,6 +1,10 @@
 # noah ~ Automated Rebuilds for [ArkEcosystem/ark-node](https://github.com/ArkEcosystem/ark-node)
 
-> `noah` is still in its early stages which means it is undergoing constant changes so make sure to check the commit history for any changes before updating **AND** test it on devnet before deploying it to mainnet.
+---
+
+If **noah** saves you the headache of having to constantly monitor your server which results in more sleep for you maybe support my open-source work by donating some ARK to **AdVSe37niA3uFUPgCgMUH2tMsHF4LpLoiX**.
+
+---
 
 ## Installation
 
@@ -15,54 +19,64 @@ git clone https://github.com/faustbrian/noah.git
 > This step is required to guarantee that noah can execute all `sudo` commands required to rebuild your node without your intervention.
 
 ```bash
-bash ~/noah/noah.sh --install
+bash ~/noah/noah.sh install
 ```
 
 ### 3. Start noah
 
 ```bash
-bash ~/noah/noah.sh --start
+bash ~/noah/noah.sh start
 ```
 
 ## Configuration
 
-If you wish to use a different configuration then the default one you will need to open `~/noah/noah.conf` and change it to suit your needs.
+If you wish to use a different configuration then the default one just execute `bash ~/noah/noah.sh config`.
 
 ### E-Mail
 
-If you wish to use **EMAIL** as your notification driver you will need to install and configure [Postfix](https://digitalocean.com/community/tutorials/how-to-install-and-configure-postfix-on-ubuntu-16-04).
+If you wish to use **E-Mail** as your notification driver you will need to install and configure [Postfix](https://digitalocean.com/community/tutorials/how-to-install-and-configure-postfix-on-ubuntu-16-04).
 
-### SMS
+### Nexmo
 
-If you wish to use **SMS** as your notification driver you will need to sign up for [Nexmo](https://nexmo.com).
+If you wish to use **Nexmo** as your notification driver you will need to sign up for [Nexmo](https://nexmo.com).
 
 ### Pushover
 
 If you wish to use **Pushover** as your notification driver you will need to sign up for [Pushover](https://pushover.net).
 
+### Pushbullet
+
+If you wish to use **Pushbullet** as your notification driver you will need to sign up for [Pushbullet](https://pushbullet.com).
+
+### Mailgun
+
+If you wish to use **Mailgun** as your notification driver you will need to sign up for [Mailgun](https://mailgun.com).
+
 ### Slack
 
-If you wish to use **Slack** as your notification driver you will need to install and configure [slacktee](https://github.com/course-hero/slacktee).
+If you wish to use **Slack** as your notification driver you will need to sign up for [Slack](https://slack.com) and create an [Incoming Webhook](https://api.slack.com/incoming-webhooks).
 
 ## Commands
 
 ```bash
 Usage: noah.sh [options]
 options:
-    -h, --help, --pray              Show this help.
-    -b, --start, --board            Start the noah process.
-    -m, --stop, --martyr            Stop the noah process.
-    -f, --restart, --flood          Restart the noah process.
-    -r, --rebuild, --rebirth        Start the rebuild process.
-    -o, --observe, --guard          Show this help.
-    -i, --install                   Setup noah interactively.
-    -u, --update                    Update the noah installation.
-    -l, --log                       Show the noah log.
-    -t, --test                      Test the specified method.
-    -a, --alias                     Create a bash alias for noah.
+    help                      Show this help.
+    version                   Show the installed version.
+    start                     Start the noah process.
+    stop                      Stop the noah process.
+    restart                   Restart the noah process.
+    reload                    Reload the noah process.
+    delete                    Delete the noah process.
+    rebuild                   Start the rebuild process.
+    monitor                   Temporarily monitor the log.
+    install                   Setup noah interactively.
+    update                    Update the noah installation.
+    config                    Configure the noah installation.
+    log                       Show the noah log.
+    test [method] [params]    Test the specified method.
+    alias                     Create a bash alias for noah.
 ```
-
-Run `ps ax | grep '/home/ark/noah/noah.sh' && ps ax | grep '~/noah/noah.sh'` and make sure there are only 2 processes related to the `noah.sh`.
 
 ## Security
 
