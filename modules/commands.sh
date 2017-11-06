@@ -100,7 +100,7 @@ noah_help()
 Usage: $noah [options]
 options:
     help                      Show this help.
-    version                   Show this version.
+    version                   Show the installed version.
     start                     Start the noah process.
     stop                      Stop the noah process.
     restart                   Restart the noah process.
@@ -110,6 +110,7 @@ options:
     monitor                   Temporarily monitor the log.
     install                   Setup noah interactively.
     update                    Update the noah installation.
+    config                    Configure the noah installation.
     log                       Show the noah log.
     test [method] [params]    Test the specified method.
     alias                     Create a bash alias for noah.
