@@ -9,9 +9,6 @@
 # file that was distributed with this source code.
 # ---------------------------------------------------------------------------
 
-# me=$(basename "$0")
-# noah_dir=$(dirname "$0")
-
 # -------------------------
 # Required Variables
 # -------------------------

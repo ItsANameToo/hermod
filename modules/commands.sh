@@ -70,7 +70,7 @@ noah_version()
 noah_help()
 {
     cat << EOF
-Usage: $me [options]
+Usage: $noah [options]
 options:
     help                      Show this help.
     version                   Show this version.
