@@ -41,8 +41,8 @@ noah_tail()
 
 noah_update()
 {
-    current_version=$(curl --silent https://raw.githubusercontent.com/faustbrian/noah/master/version)
-    install_version=$(cat ${noah_dir}/version)
+    local current_version=$(curl --silent https://raw.githubusercontent.com/faustbrian/noah/master/version)
+    local install_version=$(cat ${noah_dir}/version)
 
     if [[ $current_version == $install_version ]]; then
         info "You are already using the latest version."
