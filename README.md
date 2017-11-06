@@ -62,10 +62,12 @@ If you wish to use **Slack** as your notification driver you will need to sign u
 Usage: noah.sh [options]
 options:
     help                      Show this help.
-    version                   Show the current version.
+    version                   Show this version.
     start                     Start the noah process.
     stop                      Stop the noah process.
     restart                   Restart the noah process.
+    reload                    Reload the noah process.
+    delete                    Delete the noah process.
     rebuild                   Start the rebuild process.
     monitor                   Temporarily monitor the log.
     install                   Setup noah interactively.
