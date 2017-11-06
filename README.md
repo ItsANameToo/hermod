@@ -30,7 +30,7 @@ bash ~/noah/noah.sh start
 
 ## Configuration
 
-If you wish to use a different configuration then the default one you will need to open `~/noah/noah.conf` and change it to suit your needs.
+If you wish to use a different configuration then the default one just execute `bash ~/noah/noah.sh config`.
 
 ### E-Mail
 
