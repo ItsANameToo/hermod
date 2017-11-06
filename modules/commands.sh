@@ -41,10 +41,18 @@ noah_tail()
 
 noah_update()
 {
-    heading "Starting Update..."
-    git reset --hard >> ${noah_dir_logs}/update.log 2>&1
-    git pull >> ${noah_dir_logs}/update.log 2>&1
-    success "Update complete!"
+    current_version=$(curl --silent https://raw.githubusercontent.com/faustbrian/noah/master/version)
+    install_version=$(cat ${noah_dir}/version)
+
+    if [[ $current_version == $install_version ]]; then
+        info "You are already using the latest version."
+        exit 0
+    else
+        heading "Starting Update..."
+        git reset --hard >> ${noah_dir_logs}/update.log 2>&1
+        git pull >> ${noah_dir_logs}/update.log 2>&1
+        success "Update complete!"
+    fi
 }
 
 noah_test()
