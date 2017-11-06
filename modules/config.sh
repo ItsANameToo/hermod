@@ -24,14 +24,6 @@ setup_environment()
 
 check_configuration()
 {
-    # if [[ -z $(command -v jq) ]]; then
-    #     abort 1 'jq is not installed. Please install it first.'
-    # fi
-
-    # if [[ -z $(command -v pm2) ]]; then
-    #     abort 1 'pm2 is not installed. Please install it first.'
-    # fi
-
     if [[ $network != 'mainnet' && $network != 'devnet' ]]; then
         abort 1 "network [$network] is invalid."
     fi

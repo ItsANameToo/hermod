@@ -28,7 +28,5 @@ snapshot_restore()
         sudo service postgresql start
     fi
 
-    # local cores=$(nproc)
-
     pg_restore -O -j 8 -d ark_${network} ${snapshot_dir}/current >> $noah_log 2>&1
 }
