@@ -13,6 +13,8 @@ parse_args()
 {
     case "$1" in
         start)
+            process_vars
+            
             noah_start
         ;;
         stop)
