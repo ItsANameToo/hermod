@@ -25,7 +25,7 @@ monitor()
                 if [[ $relay_enabled = true ]]; then
                     rebuild_with_relay
                 else
-                    rebuild
+                    rebuild_via_monitor
                 fi
             fi
 

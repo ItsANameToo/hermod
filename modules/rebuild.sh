@@ -9,17 +9,11 @@
 # file that was distributed with this source code.
 # ---------------------------------------------------------------------------
 
-rebuild()
+rebuild_via_monitor()
 {
     if [[ $trigger_method_notify = true ]]; then
         notify "Starting Rebuild..."
     fi
-
-    if [[ $trigger_method_notify = true ]]; then
-        notify "Stopping noah..."
-    fi
-
-    noah_delete
 
     if [[ $trigger_method_notify = true ]]; then
         notify "Stopping ARK Process..."
