@@ -12,20 +12,9 @@ If **noah** saves you the headache of having to constantly monitor your server w
 
 ```bash
 git clone https://github.com/faustbrian/noah.git
-```
-
-### 2. Install noah
-
-> This step is required to guarantee that noah can execute all `sudo` commands required to rebuild your node without your intervention.
-
-```bash
-bash ~/noah/noah.sh install
-```
-
-### 3. Start noah
-
-```bash
-bash ~/noah/noah.sh start
+cd ~/noah
+bash noah.sh install
+bash noah.sh start
 ```
 
 ## Configuration
