@@ -28,9 +28,5 @@ snapshot_download()
 
 snapshot_restore()
 {
-    if [ -z "$process_postgres" ]; then
-        sudo service postgresql start
-    fi
-
     pg_restore -O -j 8 -d ark_${network} ${snapshot_dir}/current >> $noah_log 2>&1
 }

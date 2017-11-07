@@ -9,7 +9,7 @@
 # file that was distributed with this source code.
 # ---------------------------------------------------------------------------
 
-rebuild()
+rebuild_via_monitor()
 {
     if [[ $trigger_method_notify = true ]]; then
         notify "Starting Rebuild..."
@@ -22,13 +22,13 @@ rebuild()
     ark_stop
 
     if [[ $trigger_method_notify = true ]]; then
-        notify "Dropping Database User..."
+        notify "Dropping Database..."
     fi
 
     database_destroy
 
     if [[ $trigger_method_notify = true ]]; then
-        notify "Dropping Database..."
+        notify "Dropping Database User..."
     fi
 
     database_drop_user
@@ -66,13 +66,16 @@ rebuild_via_command()
 {
     heading "Starting Rebuild..."
 
+    info "Stopping noah..."
+    noah_delete
+
     info "Stopping ARK Process..."
     ark_stop
 
-    info "Dropping Database User..."
+    info "Dropping Database..."
     database_destroy
 
-    info "Dropping Database..."
+    info "Dropping Database User..."
     database_drop_user
 
     info "Creating Database..."

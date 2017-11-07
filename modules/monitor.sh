@@ -17,7 +17,7 @@ monitor()
         if tail -n $monitor_lines $ark_log | grep -q "Blockchain not ready to receive block"; then
             # Day >>> Only Notify
             if [[ $trigger_method_notify = true && $trigger_method_rebuild = false ]]; then
-                notify "ARK Node out of sync - Rebuild required...";
+                notify "ark-node out of sync - rebuild required...";
             fi
 
             # Night >>> Only Rebuild
@@ -25,7 +25,7 @@ monitor()
                 if [[ $relay_enabled = true ]]; then
                     rebuild_with_relay
                 else
-                    rebuild
+                    rebuild_via_monitor
                 fi
             fi
 
