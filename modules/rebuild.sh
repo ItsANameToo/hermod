@@ -16,6 +16,12 @@ rebuild()
     fi
 
     if [[ $trigger_method_notify = true ]]; then
+        notify "Stopping noah..."
+    fi
+
+    noah_delete
+
+    if [[ $trigger_method_notify = true ]]; then
         notify "Stopping ARK Process..."
     fi
 
@@ -65,6 +71,9 @@ rebuild()
 rebuild_via_command()
 {
     heading "Starting Rebuild..."
+
+    info "Stopping noah..."
+    noah_delete
 
     info "Stopping ARK Process..."
     ark_stop
