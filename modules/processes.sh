@@ -29,7 +29,4 @@ process_vars()
             ;;
         esac
     fi
-
-    process_ark_node=$(pgrep -a node | grep ark-node | awk '{print $1}')
-    process_forever=$(forever --plain list | grep ${process_ark_node} | awk '{print $2}' | tail -c +2 | head -c -2)
 }
