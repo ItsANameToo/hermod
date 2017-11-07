@@ -12,21 +12,8 @@
 process_vars()
 {
     process_postgres=$(pgrep -a postgres | awk '{print $1}')
-    process_ark_node=$(pgrep -a node | grep ark-node | awk '{print $1}')
 
-    if [ -z "$process_ark_node" ]; then
-        read -p "ark-node is not running, do you want to start it? [y/n] :" choice
-
-        case "$choice" in
-            y|Y)
-                heading "Starting ARK Node..."
-                ark_start
-                sleep 5
-                success "ARK Node started!"
-            ;;
-            *)
-                abort 0 "Aborting..."
-            ;;
-        esac
+    if [ -z "$process_postgres" ]; then
+        sudo service postgresql start
     fi
 }
