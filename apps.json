@@ -1,7 +1,7 @@
 {
     "apps": [{
         "name": "noah",
-        "script": "noah.sh",
+        "script": "~/noah/noah.sh",
         "args": ["monitor"],
         "instances": 1,
         "exec_mode": "fork",
