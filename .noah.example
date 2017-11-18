@@ -15,10 +15,17 @@ declare -A snapshot_sources=(
 )
 
 # -------------------------
+# ARK
+# -------------------------
+
+ark_dir=$(locate -b ark-node)                          # ark-node directory...
+ark_log=${ark_dir}/logs/ark.log                        # ark-node log file...
+
+# -------------------------
 # Network
 # -------------------------
 
-network='mainnet'                                      # network we operate on...
+network=$(cd $ark_dir && git symbolic-ref --short -q HEAD)  # network we operate on...
 
 # -------------------------
 # Snapshot
@@ -26,13 +33,6 @@ network='mainnet'                                      # network we operate on..
 
 snapshot=${snapshot_sources[$network]}                 # snapshot source based on network...
 snapshot_dir=${HOME}/snapshots                         # ark-node directory for snapshots...
-
-# -------------------------
-# ARK
-# -------------------------
-
-ark_dir=$(locate -b ark-node)                          # ark-node directory...
-ark_log=${ark_dir}/logs/ark.log                        # ark-node log file...
 
 # -------------------------
 # [Notifications] Driver
