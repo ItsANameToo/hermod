@@ -27,4 +27,5 @@ database_create()
     sudo -u postgres psql -c "CREATE USER $USER WITH PASSWORD 'password' CREATEDB;" >> $noah_log 2>&1
     sleep 1
     createdb ark_${network}
+    sudo -u postgres psql -c "CREATE INDEX IF NOT EXISTS 'mem_accounts2delegates_dependentId' ON mem_accounts2delegates ('dependentId');" >> $noah_log 2>&1
 }
