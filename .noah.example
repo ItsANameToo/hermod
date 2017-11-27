@@ -30,6 +30,7 @@ snapshot_mainnet=(
     'https://snapshots.ark.io/current'
     'https://s.arkno.de/current'
     'http://s.arkx.io/current'
+    'https://www.arkdelegate.com/current'
 )
 
 snapshot_devnet=(
