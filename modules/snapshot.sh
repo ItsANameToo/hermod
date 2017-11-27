@@ -12,6 +12,11 @@
 snapshot_download()
 {
     local target=${snapshot_dir}/current
+    local snapshot=${snapshot_mainnet[$RANDOM % ${#snapshot_mainnet[@]}]}
+
+    if [ "$network" == 'devnet' ]; then
+        snapshot=${snapshot_devnet[$RANDOM % ${#snapshot_devnet[@]}]}
+    fi
 
     if [ ! -f $target ]; then
         wget -nv ${snapshot} -O ${target} >> $noah_log 2>&1
