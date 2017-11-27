@@ -37,6 +37,7 @@ snapshot_mainnet=(
     'https://dafty.net/snapshot4/current'
     'https://dafty.net/snapshot5/current'
     'https://dafty.net/snapshot6/current'
+    'https://snapshot.arkcoin.net/current'
 )
 
 snapshot_devnet=(
