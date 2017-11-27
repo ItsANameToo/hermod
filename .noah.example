@@ -31,6 +31,12 @@ snapshot_mainnet=(
     'https://s.arkno.de/current'
     'http://s.arkx.io/current'
     'https://www.arkdelegate.com/current'
+    'https://dafty.net/snapshot1/current'
+    'https://dafty.net/snapshot2/current'
+    'https://dafty.net/snapshot3/current'
+    'https://dafty.net/snapshot4/current'
+    'https://dafty.net/snapshot5/current'
+    'https://dafty.net/snapshot6/current'
 )
 
 snapshot_devnet=(
