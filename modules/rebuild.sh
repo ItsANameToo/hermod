@@ -40,7 +40,13 @@ rebuild_via_monitor()
     database_create
 
     if [[ $trigger_method_notify = true ]]; then
-        notify "Downloading Current Snapshot..."
+        notify "Choosing Snapshot..."
+    fi
+
+    snapshot_choose
+
+    if [[ $trigger_method_notify = true ]]; then
+        notify "Downloading Snapshot..."
     fi
 
     snapshot_download
@@ -81,7 +87,10 @@ rebuild_via_command()
     info "Creating Database..."
     database_create
 
-    info "Downloading Current Snapshot..."
+    info "Choosing Snapshot..."
+    snapshot_choose
+
+    info "Downloading Snapshot..."
     snapshot_download
 
     info "Restoring Database..."

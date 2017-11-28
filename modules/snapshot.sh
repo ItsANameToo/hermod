@@ -9,33 +9,11 @@
 # file that was distributed with this source code.
 # ---------------------------------------------------------------------------
 
+snapshot_source=""
+
 snapshot_download()
 {
     local target=${snapshot_dir}/current
-
-    # initial determination of what snapshot to use
-    local snapshot=""
-
-    if [ "$network" == 'mainnet' ]; then
-        snapshot=${snapshot_mainnet[$RANDOM % ${#snapshot_mainnet[@]}]}
-    else
-        snapshot=${snapshot_devnet[$RANDOM % ${#snapshot_devnet[@]}]}
-    fi
-
-    # prevent the use of the same snapshot twice in a row
-    local snapshot_previous_log="${noah_dir}/data/snapshot.txt"
-    local snapshot_previous=$(cat $snapshot_previous_log)
-
-    while [ "$snapshot" == "$snapshot_previous" ]; do
-        if [ "$network" == 'mainnet' ]; then
-            snapshot=${snapshot_mainnet[$RANDOM % ${#snapshot_mainnet[@]}]}
-        else
-            snapshot=${snapshot_devnet[$RANDOM % ${#snapshot_devnet[@]}]}
-        fi
-    done
-
-    # store the current snapshot url
-    echo "$snapshot" > $snapshot_previous_log
 
     if [ ! -f $target ]; then
         wget -nv ${snapshot} -O ${target} >> $noah_log 2>&1
@@ -56,4 +34,29 @@ snapshot_restore()
 
     # temporary fix to add index - https://github.com/ArkEcosystem/ark-node/pull/47
     sudo -u postgres psql -d ark_${network} -c 'CREATE INDEX IF NOT EXISTS "mem_accounts2delegates_dependentId" ON mem_accounts2delegates ("dependentId");'
+}
+
+snapshot_choose()
+{
+    # initial determination of what snapshot to use
+    if [ "$network" == 'mainnet' ]; then
+        snapshot_source=${snapshot_mainnet[$RANDOM % ${#snapshot_mainnet[@]}]}
+    else
+        snapshot_source=${snapshot_devnet[$RANDOM % ${#snapshot_devnet[@]}]}
+    fi
+
+    # prevent the use of the same snapshot twice in a row
+    local snapshot_previous_log="${noah_dir}/data/snapshot.txt"
+    local snapshot_previous=$(cat $snapshot_previous_log)
+
+    while [ "$snapshot" == "$snapshot_previous" ]; do
+        if [ "$network" == 'mainnet' ]; then
+            snapshot_source=${snapshot_mainnet[$RANDOM % ${#snapshot_mainnet[@]}]}
+        else
+            snapshot_source=${snapshot_devnet[$RANDOM % ${#snapshot_devnet[@]}]}
+        fi
+    done
+
+    # store the current snapshot url
+    echo "$snapshot_source" > $snapshot_previous_log
 }
