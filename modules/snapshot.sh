@@ -12,11 +12,30 @@
 snapshot_download()
 {
     local target=${snapshot_dir}/current
-    local snapshot=${snapshot_mainnet[$RANDOM % ${#snapshot_mainnet[@]}]}
 
-    if [ "$network" == 'devnet' ]; then
+    # initial determination of what snapshot to use
+    local snapshot=""
+
+    if [ "$network" == 'mainnet' ]; then
+        snapshot=${snapshot_mainnet[$RANDOM % ${#snapshot_mainnet[@]}]}
+    else
         snapshot=${snapshot_devnet[$RANDOM % ${#snapshot_devnet[@]}]}
     fi
+
+    # prevent the use of the same snapshot twice in a row
+    local snapshot_previous_log="${noah_dir}/data/snapshot.txt"
+    local snapshot_previous=$(cat $snapshot_previous_log)
+
+    while [ "$snapshot_previous" == "$snapshot" ]; do
+        if [ "$network" == 'mainnet' ]; then
+            snapshot=${snapshot_mainnet[$RANDOM % ${#snapshot_mainnet[@]}]}
+        else
+            snapshot=${snapshot_devnet[$RANDOM % ${#snapshot_devnet[@]}]}
+        fi
+    done
+
+    # store the current snapshot url
+    echo "$snapshot" > $snapshot_previous_log
 
     if [ ! -f $target ]; then
         wget -nv ${snapshot} -O ${target} >> $noah_log 2>&1
@@ -37,4 +56,26 @@ snapshot_restore()
 
     # temporary fix to add index - https://github.com/ArkEcosystem/ark-node/pull/47
     sudo -u postgres psql -d ark_${network} -c 'CREATE INDEX IF NOT EXISTS "mem_accounts2delegates_dependentId" ON mem_accounts2delegates ("dependentId");'
+}
+
+snapshot_determine()
+{
+    # initial determination of what snapshot to use
+    local snapshot=${snapshot_mainnet[$RANDOM % ${#snapshot_mainnet[@]}]}
+
+    if [ "$network" == 'devnet' ]; then
+        snapshot=${snapshot_devnet[$RANDOM % ${#snapshot_devnet[@]}]}
+    fi
+
+    # prevent the use of the same snapshot twice in a row
+    while [ "$NOAH_PREVIOUS_SNAPSHOT_SOURCE" == "$snapshot" ]; do
+        if [ "$network" == 'mainnet' ]; then
+            snapshot=${snapshot_mainnet[$RANDOM % ${#snapshot_mainnet[@]}]}
+        else
+            snapshot=${snapshot_devnet[$RANDOM % ${#snapshot_devnet[@]}]}
+        fi
+    done
+
+    # export the current snapshot url for later comparsion
+    export NOAH_PREVIOUS_SNAPSHOT_SOURCE="$snapshot"
 }
