@@ -26,7 +26,7 @@ snapshot_download()
     local snapshot_previous_log="${noah_dir}/data/snapshot.txt"
     local snapshot_previous=$(cat $snapshot_previous_log)
 
-    while [ "$snapshot_previous" == "$snapshot" ]; do
+    while [ "$snapshot" == "$snapshot_previous" ]; do
         if [ "$network" == 'mainnet' ]; then
             snapshot=${snapshot_mainnet[$RANDOM % ${#snapshot_mainnet[@]}]}
         else
