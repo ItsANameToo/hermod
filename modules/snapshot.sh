@@ -9,7 +9,7 @@
 # file that was distributed with this source code.
 # ---------------------------------------------------------------------------
 
-snapshot_source=""
+snapshot=""
 
 snapshot_download()
 {
@@ -40,9 +40,9 @@ snapshot_choose()
 {
     # initial determination of what snapshot to use
     if [ "$network" == 'mainnet' ]; then
-        snapshot_source=${snapshot_mainnet[$RANDOM % ${#snapshot_mainnet[@]}]}
+        snapshot=${snapshot_mainnet[$RANDOM % ${#snapshot_mainnet[@]}]}
     else
-        snapshot_source=${snapshot_devnet[$RANDOM % ${#snapshot_devnet[@]}]}
+        snapshot=${snapshot_devnet[$RANDOM % ${#snapshot_devnet[@]}]}
     fi
 
     # prevent the use of the same snapshot twice in a row
@@ -51,12 +51,12 @@ snapshot_choose()
 
     while [ "$snapshot" == "$snapshot_previous" ]; do
         if [ "$network" == 'mainnet' ]; then
-            snapshot_source=${snapshot_mainnet[$RANDOM % ${#snapshot_mainnet[@]}]}
+            snapshot=${snapshot_mainnet[$RANDOM % ${#snapshot_mainnet[@]}]}
         else
-            snapshot_source=${snapshot_devnet[$RANDOM % ${#snapshot_devnet[@]}]}
+            snapshot=${snapshot_devnet[$RANDOM % ${#snapshot_devnet[@]}]}
         fi
     done
 
     # store the current snapshot url
-    echo "$snapshot_source" > $snapshot_previous_log
+    echo "$snapshot" > $snapshot_previous_log
 }
