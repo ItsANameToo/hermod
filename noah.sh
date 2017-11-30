@@ -10,12 +10,10 @@
 # ---------------------------------------------------------------------------
 
 # -------------------------
-# Required Variables
+# Variables
 # -------------------------
 
-noah=$(basename "$0")
-noah_dir=$(dirname "$0")
-noah_log="${noah_dir}/noah.log"
+. "$noah_dir/variables.sh"
 
 # -------------------------
 # Modules
