@@ -60,6 +60,8 @@ noah_tail()
 
 noah_update()
 {
+    cd $noah_dir
+
     local remote_version=$(git rev-parse origin/master)
     local local_version=$(git rev-parse HEAD)
 
