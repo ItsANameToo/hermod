@@ -11,6 +11,6 @@
 
 function abort()
 {
-    error "Yikes! $2"
+    error "Yikes! $2" >> $noah_log 2>&1
     exit $1
 }
