@@ -60,17 +60,22 @@ noah_tail()
 
 noah_update()
 {
-    local current_version=$(curl --silent https://raw.githubusercontent.com/faustbrian/noah/master/version)
-    local install_version=$(cat ${noah_dir}/version)
+    local remote_version=$(git rev-parse origin/master)
+    local local_version=$(git rev-parse HEAD)
 
-    if [[ $current_version == $install_version ]]; then
-        info "You are already using the latest version."
-        exit 0
+    if [[ $remote_version == $local_version ]]; then
+        info 'You are already using the latest version.'
     else
-        heading "Starting Update..."
+        read -p 'An update is available, do you want to install it? [y/N] :' choice
+
+        if [[ $choice =~ ^(yes|y) ]]; then
+            heading "Starting Update..."
         git reset --hard >> $noah_log 2>&1
         git pull >> $noah_log 2>&1
-        success "Update complete!"
+            success 'Update OK!'
+        else
+            abort 1 "Aborting..."
+        fi
     fi
 }
 
