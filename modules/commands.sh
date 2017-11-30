@@ -72,11 +72,9 @@ noah_update()
 
         if [[ $choice =~ ^(yes|y) ]]; then
             heading "Starting Update..."
-        git reset --hard >> $noah_log 2>&1
-        git pull >> $noah_log 2>&1
+            git reset --hard >> $noah_log 2>&1
+            git pull >> $noah_log 2>&1
             success 'Update OK!'
-        else
-            abort 1 "Aborting..."
         fi
     fi
 }
