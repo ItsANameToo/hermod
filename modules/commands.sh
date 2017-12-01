@@ -96,7 +96,7 @@ noah_alias()
 
 noah_version()
 {
-    echo $(cat ${noah_dir}/version)
+    echo $(git rev-parse HEAD)
 }
 
 noah_help()
