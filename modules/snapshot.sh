@@ -59,4 +59,7 @@ snapshot_choose()
 
     # store the current snapshot url
     echo "$snapshot" > $snapshot_previous_log
+    
+    # log which snapshot we chose
+    "Chose ${snapshot}..." >> $noah_log 2>&1
 }
