@@ -73,7 +73,7 @@ rebuild_via_command()
     heading "Starting Rebuild..."
 
     info "Stopping noah..."
-    noah_delete
+    noah_stop
 
     info "Stopping ARK Process..."
     ark_stop
