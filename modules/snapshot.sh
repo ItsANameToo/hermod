@@ -55,5 +55,5 @@ snapshot_choose()
     echo "$snapshot" > $snapshot_previous_log
     
     # log which snapshot we chose
-    "Chose ${snapshot}..." >> $noah_log 2>&1
+    echo "Chose ${snapshot}..." >> $noah_log 2>&1
 }
