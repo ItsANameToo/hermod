@@ -46,6 +46,7 @@ snapshot_mainnet=(
 snapshot_devnet=(
     'https://dsnapshots.ark.io/current'
     'https://dsnapshot.arkno.de/current'
+    'http://dexplorer.ark.land/snapshots/current'
 )
 
 snapshot_dir=${HOME}/snapshots
