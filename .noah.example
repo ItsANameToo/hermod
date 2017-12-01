@@ -9,31 +9,6 @@
 # file that was distributed with this source code.
 # ---------------------------------------------------------------------------
 
-declare -A snapshot_sources=(
-    ['mainnet']='https://snapshots.ark.io/current'
-    ['devnet']='https://dsnapshots.ark.io/current'
-)
-
-# -------------------------
-# ARK
-# -------------------------
-
-ark_dir=$(locate -b '\ark-node')                       # ark-node directory...
-ark_log=${ark_dir}/logs/ark.log                        # ark-node log file...
-
-# -------------------------
-# Network
-# -------------------------
-
-network=$(cd $ark_dir && git symbolic-ref --short -q HEAD)  # network we operate on...
-
-# -------------------------
-# Snapshot
-# -------------------------
-
-snapshot=${snapshot_sources[$network]}                 # snapshot source based on network...
-snapshot_dir=${HOME}/snapshots                         # ark-node directory for snapshots...
-
 # -------------------------
 # [Notifications] Driver
 # -------------------------
@@ -110,8 +85,8 @@ night_mode_end=8                                       # when the day begins...
 # Monitor
 # -------------------------
 
-monitor_lines=5                                        # number of lines to monitor...
-monitor_rebuild=900                                    # time to wait after a rebuild in seconds...
+monitor_lines=10                                       # number of lines to monitor...
+monitor_rebuild=120                                    # time to wait after a rebuild in seconds...
 monitor_interval=1                                     # time to wait after a log check in seconds...
 
 # -------------------------
