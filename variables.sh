@@ -47,10 +47,13 @@ snapshot_mainnet=(
     'https://dafty.net/snapshot6/current'
     'https://snapshot.arkcoin.net/current'
     'http://ark.delegate-goose.biz/snapshot/current'
+    'http://s.arkmoon.com/current'
+    'http://arkdel.net/current'
 )
 
 snapshot_devnet=(
     'https://dsnapshots.ark.io/current'
+    'https://dsnapshot.arkno.de/current'
 )
 
 snapshot_dir=${HOME}/snapshots
