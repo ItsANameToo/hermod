@@ -48,13 +48,10 @@ monitor_hashbangs()
 {
     heading "Starting Hashbang Monitor..."
 
-    local hashbang_pattern='############################################'
-    local hashbang_matches=5
-
     while true; do
-        local hashbang_occurrences=$(tail -n 10 $ark_log | grep -c "$hashbang_pattern")
+        local hashbang_occurrences=$(tail -n $monitor_lines $ark_log | grep -c "############################################")
 
-        if [[ hashbang_occurrences -ge $hashbang_matches ]]; then
+        if [[ hashbang_occurrences -ge $monitor_lines ]]; then
             # Day >>> Only Notify
             if [[ $trigger_method_notify = true && $trigger_method_rebuild = false ]]; then
                 notify "ark-node out of sync - rebuild required...";
