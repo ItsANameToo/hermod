@@ -9,7 +9,7 @@
 # file that was distributed with this source code.
 # ---------------------------------------------------------------------------
 
-monitor()
+monitor_ark()
 {
     heading "Starting Monitor..."
 
