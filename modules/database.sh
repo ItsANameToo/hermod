@@ -28,3 +28,18 @@ database_create()
     sleep 1
     createdb ark_${network}
 }
+
+database_start()
+{
+    sudo service postgresql start
+}
+
+database_stop()
+{
+    sudo service postgresql stop
+}
+
+database_restart()
+{
+    sudo service postgresql restart
+}
