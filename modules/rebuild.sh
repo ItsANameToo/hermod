@@ -58,6 +58,12 @@ rebuild_via_monitor()
     snapshot_restore
 
     if [[ $trigger_method_notify = true ]]; then
+        notify "Restarting PostgreSQL..."
+    fi
+
+    database_restart
+
+    if [[ $trigger_method_notify = true ]]; then
         notify "Starting ARK Process..."
     fi
 
@@ -94,6 +100,9 @@ rebuild_via_command()
 
     info "Restoring Database..."
     snapshot_restore
+
+    info "Restarting PostgreSQL..."
+    database_restart
 
     info "Starting ARK Process..."
     ark_start
