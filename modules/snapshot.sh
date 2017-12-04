@@ -24,7 +24,7 @@ snapshot_download()
 
 snapshot_restore()
 {
-    pg_restore -O -j 8 -d ark_${network} ${snapshot_dir}/current >> $noah_log 2>&1
+    pg_restore -n public -O -j 8 -d ark_${network} ${snapshot_dir}/current >> $noah_log 2>&1
 
     # temporary fix to add index - https://github.com/ArkEcosystem/ark-node/pull/47
     sudo -u postgres psql -d ark_${network} -c 'CREATE INDEX IF NOT EXISTS "mem_accounts2delegates_dependentId" ON mem_accounts2delegates ("dependentId");'
@@ -53,7 +53,7 @@ snapshot_choose()
 
     # store the current snapshot url
     echo "$snapshot" > $snapshot_previous_log
-    
+
     # log which snapshot we chose
     echo "Chose ${snapshot}..." >> $noah_log 2>&1
 }
