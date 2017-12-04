@@ -89,7 +89,7 @@ noah_test()
 noah_alias()
 {
     heading "Installing alias..."
-    echo "alias noah='bash ${noah_dir}/noah.sh'" | tee -a ~/.bashrc
+    echo "alias noah='bash ${noah_dir}/noah.sh'" | tee -a ${HOME}/.bashrc
     source ${HOME}/.bashrc
     success "Installation complete!"
 }

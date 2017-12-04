@@ -45,9 +45,7 @@ parse_args()
         monitor)
             process_vars
 
-            monitor_hashbangs
-
-            monitor_ark
+            monitor
         ;;
         install)
             noah_install
