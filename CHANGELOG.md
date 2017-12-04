@@ -2,6 +2,13 @@
 
 All notable changes to `noah` will be documented in this file
 
+## 1.1.3 - 2017-12-04
+
+- Restart PostgreSQL after rebuilding
+- Limit pg_restore to the public schema
+- Monitor the hashbang issue that happens randomly every few weeks
+- Minor Bugfixes
+
 ## 1.1.0 - 2017-12-01
 
 - Implement random snapshot rebuilds
