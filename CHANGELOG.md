@@ -2,6 +2,11 @@
 
 All notable changes to `noah` will be documented in this file
 
+## 1.1.4 - 2017-12-04
+
+- Fix hashbang issue loop rebuild
+- Minor Bugfixes
+
 ## 1.1.3 - 2017-12-04
 
 - Restart PostgreSQL after rebuilding
