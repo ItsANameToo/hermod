@@ -69,6 +69,11 @@ monitor_hashbangs()
                 rebuild_via_monitor
             fi
         fi
+
+        # Sleep if greater than 0
+        if (( $monitor_rebuild > 0 )); then
+            sleep $monitor_rebuild
+        fi
     fi
 
     # Reduce CPU Overhead
