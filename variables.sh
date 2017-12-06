@@ -41,6 +41,7 @@ snapshot_mainnet=(
     'http://ark.delegate-goose.biz/snapshot/current'
     'http://s.arkmoon.com/current'
     'http://arkdel.net/current'
+    'http://s.thefoundry.world-domination.org/current'
 )
 
 snapshot_devnet=(
