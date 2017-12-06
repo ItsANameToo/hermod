@@ -2,13 +2,17 @@
 
 All notable changes to `noah` will be documented in this file
 
+## 1.1.8 - 2017-12-06
+
+- Choose a new snapshot until it exceeds 0MB
+
 ## 1.1.7 - 2017-12-06
 
 - Add thefoundry snapshot
 
 ## 1.1.6 - 2017-12-06
 
-- Choose a new snapshot until it longer returns a 404
+- Choose a new snapshot until it returns status 200
 
 ## 1.1.5 - 2017-12-06
 
