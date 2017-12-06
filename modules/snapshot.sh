@@ -55,6 +55,11 @@ snapshot_choose()
     until $(curl "$snapshot" --silent --head --fail --output /dev/null); do
         snapshot_choose
     done
+    
+    # choose a new snapshot until it exceeds 0MB
+    until [[ $(curl -sI $snapshot | wc -c) -gt 0 ]]; do
+        snapshot_choose
+    done
 
     # store the current snapshot url
     echo "$snapshot" > $snapshot_previous_log
