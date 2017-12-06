@@ -13,6 +13,14 @@ noah_install()
 {
     heading "Starting Installation..."
 
+    if [ -f ${ark_dir}/.foreverignore ]; then
+        info "foreverignore already exists..."
+    else
+        heading "Installing foreverignore..."
+        echo "${ark_dir}/logs/*.log" > ${ark_dir}/.foreverignore;
+        success "Installation OK."
+    fi
+
     if [ -f ${noah_dir}/.noah ]; then
         info "Configuration already exists..."
     else
