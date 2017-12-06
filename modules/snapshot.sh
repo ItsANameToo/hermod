@@ -51,6 +51,11 @@ snapshot_choose()
         fi
     done
 
+    # choose a new snapshot until it exists
+    until $(curl "$snapshot" --silent --head --fail --output /dev/null); do
+        snapshot_choose
+    done
+
     # store the current snapshot url
     echo "$snapshot" > $snapshot_previous_log
 
