@@ -2,6 +2,10 @@
 
 All notable changes to `noah` will be documented in this file
 
+## 1.1.5 - 2017-12-06
+
+- Add a `.foreverignore` for logs
+
 ## 1.1.4 - 2017-12-04
 
 - Fix hashbang issue loop rebuild
