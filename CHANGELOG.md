@@ -2,6 +2,10 @@
 
 All notable changes to `noah` will be documented in this file
 
+## 1.1.7 - 2017-12-06
+
+- Add thefoundry snapshot
+
 ## 1.1.6 - 2017-12-06
 
 - Choose a new snapshot until it longer returns a 404
