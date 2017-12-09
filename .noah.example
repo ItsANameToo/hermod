@@ -98,3 +98,31 @@ relay_user=''                                          # ssh user...
 relay_ip=''                                            # ssh ip address...
 relay_port=22                                          # ssh port address...
 relay_secret=''                                        # delegate secret...
+
+# -------------------------
+# Snapshots
+# -------------------------
+
+snapshot_mainnet=(
+    'http://ark.delegate-goose.biz/snapshot/current'
+    'http://arkdel.net/current'
+    'http://s.arkmoon.com/current'
+    'http://s.arkx.io/current'
+    'http://s.thefoundry.world-domination.org/current'
+    'https://dafty.net/snapshot1/current'
+    'https://dafty.net/snapshot2/current'
+    'https://dafty.net/snapshot3/current'
+    'https://dafty.net/snapshot4/current'
+    'https://dafty.net/snapshot5/current'
+    'https://dafty.net/snapshot6/current'
+    'https://s.arkno.de/current'
+    'https://snapshot.arkcoin.net/current'
+    'https://snapshots.ark.io/current'
+    'https://www.arkdelegate.com/current'
+)
+
+snapshot_devnet=(
+    'https://dsnapshots.ark.io/current'
+    'https://dsnapshot.arkno.de/current'
+    'http://dexplorer.ark.land/snapshots/current'
+)
