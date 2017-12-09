@@ -16,28 +16,28 @@
 noah=$(basename "$0")
 noah_dir="${HOME}/noah"
 noah_log="${noah_dir}/noah.log"
-. "$noah_dir/variables.sh"
+. "${noah_dir}/variables.sh"
 
 # -------------------------
 # Modules
 # -------------------------
 
-. "$noah_dir/modules/colors.sh"
-. "$noah_dir/modules/errors.sh"
-. "$noah_dir/modules/bootstrap.sh"
-. "$noah_dir/modules/config.sh"
-. "$noah_dir/modules/night-mode.sh"
-. "$noah_dir/modules/ark.sh"
-. "$noah_dir/modules/processes.sh"
-. "$noah_dir/modules/notifications.sh"
-. "$noah_dir/modules/database.sh"
-. "$noah_dir/modules/snapshot.sh"
-. "$noah_dir/modules/rebuild.sh"
-. "$noah_dir/modules/relay.sh"
-. "$noah_dir/modules/monitor.sh"
-. "$noah_dir/modules/commands.sh"
-. "$noah_dir/modules/install.sh"
-. "$noah_dir/modules/args.sh"
+. "${noah_dir}/modules/colors.sh"
+. "${noah_dir}/modules/errors.sh"
+. "${noah_dir}/modules/bootstrap.sh"
+. "${noah_dir}/modules/config.sh"
+. "${noah_dir}/modules/night-mode.sh"
+. "${noah_dir}/modules/ark.sh"
+. "${noah_dir}/modules/processes.sh"
+. "${noah_dir}/modules/notifications.sh"
+. "${noah_dir}/modules/database.sh"
+. "${noah_dir}/modules/snapshot.sh"
+. "${noah_dir}/modules/rebuild.sh"
+. "${noah_dir}/modules/relay.sh"
+. "${noah_dir}/modules/monitor.sh"
+. "${noah_dir}/modules/commands.sh"
+. "${noah_dir}/modules/install.sh"
+. "${noah_dir}/modules/args.sh"
 
 # -------------------------
 # Start
