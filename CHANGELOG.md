@@ -2,6 +2,10 @@
 
 All notable changes to `noah` will be documented in this file
 
+## 1.1.9 - 2017-12-09
+
+- Move snapshot lists to the configuration file
+
 ## 1.1.8 - 2017-12-06
 
 - Choose a new snapshot until it exceeds 0MB
