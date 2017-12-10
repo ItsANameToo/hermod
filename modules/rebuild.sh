@@ -22,7 +22,7 @@ rebuild_via_monitor()
     ark_stop
 
     if [[ $trigger_method_notify = true ]]; then
-        notify "Closing PostgreSQL Connections..."
+        notify "Dropping Database Connections..."
     fi
 
     database_close
@@ -64,7 +64,7 @@ rebuild_via_monitor()
     snapshot_restore
 
     if [[ $trigger_method_notify = true ]]; then
-        notify "Restarting PostgreSQL..."
+        notify "Restarting Database..."
     fi
 
     database_restart
@@ -89,7 +89,7 @@ rebuild_via_command()
     info "Stopping ARK Process..."
     ark_stop
 
-    info "Closing PostgreSQL Connections..."
+    info "Dropping Database Connections..."
     database_close
 
     info "Dropping Database..."
@@ -110,7 +110,7 @@ rebuild_via_command()
     info "Restoring Database..."
     snapshot_restore
 
-    info "Restarting PostgreSQL..."
+    info "Restarting Database..."
     database_restart
 
     info "Starting ARK Process..."
