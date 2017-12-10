@@ -11,6 +11,10 @@
 
 function abort()
 {
-    error "Yikes! $2" >> $noah_log 2>&1
+    local message="Yikes! $2"
+
+    error "$message"
+    error "$message" >> $noah_log 2>&1
+
     exit $1
 }
