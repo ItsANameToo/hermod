@@ -26,6 +26,10 @@ snapshot_restore()
 {
     pg_restore -n public -O -j 8 -d ark_${network} ${snapshot_dir}/current >> $noah_log 2>&1
 
+    until [ "${PIPESTATUS[0]}" -eq "0" ]; do
+        ${FUNCNAME[1]} # execute the parent function - either REBUILD_VIA_MONITOR or REBUILD_VIA_COMMAND
+    done
+
     # temporary fix to add index - https://github.com/ArkEcosystem/ark-node/pull/47
     sudo -u postgres psql -d ark_${network} -c 'CREATE INDEX IF NOT EXISTS "mem_accounts2delegates_dependentId" ON mem_accounts2delegates ("dependentId");'
 }
@@ -55,7 +59,7 @@ snapshot_choose()
     until $(curl "$snapshot" --silent --head --fail --output /dev/null); do
         snapshot_choose
     done
-    
+
     # choose a new snapshot until it exceeds 0MB
     until [[ $(curl -sI $snapshot | wc -c) -gt 0 ]]; do
         snapshot_choose
