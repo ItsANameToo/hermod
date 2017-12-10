@@ -29,6 +29,11 @@ database_create()
     createdb ark_${network}
 }
 
+database_close()
+{
+    sudo -u postgres psql -c "SELECT pid, pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'ark_${network}' AND pid <> pg_backend_pid();"
+}
+
 database_start()
 {
     sudo service postgresql start

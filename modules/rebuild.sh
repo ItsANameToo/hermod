@@ -22,6 +22,12 @@ rebuild_via_monitor()
     ark_stop
 
     if [[ $trigger_method_notify = true ]]; then
+        notify "Closing PostgreSQL Connections..."
+    fi
+
+    database_close
+
+    if [[ $trigger_method_notify = true ]]; then
         notify "Dropping Database..."
     fi
 
@@ -82,6 +88,9 @@ rebuild_via_command()
 
     info "Stopping ARK Process..."
     ark_stop
+
+    info "Closing PostgreSQL Connections..."
+    database_close
 
     info "Dropping Database..."
     database_destroy
