@@ -13,25 +13,17 @@ parse_args()
 {
     case "$1" in
         start)
-            noah_update
-
             process_vars
 
             noah_start
         ;;
         stop)
-            noah_update
-
             noah_stop
         ;;
         restart)
-            noah_update
-
             noah_restart
         ;;
         reload)
-            noah_update
-
             noah_reload
         ;;
         delete)
@@ -54,35 +46,23 @@ parse_args()
             noah_update
         ;;
         config)
-            noah_update
-
             noah_config
         ;;
         log)
-            noah_update
-
             noah_tail
         ;;
         alias)
-            noah_update
-
             noah_alias
         ;;
         test)
-            noah_update
-
             noah_test "$2" "$3"
         ;;
         version)
-            noah_update
-
             noah_version
 
             exit 1
         ;;
         help|*)
-            noah_update
-
             noah_help
 
             exit 1
