@@ -20,6 +20,6 @@ process_vars()
     process_ark_node=$(pgrep -a node | grep ark-node | awk '{print $1}')
 
     if [ -z "$process_ark_node" ]; then
-        abort 0 "ARK Process is not running..."
+        ark_start
     fi
 }
