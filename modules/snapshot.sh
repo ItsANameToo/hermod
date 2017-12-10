@@ -27,6 +27,8 @@ snapshot_restore()
     pg_restore -n public -O -j 8 -d ark_${network} ${snapshot_dir}/current >> $noah_log 2>&1
 
     until [ "${PIPESTATUS[0]}" -eq "0" ]; do
+        log "Failed to restore ${snapshot}..."
+
         ${FUNCNAME[1]} # execute the parent function - either REBUILD_VIA_MONITOR or REBUILD_VIA_COMMAND
     done
 
@@ -69,5 +71,5 @@ snapshot_choose()
     echo "$snapshot" > $snapshot_previous_log
 
     # log which snapshot we chose
-    echo "Chose ${snapshot}..." >> $noah_log 2>&1
+    log "Chose ${snapshot}..."
 }
