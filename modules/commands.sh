@@ -71,10 +71,14 @@ noah_update()
         read -p 'An update is available, do you want to install it? [y/N] :' choice
 
         if [[ $choice =~ ^(yes|y) ]]; then
+            noah_stop
+
             heading "Starting Update..."
             git reset --hard >> $noah_log 2>&1
             git pull >> $noah_log 2>&1
             success 'Update OK!'
+
+            noah_start
         fi
     fi
 }

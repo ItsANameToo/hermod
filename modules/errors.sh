@@ -9,8 +9,13 @@
 # file that was distributed with this source code.
 # ---------------------------------------------------------------------------
 
-function abort()
+abort()
 {
     error "Yikes! $2" >> $noah_log 2>&1
     exit $1
+}
+
+log()
+{
+    echo "$1" >> $noah_log 2>&1
 }

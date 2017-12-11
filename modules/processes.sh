@@ -16,10 +16,4 @@ process_vars()
     if [ -z "$process_postgres" ]; then
         sudo service postgresql start
     fi
-
-    process_ark_node=$(pgrep -a node | grep ark-node | awk '{print $1}')
-
-    if [ -z "$process_ark_node" ]; then
-        abort 0 "ARK Process is not running..."
-    fi
 }

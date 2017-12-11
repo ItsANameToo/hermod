@@ -43,7 +43,7 @@ noah_log="${noah_dir}/noah.log"
 # Start
 # -------------------------
 
-function main()
+main()
 {
     setup_environment
     check_configuration
