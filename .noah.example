@@ -110,7 +110,6 @@ snapshot_mainnet=(
     'http://arkdel.net/current'
     'http://s.arkmoon.com/current'
     'http://s.arkx.io/current'
-    'http://s.thefoundry.world-domination.org/current'
     'https://dafty.net/snapshot1/current'
     'https://dafty.net/snapshot2/current'
     'https://dafty.net/snapshot3/current'
