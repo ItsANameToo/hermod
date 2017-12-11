@@ -2,6 +2,16 @@
 
 All notable changes to `noah` will be documented in this file
 
+## 1.3.0 - 2017-12-11
+
+- Remove `thefoundry` snapshot
+- Remove auto-update checks
+- Remove check if `ark-node` is running
+- Restart `noah` during the update process
+- Close PostgreSQL connections before rebuilding
+- Start another rebuild if `pg_restore` fails
+- Minor Bugfixes
+
 ## 1.1.9 - 2017-12-09
 
 - Move snapshot lists to the configuration file
