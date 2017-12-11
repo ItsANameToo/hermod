@@ -10,6 +10,14 @@
 # ---------------------------------------------------------------------------
 
 # -------------------------
+# Monitor
+# -------------------------
+
+monitor_lines=10                                       # number of lines to monitor...
+monitor_rebuild=120                                    # time to wait after a rebuild in seconds...
+monitor_interval=1                                     # time to wait after a log check in seconds...
+
+# -------------------------
 # [Notifications] Driver
 # -------------------------
 
@@ -80,14 +88,6 @@ notifications_mailgun_subject='noah'                   # e-mail subject
 night_mode_enabled=false                               # enable or disable night mode...
 night_mode_start=22                                    # when the night begins...
 night_mode_end=8                                       # when the day begins...
-
-# -------------------------
-# Monitor
-# -------------------------
-
-monitor_lines=10                                       # number of lines to monitor...
-monitor_rebuild=120                                    # time to wait after a rebuild in seconds...
-monitor_interval=1                                     # time to wait after a log check in seconds...
 
 # -------------------------
 # Relay
