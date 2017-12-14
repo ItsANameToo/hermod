@@ -24,7 +24,7 @@ snapshot_download()
 
 snapshot_restore()
 {
-    pg_restore -n public -O -j 8 -d ark_${network} ${snapshot_dir}/current >> $noah_log 2>&1
+    pg_restore -n public -O -c -j 8 -d ark_${network} ${snapshot_dir}/current >> $noah_log 2>&1
 
     until [ $? -eq 0 ]; do
         log "Failed to restore ${snapshot}..."
