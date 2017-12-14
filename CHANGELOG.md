@@ -2,6 +2,11 @@
 
 All notable changes to `noah` will be documented in this file
 
+## 1.3.1 - 2017-12-14
+
+- Disable Connections before dropping the database
+- Enable Connections before restoring the database
+
 ## 1.3.0 - 2017-12-11
 
 - Remove `thefoundry` snapshot
