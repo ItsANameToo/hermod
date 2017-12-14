@@ -26,7 +26,7 @@ snapshot_restore()
 {
     sudo -u postgres psql -c "UPDATE pg_database SET datallowconn = true WHERE datname = 'ark_${network}';"
     
-    pg_restore -n public -O -c -j 8 -d ark_${network} ${snapshot_dir}/current >> $noah_log 2>&1
+    pg_restore -n public -O -j 8 -d ark_${network} ${snapshot_dir}/current >> $noah_log 2>&1
 
     until [ $? -eq 0 ]; do
         log "Failed to restore ${snapshot}..."
