@@ -31,8 +31,8 @@ database_create()
 
 database_close()
 {
-    sudo -u postgres psql -c "SELECT pid, pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'ark_${network}' AND pid <> pg_backend_pid();"
     sudo -u postgres psql -c "UPDATE pg_database SET datallowconn = false WHERE datname = 'ark_${network}';"
+    sudo -u postgres psql -c "SELECT pid, pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'ark_${network}' AND pid <> pg_backend_pid();"
 }
 
 database_start()
