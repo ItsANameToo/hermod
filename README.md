@@ -17,7 +17,7 @@ If you wish to use a different configuration then the default one just execute `
 
 ### E-Mail
 
-If you wish to use **E-Mail** as your notification driver you will need to install and configure [Postfix](https://digitalocean.com/community/tutorials/how-to-install-and-configure-postfix-on-ubuntu-16-04).
+If you wish to use **E-Mail** as your notification driver you will need to install and configure [Postfix](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-postfix-on-ubuntu-16-04).
 
 ### Nexmo
 
