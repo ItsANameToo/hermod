@@ -66,7 +66,7 @@ notify_via_slack()
 notify_via_discord()
 {
     curl -X POST "$notification_discord_webhook" \
-        -F content="$message"
+        -F content="$1"
 }
 
 
