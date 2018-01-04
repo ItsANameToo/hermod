@@ -25,7 +25,7 @@ monitor_interval=1                                     # time to wait after a lo
 
 notification_drivers=(log)                             # notification methods...
                                                        # values: none, log, email, mailgun,
-                                                       # slack, nexmo, pushover, pushbullet
+                                                       # slack, nexmo, pushover, pushbullet, discord
 
 # -------------------------
 # [Notifications] Log
@@ -39,6 +39,11 @@ notification_log=${noah_dir}/noah.log                  # log file...
 
 notification_email_to=''                               # e-mail recipient...
 notification_email_subject='noah'                      # e-mail subject...
+
+#-------------------------
+# [Notifcations] Discord
+#-------------------------
+notification_discord_webhook=''                        # discord incoming webhook...
 
 # -------------------------
 # [Notifications] Slack
