@@ -2,6 +2,10 @@
 
 All notable changes to `noah` will be documented in this file
 
+## 1.3.2 - 2018-01-04
+
+- Add discord notifications
+
 ## 1.3.1 - 2017-12-14
 
 - Disable Connections before dropping the database
