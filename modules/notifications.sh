@@ -63,6 +63,13 @@ notify_via_slack()
          "$notification_slack_webhook"
 }
 
+notify_via_discord()
+{
+    curl -X POST "$notification_discord_webhook" \
+        -F content="$1"
+}
+
+
 notify()
 {
     local datetime=$(date '+%Y-%m-%d %H:%M:%S')
@@ -91,6 +98,10 @@ notify()
             slack)
                 notify_via_slack "$message"
             ;;
+            discord)
+                notify_via_discord "$message"
+            ;;
+
             *)
                 :
             ;;
