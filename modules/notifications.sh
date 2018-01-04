@@ -69,7 +69,6 @@ notify_via_discord()
         -F content="$1"
 }
 
-
 notify()
 {
     local datetime=$(date '+%Y-%m-%d %H:%M:%S')
@@ -101,7 +100,6 @@ notify()
             discord)
                 notify_via_discord "$message"
             ;;
-
             *)
                 :
             ;;
