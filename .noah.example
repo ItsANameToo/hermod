@@ -121,7 +121,7 @@ snapshot_mainnet=(
     # 'https://dafty.net/snapshot4/current'
     # 'https://dafty.net/snapshot5/current'
     # 'https://dafty.net/snapshot6/current'
-    'https://s.arkno.de/current'
+    'https://s.arknode.ninja/current'
     'https://snapshot.arkcoin.net/current'
     'https://snapshots.ark.io/current'
     'https://www.arkdelegate.com/current'
@@ -129,6 +129,6 @@ snapshot_mainnet=(
 
 snapshot_devnet=(
     'https://dsnapshots.ark.io/current'
-    'https://dsnapshot.arkno.de/current'
+    'https://dsnapshot.arknode.ninja/current'
     'http://dexplorer.ark.land/snapshots/current'
 )
