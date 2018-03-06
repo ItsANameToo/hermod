@@ -111,7 +111,7 @@ relay_secret=''                                        # delegate secret...
 # -------------------------
 
 snapshot_mainnet=(
-    'http://ark.delegate-goose.biz/snapshot/current'
+    # 'http://ark.delegate-goose.biz/snapshot/current'
     'http://arkdel.net/current'
     'http://s.arkmoon.com/current'
     'http://s.arkx.io/current'
