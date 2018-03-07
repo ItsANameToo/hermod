@@ -111,16 +111,8 @@ relay_secret=''                                        # delegate secret...
 # -------------------------
 
 snapshot_mainnet=(
-    # 'http://ark.delegate-goose.biz/snapshot/current'
     'http://arkdel.net/current'
     'http://s.arkmoon.com/current'
-    'http://s.arkx.io/current'
-    # 'https://dafty.net/snapshot1/current'
-    # 'https://dafty.net/snapshot2/current'
-    # 'https://dafty.net/snapshot3/current'
-    # 'https://dafty.net/snapshot4/current'
-    # 'https://dafty.net/snapshot5/current'
-    # 'https://dafty.net/snapshot6/current'
     'https://s.arknode.ninja/current'
     'https://snapshot.arkcoin.net/current'
     'https://snapshots.ark.io/current'
