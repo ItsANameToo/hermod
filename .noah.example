@@ -111,10 +111,8 @@ relay_secret=''                                        # delegate secret...
 # -------------------------
 
 snapshot_mainnet=(
-    'http://arkdel.net/current'
     'http://s.arkmoon.com/current'
     'https://s.arknode.ninja/current'
-    'https://snapshot.arkcoin.net/current'
     'https://snapshots.ark.io/current'
     'https://www.arkdelegate.com/snapy/current'
 )
