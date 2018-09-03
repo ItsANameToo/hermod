@@ -19,10 +19,10 @@ rebuild_with_relay()
     local relay="-p ${relay_port} ${relay_user}@${relay_ip}"
 
     # disable forging node...
-    info "Disable Forging Node..."
+    info "Disable Forging Node"
 
     if [[ $trigger_method_notify = true ]]; then
-        notify "Disable Forging Node..."
+        notify "Disable Forging Node"
     fi
 
     jq '.forging.secret = []' <<< cat $config > tmp.$$.json && mv tmp.$$.json $config
@@ -30,10 +30,10 @@ rebuild_with_relay()
     sleep 2
 
     # enable relay node...
-    info "Enable Relay Node..."
+    info "Enable Relay Node"
 
     if [[ $trigger_method_notify = true ]]; then
-        notify "Enable Relay Node..."
+        notify "Enable Relay Node"
     fi
 
     ssh ${relay} "jq '.forging.secret = [\"$relay_secret\"]' <<< cat $config > tmp.$$.json && mv tmp.$$.json $config"
@@ -43,10 +43,10 @@ rebuild_with_relay()
     rebuild
 
     # enable forging node...
-    info "Enable Forging Node..."
+    info "Enable Forging Node"
 
     if [[ $trigger_method_notify = true ]]; then
-        notify "Enable Forging Node..."
+        notify "Enable Forging Node"
     fi
 
     ark_stop
@@ -55,10 +55,10 @@ rebuild_with_relay()
     ark_start
 
     # disable relay node...
-    info "Disable Relay Node..."
+    info "Disable Relay Node"
 
     if [[ $trigger_method_notify = true ]]; then
-        notify "Disable Relay Node..."
+        notify "Disable Relay Node"
     fi
 
     ssh ${relay} "jq '.forging.secret = []' <<< cat $config > tmp.$$.json && mv tmp.$$.json $config"

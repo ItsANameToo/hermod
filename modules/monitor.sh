@@ -14,24 +14,56 @@ monitor()
     heading "Starting Monitor..."
 
     while true; do
-        monitor_hashbangs
+        if tail -n $monitor_lines $ark_log | grep -q "Forked from network"; then
+            notify "Forked from network - Check your node!";
 
-        monitor_ark
+            # Sleep if greater than 0
+            if (( $monitor_rebuild > 0 )); then
+                sleep $monitor_rebuild
+            fi
+        else
+            # monitor_chain_comparison_failed
+
+            # monitor_blockchain_rebuild_triggered
+
+            monitor_hashbangs
+
+            monitor_ark
+        fi
+
+        # Reduce CPU Overhead
+        if (( $monitor_interval > 0 )); then
+            sleep $monitor_interval
+        fi
     done
 
     info "Closing Monitor..."
 }
 
+monitor_chain_comparison_failed()
+{
+    if tail -n $monitor_lines $ark_log | grep -q "Chain comparison failed with peer"; then
+        notify "Chain comparison failed with peer - Check your node!";
+    fi
+}
+
+monitor_blockchain_rebuild_triggered()
+{
+    if tail -n $monitor_lines $ark_log | grep -q "Blockchain rebuild triggered"; then
+        notify "Blockchain rebuild triggered - Check your node!";
+    fi
+}
+
 monitor_ark()
 {
     if tail -n $monitor_lines $ark_log | grep -q "Blockchain not ready to receive block"; then
-        # Day >>> Only Notify
+        # Only Notify
         if [[ $trigger_method_notify = true && $trigger_method_rebuild = false ]]; then
-            notify "ark-node out of sync - rebuild required...";
+            notify "Blockchain not ready to receive block - Check your node!";
         fi
 
-        # Night >>> Only Rebuild
-        if [[ $trigger_method_rebuild = true ]]; then
+        # Only Rebuild
+        if [[ "$trigger_action" = "rebuild" && $trigger_method_rebuild = true ]]; then
             if [[ $relay_enabled = true ]]; then
                 rebuild_with_relay
             else
@@ -43,11 +75,6 @@ monitor_ark()
         if (( $monitor_rebuild > 0 )); then
             sleep $monitor_rebuild
         fi
-    fi
-
-    # Reduce CPU Overhead
-    if (( $monitor_interval > 0 )); then
-        sleep $monitor_interval
     fi
 }
 
@@ -56,13 +83,13 @@ monitor_hashbangs()
     local hashbang_occurrences=$(tail -n $monitor_lines $ark_log | grep -c "############################################")
 
     if [[ hashbang_occurrences -ge $monitor_lines ]]; then
-        # Day >>> Only Notify
+        # Only Notify
         if [[ $trigger_method_notify = true && $trigger_method_rebuild = false ]]; then
-            notify "ark-node out of sync - rebuild required...";
+            notify "Blockchain not ready to receive block - Check your node!";
         fi
 
-        # Night >>> Only Rebuild
-        if [[ $trigger_method_rebuild = true ]]; then
+        # Only Rebuild
+        if [[ "$trigger_action" = "rebuild" && $trigger_method_rebuild = true ]]; then
             if [[ $relay_enabled = true ]]; then
                 rebuild_with_relay
             else
@@ -74,10 +101,5 @@ monitor_hashbangs()
         if (( $monitor_rebuild > 0 )); then
             sleep $monitor_rebuild
         fi
-    fi
-
-    # Reduce CPU Overhead
-    if (( $monitor_interval > 0 )); then
-        sleep $monitor_interval
     fi
 }
