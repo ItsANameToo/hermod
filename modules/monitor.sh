@@ -18,7 +18,7 @@ monitor()
             notify "Forked from network - Check your node!";
         else
             monitor_hashbangs
-            
+
             monitor_ark
         fi
     done
@@ -34,12 +34,14 @@ monitor_ark()
             notify "ark-node out of sync - rebuild required...";
         fi
 
-        # Night >>> Only Rebuild
-        if [[ $trigger_method_rebuild = true ]]; then
-            if [[ $relay_enabled = true ]]; then
-                rebuild_with_relay
-            else
-                rebuild_via_monitor
+        if [[ "$trigger_action" = "rebuild" ]]; then
+            # Night >>> Only Rebuild
+            if [[ $trigger_method_rebuild = true ]]; then
+                if [[ $relay_enabled = true ]]; then
+                    rebuild_with_relay
+                else
+                    rebuild_via_monitor
+                fi
             fi
         fi
 
@@ -65,12 +67,14 @@ monitor_hashbangs()
             notify "ark-node out of sync - rebuild required...";
         fi
 
-        # Night >>> Only Rebuild
-        if [[ $trigger_method_rebuild = true ]]; then
-            if [[ $relay_enabled = true ]]; then
-                rebuild_with_relay
-            else
-                rebuild_via_monitor
+        if [[ "$trigger_action" = "rebuild" ]]; then
+            # Night >>> Only Rebuild
+            if [[ $trigger_method_rebuild = true ]]; then
+                if [[ $relay_enabled = true ]]; then
+                    rebuild_with_relay
+                else
+                    rebuild_via_monitor
+                fi
             fi
         fi
 
