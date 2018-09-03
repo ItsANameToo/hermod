@@ -59,7 +59,7 @@ monitor_ark()
     if tail -n $monitor_lines $ark_log | grep -q "Blockchain not ready to receive block"; then
         # Only Notify
         if [[ $trigger_method_notify = true && $trigger_method_rebuild = false ]]; then
-            notify "ark-node out of sync - rebuild required...";
+            notify "Blockchain not ready to receive block - Check your node!";
         fi
 
         # Only Rebuild
@@ -85,7 +85,7 @@ monitor_hashbangs()
     if [[ hashbang_occurrences -ge $monitor_lines ]]; then
         # Only Notify
         if [[ $trigger_method_notify = true && $trigger_method_rebuild = false ]]; then
-            notify "ark-node out of sync - rebuild required...";
+            notify "Blockchain not ready to receive block - Check your node!";
         fi
 
         # Only Rebuild
