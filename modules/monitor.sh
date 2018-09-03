@@ -14,9 +14,13 @@ monitor()
     heading "Starting Monitor..."
 
     while true; do
-        monitor_hashbangs
-
-        monitor_ark
+        if tail -n $monitor_lines $ark_log | grep -q "Forked from network"; then
+            notify "Forked from network - Check your node!";
+        else
+            monitor_hashbangs
+            
+            monitor_ark
+        fi
     done
 
     info "Closing Monitor..."
