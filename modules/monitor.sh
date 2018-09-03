@@ -22,6 +22,10 @@ monitor()
                 sleep $monitor_rebuild
             fi
         else
+            # monitor_chain_comparison_failed
+
+            # monitor_blockchain_rebuild_triggered
+
             monitor_hashbangs
 
             monitor_ark
@@ -34,6 +38,20 @@ monitor()
     done
 
     info "Closing Monitor..."
+}
+
+monitor_chain_comparison_failed()
+{
+    if tail -n $monitor_lines $ark_log | grep -q "Chain comparison failed with peer"; then
+        notify "Chain comparison failed with peer - Check your node!";
+    fi
+}
+
+monitor_blockchain_rebuild_triggered()
+{
+    if tail -n $monitor_lines $ark_log | grep -q "Blockchain rebuild triggered"; then
+        notify "Blockchain rebuild triggered - Check your node!";
+    fi
 }
 
 monitor_ark()
