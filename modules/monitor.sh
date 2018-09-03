@@ -57,19 +57,17 @@ monitor_blockchain_rebuild_triggered()
 monitor_ark()
 {
     if tail -n $monitor_lines $ark_log | grep -q "Blockchain not ready to receive block"; then
-        # Day >>> Only Notify
+        # Only Notify
         if [[ $trigger_method_notify = true && $trigger_method_rebuild = false ]]; then
             notify "ark-node out of sync - rebuild required...";
         fi
 
-        if [[ "$trigger_action" = "rebuild" ]]; then
-            # Night >>> Only Rebuild
-            if [[ $trigger_method_rebuild = true ]]; then
-                if [[ $relay_enabled = true ]]; then
-                    rebuild_with_relay
-                else
-                    rebuild_via_monitor
-                fi
+        # Only Rebuild
+        if [[ "$trigger_action" = "rebuild" && $trigger_method_rebuild = true ]]; then
+            if [[ $relay_enabled = true ]]; then
+                rebuild_with_relay
+            else
+                rebuild_via_monitor
             fi
         fi
 
@@ -85,19 +83,17 @@ monitor_hashbangs()
     local hashbang_occurrences=$(tail -n $monitor_lines $ark_log | grep -c "############################################")
 
     if [[ hashbang_occurrences -ge $monitor_lines ]]; then
-        # Day >>> Only Notify
+        # Only Notify
         if [[ $trigger_method_notify = true && $trigger_method_rebuild = false ]]; then
             notify "ark-node out of sync - rebuild required...";
         fi
 
-        if [[ "$trigger_action" = "rebuild" ]]; then
-            # Night >>> Only Rebuild
-            if [[ $trigger_method_rebuild = true ]]; then
-                if [[ $relay_enabled = true ]]; then
-                    rebuild_with_relay
-                else
-                    rebuild_via_monitor
-                fi
+        # Only Rebuild
+        if [[ "$trigger_action" = "rebuild" && $trigger_method_rebuild = true ]]; then
+            if [[ $relay_enabled = true ]]; then
+                rebuild_with_relay
+            else
+                rebuild_via_monitor
             fi
         fi
 
