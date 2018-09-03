@@ -13,7 +13,7 @@
 # Trigger Action
 # -------------------------
 
-trigger_action='rebuild'
+trigger_action='rebuild' # rebuild or notify
 
 # -------------------------
 # Monitor
