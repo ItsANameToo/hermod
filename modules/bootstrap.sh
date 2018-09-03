@@ -20,7 +20,3 @@ fi
 if [[ -z "$HOME" ]]; then
     abort 1 "\$HOME is not defined. Please set it first."
 fi
-
-if [[ -z "$trigger_action" ]]; then
-    abort 1 "\$trigger_action is not defined. Please set it first."
-fi
