@@ -16,10 +16,20 @@ monitor()
     while true; do
         if tail -n $monitor_lines $ark_log | grep -q "Forked from network"; then
             notify "Forked from network - Check your node!";
+
+            # Sleep if greater than 0
+            if (( $monitor_rebuild > 0 )); then
+                sleep $monitor_rebuild
+            fi
         else
             monitor_hashbangs
 
             monitor_ark
+        fi
+
+        # Reduce CPU Overhead
+        if (( $monitor_interval > 0 )); then
+            sleep $monitor_interval
         fi
     done
 
@@ -50,11 +60,6 @@ monitor_ark()
             sleep $monitor_rebuild
         fi
     fi
-
-    # Reduce CPU Overhead
-    if (( $monitor_interval > 0 )); then
-        sleep $monitor_interval
-    fi
 }
 
 monitor_hashbangs()
@@ -82,10 +87,5 @@ monitor_hashbangs()
         if (( $monitor_rebuild > 0 )); then
             sleep $monitor_rebuild
         fi
-    fi
-
-    # Reduce CPU Overhead
-    if (( $monitor_interval > 0 )); then
-        sleep $monitor_interval
     fi
 }
