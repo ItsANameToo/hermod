@@ -31,7 +31,7 @@ monitor_interval=1                                     # time to wait after a lo
 
 notification_drivers=(log)                             # notification methods...
                                                        # values: none, log, email, mailgun,
-                                                       # slack, nexmo, pushover, pushbullet, discord
+                                                       # slack, nexmo, pushover, pushbullet, discord, twilio_call
 
 # -------------------------
 # [Notifications] Log
@@ -93,6 +93,20 @@ notifications_mailgun_domain=''                        # mailgun domain...
 notifications_mailgun_from='noah'                      # sender name...
 notifications_mailgun_to=''                            # recipient e-mail...
 notifications_mailgun_subject='noah'                   # e-mail subject
+
+# -------------------------
+# [Notifications] Twilio
+#
+# twilio_call will call you if there's a problem with your node. Be aware that it can be
+# very annoying, specailly during the night. Consider using the Night Mode if it annoys you.
+#
+# -------------------------
+
+notifications_twilio_account_sid=''                   # twilio api client id...
+notifications_twilio_auth_token=''                    # twilio api token...
+notifications_twilio_from=''                          # caller phone number (In this convention: +15551234567)
+notifications_twilio_to=''                            # recipient phone number (In this convention: +15551234567)
+
 
 # -------------------------
 # Night Mode
