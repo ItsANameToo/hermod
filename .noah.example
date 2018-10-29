@@ -30,8 +30,8 @@ monitor_interval=1                                     # time to wait after a lo
 # example would be notification_drivers=(log slack pushover)
 
 notification_drivers=(log)                             # notification methods...
-                                                       # values: none, log, email, mailgun,
-                                                       # slack, nexmo, pushover, pushbullet, discord, twilio_call
+                                                       # values: none, log, email, mailgun, slack, nexmo
+                                                       # pushover, pushbullet, discord, twilio_call, twilio_message
 
 # -------------------------
 # [Notifications] Log
