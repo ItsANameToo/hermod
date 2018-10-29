@@ -121,6 +121,7 @@ snapshot_mainnet=(
     'https://s.arknode.ninja/current'
     'https://snapshots.ark.io/current'
     'https://www.arkdelegate.com/snapy/current'
+    'https://snapshots.ark.land/current'
 )
 
 snapshot_devnet=(
