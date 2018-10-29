@@ -39,6 +39,12 @@ If you wish to use **Mailgun** as your notification driver you will need to sign
 
 If you wish to use **Slack** as your notification driver you will need to sign up for [Slack](https://slack.com) and create an [Incoming Webhook](https://api.slack.com/incoming-webhooks).
 
+### Twilio
+
+If you wish to use **Twilio** as your notification driver you will need to sign up for [Twilio](https://www.twilio.com). With a trial account, you can send unlimited calls and sms to the number you use on the sign up process (your phone number).
+
+`twilio_message` will send you SMS, and `twilio_call` will call you when there's a problem with your node. Be aware that `twilio_call` can be very annoying, specially at night, so you might want to use the Night Mode if you enable it.
+
 ## Commands
 
 ```bash

@@ -69,6 +69,24 @@ notify_via_discord()
         -F content="$1"
 }
 
+notify_via_twilio_call()
+{
+    curl -X "POST" "https://api.twilio.com/2010-04-01/Accounts/$notifications_twilio_account_sid/Calls.json" \
+        --data-urlencode "Url=http://demo.twilio.com/docs/voice.xml" \
+        --data-urlencode "From=$notifications_twilio_from" \
+        --data-urlencode "To=$notifications_twilio_to" \
+        -u "$notifications_twilio_account_sid:$notifications_twilio_auth_token"
+}
+
+notify_via_twilio_message()
+{
+    curl -X "POST" "https://api.twilio.com/2010-04-01/Accounts/$notifications_twilio_account_sid/Messages.json" \
+        --data-urlencode "From=$notifications_twilio_from" \
+        --data-urlencode "Body=$1" \
+        --data-urlencode "To=$notifications_twilio_to" \
+        -u "$notifications_twilio_account_sid:$notifications_twilio_auth_token"
+}
+
 notify()
 {
     local datetime=$(date '+%Y-%m-%d %H:%M:%S')
@@ -99,6 +117,12 @@ notify()
             ;;
             discord)
                 notify_via_discord "$message"
+            ;;
+            twilio_message)
+                notify_via_twilio_message "$message"
+            ;;
+            twilio_call)
+                notify_via_twilio_call "$message"
             ;;
             *)
                 :
