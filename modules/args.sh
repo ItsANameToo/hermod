@@ -9,6 +9,7 @@
 # file that was distributed with this source code.
 # ---------------------------------------------------------------------------
 
+# TODO: change these args
 parse_args()
 {
     case "$1" in
