@@ -1,7 +1,7 @@
 {
     "apps": [{
-        "name": "noah",
-        "script": "~/noah/noah.sh",
+        "name": "hermod",
+        "script": "~/hermod/hermod.sh",
         "args": ["monitor"],
         "instances": 1,
         "exec_mode": "fork",

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # ---------------------------------------------------------------------------
-# This file is part of noah.
+# This file is part of hermod.
 #
-# (c) Brian Faust <hello@brianfaust.me>
+# (c) ItsANameToo <itsanametoo@protonmail.com>
 #
 # For the full copyright and license information, please view the LICENSE
 # file that was distributed with this source code.
@@ -16,19 +16,19 @@ parse_args()
         start)
             process_vars
 
-            noah_start
+            hermod_start
         ;;
         stop)
-            noah_stop
+            hermod_stop
         ;;
         restart)
-            noah_restart
+            hermod_restart
         ;;
         reload)
-            noah_reload
+            hermod_reload
         ;;
         delete)
-            noah_delete
+            hermod_delete
         ;;
         rebuild)
             process_vars
@@ -41,30 +41,30 @@ parse_args()
             monitor
         ;;
         install)
-            noah_install
+            hermod_install
         ;;
         update)
-            noah_update
+            hermod_update
         ;;
         config)
-            noah_config
+            hermod_config
         ;;
         log)
-            noah_tail
+            hermod_tail
         ;;
         alias)
-            noah_alias
+            hermod_alias
         ;;
         test)
-            noah_test "$2" "$3"
+            hermod_test "$2" "$3"
         ;;
         version)
-            noah_version
+            hermod_version
 
             exit 1
         ;;
         help|*)
-            noah_help
+            hermod_help
 
             exit 1
         ;;
