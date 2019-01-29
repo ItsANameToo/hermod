@@ -24,6 +24,7 @@ setup_environment()
 
 check_configuration()
 {
+    # TODO: change these checks
     if [[ $network != 'mainnet' && $network != 'devnet' ]]; then
         abort 1 "network [$network] is invalid."
     fi

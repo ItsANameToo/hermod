@@ -9,6 +9,7 @@
 # file that was distributed with this source code.
 # ---------------------------------------------------------------------------
 
+# TODO: change these commands
 noah_start()
 {
     heading "Starting noah..."

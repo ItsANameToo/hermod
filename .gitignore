@@ -1,3 +1,5 @@
 .noah
 noah.log
 data/snapshot.txt
+
+.DS_Store
