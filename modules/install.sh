@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
 # ---------------------------------------------------------------------------
-# This file is part of noah.
+# This file is part of hermod.
 #
-# (c) Brian Faust <hello@brianfaust.me>
+# (c) ItsANameToo <itsanametoo@protonmail.com>
 #
 # For the full copyright and license information, please view the LICENSE
 # file that was distributed with this source code.
 # ---------------------------------------------------------------------------
 
-noah_install()
+hermod_install()
 {
     heading "Starting Installation..."
 
@@ -21,11 +21,11 @@ noah_install()
         success "Installation OK."
     fi
 
-    if [ -f ${noah_dir}/.noah ]; then
+    if [ -f ${hermod_dir}/.hermod ]; then
         info "Configuration already exists..."
     else
         heading "Installing Configuration..."
-        cp ${noah_dir}/.noah.example ${noah_dir}/.noah;
+        cp ${hermod_dir}/.hermod.example ${hermod_dir}/.hermod;
         success "Installation OK."
     fi
 
@@ -33,13 +33,13 @@ noah_install()
         info "visudo already exists..."
     else
         heading "Installing visudo..."
-        echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo EDITOR='tee -a' visudo >> $noah_log 2>&1
+        echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo EDITOR='tee -a' visudo >> $hermod_log 2>&1
         success "Installation OK."
     fi
 
     if [[ -z $(command -v jq) ]]; then
         heading "Installing jq..."
-        sudo apt-get -qq install jq >> $noah_log 2>&1
+        sudo apt-get -qq install jq >> $hermod_log 2>&1
         success "Installation OK."
     else
         info "jq already exists..."
@@ -47,7 +47,7 @@ noah_install()
 
     if [[ -z $(command -v pm2) ]]; then
         heading "Installing pm2..."
-        npm install pm2 -g >> $noah_log 2>&1
+        npm install pm2 -g >> $hermod_log 2>&1
         success "Installation OK."
     else
         info "pm2 already exists..."

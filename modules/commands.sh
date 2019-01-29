@@ -1,67 +1,67 @@
 #!/usr/bin/env bash
 
 # ---------------------------------------------------------------------------
-# This file is part of noah.
+# This file is part of hermod.
 #
-# (c) Brian Faust <hello@brianfaust.me>
+# (c) ItsANameToo <itsanametoo@protonmail.com>
 #
 # For the full copyright and license information, please view the LICENSE
 # file that was distributed with this source code.
 # ---------------------------------------------------------------------------
 
 # TODO: change these commands
-noah_start()
+hermod_start()
 {
-    heading "Starting noah..."
-    pm2 start ${noah_dir}/apps.json >> $noah_log 2>&1
+    heading "Starting hermod..."
+    pm2 start ${hermod_dir}/apps.json >> $hermod_log 2>&1
     success "Start complete!"
 }
 
-noah_stop()
+hermod_stop()
 {
-    heading "Stopping noah..."
-    pm2 stop ${noah_dir}/apps.json >> $noah_log 2>&1
+    heading "Stopping hermod..."
+    pm2 stop ${hermod_dir}/apps.json >> $hermod_log 2>&1
     success "Stop complete!"
 }
 
-noah_restart()
+hermod_restart()
 {
-    heading "Restarting noah..."
-    pm2 restart ${noah_dir}/apps.json >> $noah_log 2>&1
+    heading "Restarting hermod..."
+    pm2 restart ${hermod_dir}/apps.json >> $hermod_log 2>&1
     success "Restart complete!"
 }
 
-noah_reload()
+hermod_reload()
 {
-    heading "Reloading noah..."
-    pm2 reload ${noah_dir}/apps.json >> $noah_log 2>&1
+    heading "Reloading hermod..."
+    pm2 reload ${hermod_dir}/apps.json >> $hermod_log 2>&1
     success "Reload complete!"
 }
 
-noah_delete()
+hermod_delete()
 {
-    heading "Deleting noah..."
-    pm2 delete ${noah_dir}/apps.json >> $noah_log 2>&1
+    heading "Deleting hermod..."
+    pm2 delete ${hermod_dir}/apps.json >> $hermod_log 2>&1
     success "Delete complete!"
 }
 
-noah_config()
+hermod_config()
 {
-    nano ${noah_dir}/.noah
+    nano ${hermod_dir}/.hermod
 }
 
-noah_tail()
+hermod_tail()
 {
-    if [ ! -e $noah_log ]; then
-        touch $noah_log
+    if [ ! -e $hermod_log ]; then
+        touch $hermod_log
     fi
 
-    tail -f $noah_log
+    tail -f $hermod_log
 }
 
-noah_update()
+hermod_update()
 {
-    cd $noah_dir
+    cd $hermod_dir
 
     local remote_version=$(git rev-parse origin/master)
     local local_version=$(git rev-parse HEAD)
@@ -72,57 +72,57 @@ noah_update()
         read -p 'An update is available, do you want to install it? [y/N] :' choice
 
         if [[ $choice =~ ^(yes|y) ]]; then
-            noah_stop
+            hermod_stop
 
             heading "Starting Update..."
-            git reset --hard >> $noah_log 2>&1
-            git pull >> $noah_log 2>&1
+            git reset --hard >> $hermod_log 2>&1
+            git pull >> $hermod_log 2>&1
             success 'Update OK!'
 
-            noah_start
+            hermod_start
         fi
     fi
 }
 
-noah_test()
+hermod_test()
 {
     heading "Starting Test..."
     $1 "$2"
     success "Test complete!"
 }
 
-noah_alias()
+hermod_alias()
 {
     heading "Installing alias..."
-    echo "alias noah='bash ${noah_dir}/noah.sh'" | tee -a ${HOME}/.bashrc
+    echo "alias hermod='bash ${hermod_dir}/hermod.sh'" | tee -a ${HOME}/.bashrc
     source ${HOME}/.bashrc
     success "Installation complete!"
 }
 
-noah_version()
+hermod_version()
 {
     echo $(git rev-parse HEAD)
 }
 
-noah_help()
+hermod_help()
 {
     cat << EOF
-Usage: $noah [options]
+Usage: $hermod [options]
 options:
     help                      Show this help.
     version                   Show the installed version.
-    start                     Start the noah process.
-    stop                      Stop the noah process.
-    restart                   Restart the noah process.
-    reload                    Reload the noah process.
-    delete                    Delete the noah process.
+    start                     Start the hermod process.
+    stop                      Stop the hermod process.
+    restart                   Restart the hermod process.
+    reload                    Reload the hermod process.
+    delete                    Delete the hermod process.
     rebuild                   Start the rebuild process.
     monitor                   Temporarily monitor the log.
-    install                   Setup noah interactively.
-    update                    Update the noah installation.
-    config                    Configure the noah installation.
-    log                       Show the noah log.
+    install                   Setup hermod interactively.
+    update                    Update the hermod installation.
+    config                    Configure the hermod installation.
+    log                       Show the hermod log.
     test [method] [params]    Test the specified method.
-    alias                     Create a bash alias for noah.
+    alias                     Create a bash alias for hermod.
 EOF
 }

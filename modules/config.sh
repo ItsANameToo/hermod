@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # ---------------------------------------------------------------------------
-# This file is part of noah.
+# This file is part of hermod.
 #
-# (c) Brian Faust <hello@brianfaust.me>
+# (c) ItsANameToo <itsanametoo@protonmail.com>
 #
 # For the full copyright and license information, please view the LICENSE
 # file that was distributed with this source code.
@@ -11,14 +11,14 @@
 
 setup_environment()
 {
-    if [ ! -f ${noah_dir}/.noah ]; then
-        cp ${noah_dir}/.noah.example ${noah_dir}/.noah
+    if [ ! -f ${hermod_dir}/.hermod ]; then
+        cp ${hermod_dir}/.hermod.example ${hermod_dir}/.hermod
 
         warning "Yikes! A default configuration has been created, next you need to run the install command to get started."
     fi
 
-    if [[ -e ${noah_dir}/.noah ]]; then
-        . ${noah_dir}/.noah
+    if [[ -e ${hermod_dir}/.hermod ]]; then
+        . ${hermod_dir}/.hermod
     fi
 }
 
