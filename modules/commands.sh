@@ -9,7 +9,6 @@
 # file that was distributed with this source code.
 # ---------------------------------------------------------------------------
 
-# TODO: change these commands
 hermod_start()
 {
     heading "Starting hermod..."
@@ -116,7 +115,6 @@ options:
     restart                   Restart the hermod process.
     reload                    Reload the hermod process.
     delete                    Delete the hermod process.
-    rebuild                   Start the rebuild process.
     monitor                   Temporarily monitor the log.
     install                   Setup hermod interactively.
     update                    Update the hermod installation.

@@ -30,11 +30,6 @@ parse_args()
         delete)
             hermod_delete
         ;;
-        rebuild)
-            process_vars
-
-            rebuild_via_command
-        ;;
         monitor)
             process_vars
 
