@@ -13,17 +13,5 @@
 # ARK
 # -------------------------
 
-ark_dir=$(locate -b '\ark-node')
-ark_log=${ark_dir}/logs/ark.log
-
-# -------------------------
-# Network
-# -------------------------
-
-network=$(cd $ark_dir && git symbolic-ref --short -q HEAD)
-
-# -------------------------
-# Snapshot
-# -------------------------
-
-snapshot_dir=${HOME}/snapshots
+$HOME/.local/state/ark-core/$network
+ark_log=~/.local/state/ark-core/devnet/core/devnet/*.log

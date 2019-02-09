@@ -24,11 +24,6 @@ setup_environment()
 
 check_configuration()
 {
-    # TODO: change these checks
-    if [[ $network != 'mainnet' && $network != 'devnet' ]]; then
-        abort 1 "network [$network] is invalid."
-    fi
-
     if [[ ! -e $ark_log ]];then
         abort 1 "ark_log [$ark_log] does not exist."
     fi
@@ -39,10 +34,6 @@ check_configuration()
 
     if (($monitor_lines <= 0)); then
         abort 1 "monitor_lines [$monitor_lines] has to be greater than 0."
-    fi
-
-    if (($monitor_rebuild <= 0)); then
-        abort 1 "monitor_rebuild [$monitor_rebuild] has to be greater than 0."
     fi
 
     if (($monitor_interval <= 0)); then

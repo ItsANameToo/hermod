@@ -9,6 +9,8 @@
 # file that was distributed with this source code.
 # ---------------------------------------------------------------------------
 
+# TODO: update the monitoring statements
+
 monitor()
 {
     heading "Starting Monitor..."
