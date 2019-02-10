@@ -14,6 +14,9 @@ monitor()
 {
     heading "Starting Monitor..."
 
+    last_line='';
+    last_line_count=0;
+
     while true; do
         
         monitor_forged
@@ -30,6 +33,10 @@ monitor()
 
         monitor_started
 
+        monitor_relay
+
+        monitor_last_line
+
         # Reduce CPU Overhead
         if (( $monitor_interval > 0 )); then
             sleep $monitor_interval
@@ -40,7 +47,6 @@ monitor()
 }
 
 # TODO: add monitoring option that checks for a not-responding log (e.g. the same entry for more than x seconds)
-# TODO: in case the node stopped, we might need a longer interval if it doesn't start again in x seconds because otherwise it will keep sending messages
 
 monitor_forged()
 {
@@ -63,7 +69,8 @@ monitor_quorum()
     fi
 }
 
-monitor_blocks() {
+monitor_blocks()
+{
     if tail -n $monitor_lines $ark_log | grep -q "Delegate $delegate_username ($delegate_public_key) just missed a block"; then
         notify "[MISSED BLOCK] - You have missed a block this round";
 
@@ -71,13 +78,15 @@ monitor_blocks() {
     fi
 }
 
-monitor_disregarded() {
+monitor_disregarded()
+{
     if tail -n $monitor_lines $ark_log | grep -q "disregarded because already in blockchain"; then
         notify "[BLOCK DISREGARDED] - Block disregarded because already in blockchain";
     fi
 }
 
-monitor_synced() {
+monitor_synced()
+{
     if tail -n $monitor_lines $ark_log | grep -q "NOTSYNCED"; then
         notify "[OUT OF SYNC] - Node out of sync";
 
@@ -91,7 +100,8 @@ monitor_synced() {
     fi
 }
 
-monitor_stopped() {
+monitor_stopped()
+{
     if tail -n $monitor_lines $ark_log | grep -q -e "Disconnecting" -e "Stopping" -e "STOP" -e "The blockchain has been stopped"; then
         notify "[STOPPING] - Node stopping";
 
@@ -99,10 +109,36 @@ monitor_stopped() {
     fi
 }
 
-monitor_started() {
+monitor_started()
+{
     if tail -n $monitor_lines $ark_log | grep -q -e "Starting Blockchain" -e "Verifying database integrity" -e "START"; then
         notify "[STARTING] - Node starting";
 
         sleep $monitor_sleep_after_notif
+    fi
+}
+
+monitor_relay()
+{
+    if tail -n $monitor_lines $ark_log | grep -q "didn't respond to the forger. Trying another host"; then 
+        notify "[RELAY] - Relay did not respond to the forger";
+
+        sleep $monitor_sleep_after_notif
+    fi
+}
+
+monitor_last_line()
+{
+    new_last_line=$( tail -n 1 $ark_log );
+
+    if [ "$new_last_line" == "$last_line" ]; then
+        last_line_count=$((last_line_count + 1))
+
+        if (($last_line_count > 3)); then
+            last_line_count=0;
+            notify "[HALTED] - Node logs have not updated in a while; going to sleep a little longer this time";
+
+            sleep 60
+        fi
     fi
 }
