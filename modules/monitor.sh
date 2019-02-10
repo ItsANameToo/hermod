@@ -16,21 +16,23 @@ monitor()
     heading "Starting Monitor..."
 
     while true; do
-        if tail -n $monitor_lines $ark_log | grep -q "Forked from network"; then
-            notify "Forked from network - Check your node!";
+        if tail -n $monitor_lines $ark_log | grep -q "Forged new block"; then
+            notify "Forged a new block!";
 
-            # Sleep if greater than 0
-            if (( $monitor_rebuild > 0 )); then
-                sleep $monitor_rebuild
-            fi
+            # TODO: add sleep option after notification
+            sleep 10
         else
-            # monitor_chain_comparison_failed
+            monitor_quorum
 
-            # monitor_blockchain_rebuild_triggered
+            monitor_blocks
 
-            monitor_hashbangs
+            monitor_disregarded
 
-            monitor_ark
+            monitor_synced
+
+            monitor_stopped
+
+            monitor_started
         fi
 
         # Reduce CPU Overhead
@@ -42,66 +44,50 @@ monitor()
     info "Closing Monitor..."
 }
 
-monitor_chain_comparison_failed()
+monitor_quorum()
 {
-    if tail -n $monitor_lines $ark_log | grep -q "Chain comparison failed with peer"; then
-        notify "Chain comparison failed with peer - Check your node!";
+    if tail -n $monitor_lines $ark_log | grep -q "Fork 6 - Not enough quorum to forge next block"; then
+        notify "[NO QUORUM] - Fork 6; Not enough quorum to forge";
+    fi
+
+    if tail -n $monitor_lines $ark_log | grep -q "Network reach is not sufficient to get quorum"; then
+        notify "[NO QUORUM] - Insufficient network reach for quorum";
     fi
 }
 
-monitor_blockchain_rebuild_triggered()
-{
-    if tail -n $monitor_lines $ark_log | grep -q "Blockchain rebuild triggered"; then
-        notify "Blockchain rebuild triggered - Check your node!";
+monitor_blocks() {
+    if tail -n $monitor_lines $ark_log | grep -q "Delegate $delegate_username ($delegate_public_key) just missed a block"; then
+        notify "[MISSED BLOCK] - You have missed a block this round";
     fi
 }
 
-monitor_ark()
-{
-    if tail -n $monitor_lines $ark_log | grep -q "Blockchain not ready to receive block"; then
-        # Only Notify
-        if [[ $trigger_method_notify = true && $trigger_method_rebuild = false ]]; then
-            notify "Blockchain not ready to receive block - Check your node!";
-        fi
-
-        # Only Rebuild
-        if [[ "$trigger_action" = "rebuild" && $trigger_method_rebuild = true ]]; then
-            if [[ $relay_enabled = true ]]; then
-                rebuild_with_relay
-            else
-                rebuild_via_monitor
-            fi
-        fi
-
-        # Sleep if greater than 0
-        if (( $monitor_rebuild > 0 )); then
-            sleep $monitor_rebuild
-        fi
+monitor_disregarded() {
+    if tail -n $monitor_lines $ark_log | grep -q "disregarded because already in blockchain"; then
+        notify "[BLOCK DISREGARDED] - Block disregarded because already in blockchain";
     fi
 }
 
-monitor_hashbangs()
-{
-    local hashbang_occurrences=$(tail -n $monitor_lines $ark_log | grep -c "############################################")
+monitor_synced() {
+    if tail -n $monitor_lines $ark_log | grep -q "NOTSYNCED"; then
+        notify "[OUT OF SYNC] - Node out of sync";
+    fi
 
-    if [[ hashbang_occurrences -ge $monitor_lines ]]; then
-        # Only Notify
-        if [[ $trigger_method_notify = true && $trigger_method_rebuild = false ]]; then
-            notify "Blockchain not ready to receive block - Check your node!";
-        fi
+    if tail -n $monitor_lines $ark_log | grep -q "Tried to sync 5 times to different nodes, looks like the network is missing blocks"; then
+        notify "[OUT OF SYNC] - Tried syncing to different nodes but failed";
+    fi
 
-        # Only Rebuild
-        if [[ "$trigger_action" = "rebuild" && $trigger_method_rebuild = true ]]; then
-            if [[ $relay_enabled = true ]]; then
-                rebuild_with_relay
-            else
-                rebuild_via_monitor
-            fi
-        fi
+    # TODO: add sleep option after notification
+    sleep 10
+}
 
-        # Sleep if greater than 0
-        if (( $monitor_rebuild > 0 )); then
-            sleep $monitor_rebuild
-        fi
+monitor_stopped() {
+    if tail -n $monitor_lines $ark_log | grep -q -e "Disconnecting" -e "Stopping" -e "STOP" -e "The blockchain has been stopped"; then
+        notify "[STOPPED] - Node stopped";
+    fi
+}
+
+monitor_started() {
+    if tail -n $monitor_lines $ark_log | grep -q -e "Starting Blockchain" -e "Verifying database integrity" -e "START"; then
+        notify "[STARTED] - Node started";
     fi
 }
