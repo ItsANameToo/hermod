@@ -24,13 +24,7 @@ setup_environment()
 
 check_configuration()
 {
-    if [[ ! -e $ark_log ]];then
-        abort 1 "ark_log [$ark_log] does not exist."
-    fi
-
-    if [[ ! -r $ark_log ]];then
-        abort 1 "ark_log [$ark_log] is not readable."
-    fi
+    # TODO: check if log file exists and is readable
 
     if (($monitor_lines <= 0)); then
         abort 1 "monitor_lines [$monitor_lines] has to be greater than 0."
@@ -38,9 +32,5 @@ check_configuration()
 
     if (($monitor_interval <= 0)); then
         abort 1 "monitor_interval [$monitor_interval] has to be greater than 0."
-    fi
-
-    if (($relay_port <= 0)); then
-        abort 1 "relay_port [$relay_port] has to be greater than 0."
     fi
 }

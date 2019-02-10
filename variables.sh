@@ -13,5 +13,4 @@
 # ARK
 # -------------------------
 
-$HOME/.local/state/ark-core/$network
-ark_log=~/.local/state/ark-core/devnet/core/devnet/*.log
+ark_log=~/.local/share/ark-core/devnet/logs/core/devnet/*.log

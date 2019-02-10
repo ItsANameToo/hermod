@@ -13,8 +13,15 @@
 # Monitor
 # -------------------------
 
-monitor_lines=10                                       # number of lines to monitor...
+monitor_lines=20                                       # number of lines to monitor...
 monitor_interval=1                                     # time to wait after a log check in seconds...
+
+# -------------------------
+# Delegate
+# -------------------------
+
+delegate_username=''                                   # username of the delegate running on the node
+delegate_public_key=''                                 # public key of the delegate running on the node
 
 # -------------------------
 # [Notifications] Driver
