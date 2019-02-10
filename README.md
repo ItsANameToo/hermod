@@ -4,6 +4,8 @@
 
 This tool is based on the monitoring capabilities of [Noah](https://github.com/faustbrian/noah), but adjusted to work with v2 of Ark.
 
+The reason for not going with a core plugin but a bash script instead, is because the script can still notify you if core goes down for whatever reason, while the plugin would go down with it. Nonetheless, it might be possible that I'll create a core plugin out of some of the `hermod` features too, sometime in the future.
+
 ## Installation
 
 ```
@@ -58,7 +60,6 @@ options:
     restart                   Restart the hermod process.
     reload                    Reload the hermod process.
     delete                    Delete the hermod process.
-    rebuild                   Start the rebuild process.
     monitor                   Temporarily monitor the log.
     install                   Setup hermod interactively.
     update                    Update the hermod installation.
