@@ -13,8 +13,9 @@
 # Monitor
 # -------------------------
 
-monitor_lines=20                                       # number of lines to monitor...
+monitor_lines=10                                       # number of lines to monitor...
 monitor_interval=1                                     # time to wait after a log check in seconds...
+monitor_sleep_after_notif=10                           # time to wait after a notification was sent in seconds
 
 # -------------------------
 # Delegate

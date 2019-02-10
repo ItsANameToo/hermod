@@ -9,31 +9,25 @@
 # file that was distributed with this source code.
 # ---------------------------------------------------------------------------
 
-# TODO: update the monitoring statements
-
 monitor()
 {
     heading "Starting Monitor..."
 
     while true; do
-        if tail -n $monitor_lines $ark_log | grep -q "Forged new block"; then
-            notify "Forged a new block!";
+        
+        monitor_forged
 
-            # TODO: add sleep option after notification
-            sleep 10
-        else
-            monitor_quorum
+        monitor_quorum
 
-            monitor_blocks
+        monitor_blocks
 
-            monitor_disregarded
+        monitor_disregarded
 
-            monitor_synced
+        monitor_synced
 
-            monitor_stopped
+        monitor_stopped
 
-            monitor_started
-        fi
+        monitor_started
 
         # Reduce CPU Overhead
         if (( $monitor_interval > 0 )); then
@@ -42,6 +36,18 @@ monitor()
     done
 
     info "Closing Monitor..."
+}
+
+# TODO: add monitoring option that checks for a not-responding log (e.g. the same entry for more than x seconds)
+
+monitor_forged()
+{
+    # TODO: mostly for testing, can be removed after
+    if tail -n $monitor_lines $ark_log | grep -q "Forged new block"; then
+        notify "[FORGED] Forged a new block!";
+
+        sleep $monitor_sleep_after_notif
+    fi
 }
 
 monitor_quorum()
@@ -58,6 +64,8 @@ monitor_quorum()
 monitor_blocks() {
     if tail -n $monitor_lines $ark_log | grep -q "Delegate $delegate_username ($delegate_public_key) just missed a block"; then
         notify "[MISSED BLOCK] - You have missed a block this round";
+
+        sleep $monitor_sleep_after_notif
     fi
 }
 
@@ -70,24 +78,29 @@ monitor_disregarded() {
 monitor_synced() {
     if tail -n $monitor_lines $ark_log | grep -q "NOTSYNCED"; then
         notify "[OUT OF SYNC] - Node out of sync";
+
+        sleep $monitor_sleep_after_notif
     fi
 
     if tail -n $monitor_lines $ark_log | grep -q "Tried to sync 5 times to different nodes, looks like the network is missing blocks"; then
         notify "[OUT OF SYNC] - Tried syncing to different nodes but failed";
-    fi
 
-    # TODO: add sleep option after notification
-    sleep 10
+        sleep $monitor_sleep_after_notif
+    fi
 }
 
 monitor_stopped() {
     if tail -n $monitor_lines $ark_log | grep -q -e "Disconnecting" -e "Stopping" -e "STOP" -e "The blockchain has been stopped"; then
-        notify "[STOPPED] - Node stopped";
+        notify "[STOPPING] - Node stopping";
+
+        sleep $monitor_sleep_after_notif
     fi
 }
 
 monitor_started() {
     if tail -n $monitor_lines $ark_log | grep -q -e "Starting Blockchain" -e "Verifying database integrity" -e "START"; then
-        notify "[STARTED] - Node started";
+        notify "[STARTING] - Node starting";
+
+        sleep $monitor_sleep_after_notif
     fi
 }
