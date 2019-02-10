@@ -2,7 +2,7 @@
 
 > Monitoring tool for Ark Core
 
-This tool is based on the existing monitoring capabilities of [Noah](https://github.com/faustbrian/noah), but adjusted to work with v2 of Ark.
+This tool is based on the monitoring capabilities of [Noah](https://github.com/faustbrian/noah), but adjusted to work with v2 of Ark.
 
 ## Installation
 
@@ -26,7 +26,7 @@ monitor_lines=10
 monitor_interval=1
 monitor_sleep_after_notif=10
 
-# Delegate info to properly filter the logs messages. Both should be filled in with your delegate details.
+# Delegate info to properly filter the log messages. Both should be filled in with your delegate details.
 delegate_username=''
 delegate_public_key=''
 
