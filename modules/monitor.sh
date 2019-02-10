@@ -39,6 +39,7 @@ monitor()
 }
 
 # TODO: add monitoring option that checks for a not-responding log (e.g. the same entry for more than x seconds)
+# TODO: in case the node stopped, we might need a longer interval if it doesn't start again in x seconds because otherwise it will keep sending messages
 
 monitor_forged()
 {
