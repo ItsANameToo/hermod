@@ -37,6 +37,8 @@ monitor()
 
         monitor_last_line
 
+        monitor_round_saved
+
         # Reduce CPU Overhead
         if (( $monitor_interval > 0 )); then
             sleep $monitor_interval
@@ -140,5 +142,14 @@ monitor_last_line()
 
             sleep 60
         fi
+    fi
+}
+
+monitor_round_saved()
+{
+    if tail -n $monitor_lines $ark_log | grep -q "Saving round"; then
+        notify "[SNAPSHOTS] - Just saved a new round";
+
+        sleep $monitor_sleep_after_notif
     fi
 }

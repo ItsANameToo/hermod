@@ -104,6 +104,11 @@ hermod_version()
     echo $(git rev-parse HEAD)
 }
 
+hermod_snapshot()
+{
+    snapshot
+}
+
 hermod_help()
 {
     cat << EOF
@@ -123,5 +128,6 @@ options:
     log                       Show the hermod log.
     test [method] [params]    Test the specified method.
     alias                     Create a bash alias for hermod.
+    snapshot
 EOF
 }
