@@ -32,9 +32,19 @@ monitor_sleep_after_notif=10
 delegate_username=''
 delegate_public_key=''
 
+# Core settings, set the path to core (usually $HOME/core or $HOME/ark-core), and the network (devnet or mainnet).
+core_path=$HOME/ark-core
+core_network=devnet
+
 # How you would like to be notified. Don't forget to change this line to one (or more) ways in which you would like to be updated.
 notification_drivers=(log)  
 ```
+
+### Snapshots
+
+When rounds are saved on core, hermod will take snapshots, or append to the most recent one. It is enabled by default and it will keep the 5 most recent snapshots. Older snapshots are deleted. Make sure that you have enough storage space. 
+
+### Notifications
 
 There are a couple of services that you can use to get notified by the script.
 These are currently the following:
@@ -67,11 +77,14 @@ options:
     log                       Show the hermod log.
     test [method] [params]    Test the specified method.
     alias                     Create a bash alias for hermod.
+    snapshot                  Take a new snapshot, or append to the most recent one.
+    rollback                  Roll back to the most recent snapshot.
 ```
 
 ## Credits
 
 - [ItsANameToo](https://github.com/itsanametoo)
+- [vmunich (Arkland)](https://github.com/vmunich)
 - [Brian Faust](https://github.com/faustbrian) - Noah implementation
 - [All Contributors](../../contributors)
 
