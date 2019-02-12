@@ -16,6 +16,8 @@ snapshot()
     # go into the snapshot dir
     cd "$HOME/.local/share/ark-core/$core_network/snapshots"
 
+    #TODO: create /snapshots folder if it doesn't exist.
+
     # check if dir is empty
     has_snapshots=$(ls -1 . | wc -l)
 
