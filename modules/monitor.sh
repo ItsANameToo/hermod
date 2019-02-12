@@ -150,6 +150,8 @@ monitor_round_saved()
     if tail -n $monitor_lines $ark_log | grep -q "Saving round"; then
         notify "[SNAPSHOTS] - Just saved a new round";
 
+        snapshot
+
         sleep $monitor_sleep_after_notif
     fi
 }
