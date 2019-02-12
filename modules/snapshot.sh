@@ -19,13 +19,13 @@ snapshot()
     # check if dir is empty
     has_snapshots=$(ls -1 . | wc -l)
 
-    notify "[DEBUG] retain: $snapshots_retain";
-
     if [ $has_snapshots -eq 0 ] 
     then
         snapshot_dump
     else
         snapshot_append
+
+        snapshot_purge
     fi
 }
 
@@ -33,9 +33,11 @@ snapshot_dump()
 {
     cd ~/ark-core/packages/core-snapshots-cli
 
-    notify "[SNAPSHOTS] Taking a fresh snapshot";
+    log "[SNAPSHOTS] Taking a fresh snapshot...";
 
     yarn dump:devnet
+
+    log "[SNAPSHOTS] Done.";
 }
 
 snapshot_append()
@@ -45,18 +47,17 @@ snapshot_append()
 
     cd ~/ark-core/packages/core-snapshots-cli
 
-    notify "[SNAPSHOTS] Appending to snapshot: $most_recent_snapshot...";
+    log "[SNAPSHOTS] Appending to snapshot: $most_recent_snapshot...";
 
     yarn dump:devnet --blocks $most_recent_snapshot
 
-    notify "[SNAPSHOTS] Done.";
+    log "[SNAPSHOTS] Done.";
 }
 
 snapshot_purge()
 {
-    #TODO: Purge older snapshots according to snapshots_retain setting
     cd ~/.local/share/ark-core/devnet/snapshots
 
-    # delete all but the 10 recent snapshots
-    # ls -t | tail -n 1 | xargs rm -r
+    # delete old snapshots
+    ls -t | tail -n +$snapshots_retain | xargs rm -r
 }
