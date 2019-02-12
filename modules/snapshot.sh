@@ -14,7 +14,7 @@
 snapshot()
 {
     # go into the snapshot dir
-    cd ~/.local/share/ark-core/devnet/snapshots
+    cd "~/.local/share/ark-core/$core_network/snapshots"
 
     # check if dir is empty
     has_snapshots=$(ls -1 . | wc -l)
@@ -31,7 +31,7 @@ snapshot()
 
 snapshot_dump()
 {
-    cd ~/ark-core/packages/core-snapshots-cli
+    cd "$core_path/packages/core-snapshots-cli"
 
     log "[SNAPSHOTS] Taking a fresh snapshot...";
 
@@ -45,7 +45,7 @@ snapshot_append()
     # get most recent snapshot
     most_recent_snapshot=$(ls -td * | head -1)
 
-    cd ~/ark-core/packages/core-snapshots-cli
+    cd "$core_path/packages/core-snapshots-cli"
 
     log "[SNAPSHOTS] Appending to snapshot: $most_recent_snapshot...";
 
@@ -56,7 +56,7 @@ snapshot_append()
 
 snapshot_purge()
 {
-    cd ~/.local/share/ark-core/devnet/snapshots
+    cd "~/.local/share/ark-core/$core_network/snapshots"
 
     # delete old snapshots
     ls -t | tail -n +$snapshots_retain | xargs rm -r

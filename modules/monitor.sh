@@ -16,6 +16,7 @@ monitor()
 
     last_line='';
     last_line_count=0;
+    log_file="$core_log_path/*.log"
 
     while true; do
         
@@ -53,7 +54,7 @@ monitor()
 monitor_forged()
 {
     # TODO: mostly for testing, can be removed after
-    if tail -n $monitor_lines $ark_log | grep -q "Forged new block"; then
+    if tail -n $monitor_lines $log_file | grep -q "Forged new block"; then
         notify "[FORGED] Forged a new block!";
 
         sleep $monitor_sleep_after_notif
@@ -62,18 +63,18 @@ monitor_forged()
 
 monitor_quorum()
 {
-    if tail -n $monitor_lines $ark_log | grep -q "Fork 6 - Not enough quorum to forge next block"; then
+    if tail -n $monitor_lines $log_file | grep -q "Fork 6 - Not enough quorum to forge next block"; then
         notify "[NO QUORUM] - Fork 6; Not enough quorum to forge";
     fi
 
-    if tail -n $monitor_lines $ark_log | grep -q "Network reach is not sufficient to get quorum"; then
+    if tail -n $monitor_lines $log_file | grep -q "Network reach is not sufficient to get quorum"; then
         notify "[NO QUORUM] - Insufficient network reach for quorum";
     fi
 }
 
 monitor_blocks()
 {
-    if tail -n $monitor_lines $ark_log | grep -q "Delegate $delegate_username ($delegate_public_key) just missed a block"; then
+    if tail -n $monitor_lines $log_file | grep -q "Delegate $delegate_username ($delegate_public_key) just missed a block"; then
         notify "[MISSED BLOCK] - You have missed a block this round";
 
         sleep $monitor_sleep_after_notif
@@ -82,20 +83,20 @@ monitor_blocks()
 
 monitor_disregarded()
 {
-    if tail -n $monitor_lines $ark_log | grep -q "disregarded because already in blockchain"; then
+    if tail -n $monitor_lines $log_file | grep -q "disregarded because already in blockchain"; then
         notify "[BLOCK DISREGARDED] - Block disregarded because already in blockchain";
     fi
 }
 
 monitor_synced()
 {
-    if tail -n $monitor_lines $ark_log | grep -q "NOTSYNCED"; then
+    if tail -n $monitor_lines $log_file | grep -q "NOTSYNCED"; then
         notify "[OUT OF SYNC] - Node out of sync";
 
         sleep $monitor_sleep_after_notif
     fi
 
-    if tail -n $monitor_lines $ark_log | grep -q "Tried to sync 5 times to different nodes, looks like the network is missing blocks"; then
+    if tail -n $monitor_lines $log_file | grep -q "Tried to sync 5 times to different nodes, looks like the network is missing blocks"; then
         notify "[OUT OF SYNC] - Tried syncing to different nodes but failed";
 
         sleep $monitor_sleep_after_notif
@@ -104,7 +105,7 @@ monitor_synced()
 
 monitor_stopped()
 {
-    if tail -n $monitor_lines $ark_log | grep -q -e "Disconnecting" -e "Stopping" -e "STOP" -e "The blockchain has been stopped"; then
+    if tail -n $monitor_lines $log_file | grep -q -e "Disconnecting" -e "Stopping" -e "STOP" -e "The blockchain has been stopped"; then
         notify "[STOPPING] - Node stopping";
 
         sleep $monitor_sleep_after_notif
@@ -113,7 +114,7 @@ monitor_stopped()
 
 monitor_started()
 {
-    if tail -n $monitor_lines $ark_log | grep -q -e "Starting Blockchain" -e "Verifying database integrity" -e "START"; then
+    if tail -n $monitor_lines $log_file | grep -q -e "Starting Blockchain" -e "Verifying database integrity" -e "START"; then
         notify "[STARTING] - Node starting";
 
         sleep $monitor_sleep_after_notif
@@ -122,7 +123,7 @@ monitor_started()
 
 monitor_relay()
 {
-    if tail -n $monitor_lines $ark_log | grep -q "didn't respond to the forger. Trying another host"; then 
+    if tail -n $monitor_lines $log_file | grep -q "didn't respond to the forger. Trying another host"; then 
         notify "[RELAY] - Relay did not respond to the forger";
 
         sleep $monitor_sleep_after_notif
@@ -131,7 +132,7 @@ monitor_relay()
 
 monitor_last_line()
 {
-    new_last_line=$( tail -n 1 $ark_log );
+    new_last_line=$( tail -n 1 $log_file );
 
     if [ "$new_last_line" == "$last_line" ]; then
         last_line_count=$((last_line_count + 1))
@@ -147,7 +148,7 @@ monitor_last_line()
 
 monitor_round_saved()
 {
-    if tail -n $monitor_lines $ark_log | grep -q "Saving round"; then
+    if tail -n $monitor_lines $log_file | grep -q "Saving round"; then
         notify "[SNAPSHOTS] - Just saved a new round";
 
         snapshot
