@@ -128,6 +128,6 @@ options:
     log                       Show the hermod log.
     test [method] [params]    Test the specified method.
     alias                     Create a bash alias for hermod.
-    snapshot
+    snapshot                  Take a new snapshot, or append to the most recent one.
 EOF
 }
