@@ -134,6 +134,6 @@ options:
     test [method] [params]    Test the specified method.
     alias                     Create a bash alias for hermod.
     snapshot                  Take a new snapshot, or append to the most recent one.
-    rollback                  Rolls back the database to the most recent snapshot.
+    rollback                  Roll back to the most recent snapshot.
 EOF
 }
