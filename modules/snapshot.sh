@@ -14,7 +14,7 @@
 snapshot()
 {
     # go into the snapshot dir
-    cd "~/.local/share/ark-core/$core_network/snapshots"
+    cd "$HOME/.local/share/ark-core/$core_network/snapshots"
 
     # check if dir is empty
     has_snapshots=$(ls -1 . | wc -l)
@@ -56,7 +56,7 @@ snapshot_append()
 
 snapshot_purge()
 {
-    cd "~/.local/share/ark-core/$core_network/snapshots"
+    cd "$HOME/.local/share/ark-core/$core_network/snapshots"
 
     # delete old snapshots
     ls -t | tail -n +$snapshots_retain | xargs rm -r
