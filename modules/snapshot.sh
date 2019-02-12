@@ -61,3 +61,15 @@ snapshot_purge()
     # delete old snapshots
     ls -t | tail -n +$snapshots_retain | xargs rm -r
 }
+
+snapshot_rollback()
+{
+    cd "$HOME/.local/share/ark-core/$core_network/snapshots"
+
+    # get most recent snapshot
+    most_recent_snapshot=$(ls -td * | head -1)
+
+    most_recent_snapshot="${most_recent_snapshot:2}"
+
+    log "[SNAPSHOTS] $most_recent_snapshot";
+}
