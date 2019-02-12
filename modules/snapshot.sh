@@ -69,7 +69,24 @@ snapshot_rollback()
     # get most recent snapshot
     most_recent_snapshot=$(ls -td * | head -1)
 
+    # trim the first 2 characters of the file name
     most_recent_snapshot="${most_recent_snapshot:2}"
 
-    log "[SNAPSHOTS] $most_recent_snapshot";
+    log "[SNAPSHOTS] Stopping core...";
+
+    pm2 stop all
+
+    log "[SNAPSHOTS] Rolling back the database to block $most_recent_snapshot";
+
+    cd "$core_path/packages/core-snapshots-cli"
+
+    yarn rollback:$core_network --height $most_recent_snapshot
+
+    log "[SNAPSHOTS] Done.";
+
+    log "[SNAPSHOTS] Starting core...";
+
+    pm2 start all
+
+    log "[SNAPSHOTS] Done.";
 }
