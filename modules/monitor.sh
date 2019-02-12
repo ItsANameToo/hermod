@@ -16,7 +16,7 @@ monitor()
 
     last_line='';
     last_line_count=0;
-    log_file="$core_log_path/*.log"
+    log_file="${core_log_path}/*.log"
 
     while true; do
         
@@ -149,8 +149,8 @@ monitor_last_line()
 monitor_round_saved()
 {
     if tail -n $monitor_lines $log_file | grep -q "Saving round"; then
-        notify "[SNAPSHOTS] - Just saved a new round";
 
+        # run snapshot() function when rounds are saved
         snapshot
 
         sleep $monitor_sleep_after_notif

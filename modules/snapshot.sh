@@ -35,7 +35,7 @@ snapshot_dump()
 
     log "[SNAPSHOTS] Taking a fresh snapshot...";
 
-    yarn dump:devnet
+    yarn dump:$core_network
 
     log "[SNAPSHOTS] Done.";
 }
@@ -49,7 +49,7 @@ snapshot_append()
 
     log "[SNAPSHOTS] Appending to snapshot: $most_recent_snapshot...";
 
-    yarn dump:devnet --blocks $most_recent_snapshot
+    yarn dump:$core_network --blocks $most_recent_snapshot
 
     log "[SNAPSHOTS] Done.";
 }
