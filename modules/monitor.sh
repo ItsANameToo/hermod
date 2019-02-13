@@ -150,7 +150,8 @@ monitor_round_saved()
 {
     if tail -n $monitor_lines $log_file | grep -q "Saving round"; then
 
-        if [[ $snapshots_enabled == "true" ]] then
+        if [[ $snapshots_enabled == "true" ]];
+        then
             # run snapshot() function when rounds are saved
             snapshot
         fi
