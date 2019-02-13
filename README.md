@@ -34,7 +34,10 @@ delegate_public_key=''
 
 # Core settings, set the path to core (usually $HOME/core or $HOME/ark-core), and the network (devnet or mainnet).
 core_path=$HOME/ark-core
-core_network=devnet
+core_network=mainnet
+
+# Snapshot settings, enabling the snapshot module will automatically take snapshots and append blocks to existing snapshots.
+snapshots_enable=true
 
 # How you would like to be notified. Don't forget to change this line to one (or more) ways in which you would like to be updated.
 notification_drivers=(log)  
