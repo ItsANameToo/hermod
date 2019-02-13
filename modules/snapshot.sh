@@ -13,14 +13,17 @@
 
 snapshot()
 {
-    # go into the snapshot dir
+    # create snapshot directory if it doesn't exist yet
+    mkdir -p "$HOME/.local/share/ark-core/$core_network/snapshots"
+
+    # go into the snapshot directory
     cd "$HOME/.local/share/ark-core/$core_network/snapshots"
 
-    #TODO: create /snapshots folder if it doesn't exist.
-
-    # check if dir is empty
+    # check if directory is empty
     has_snapshots=$(ls -1 . | wc -l)
 
+    # if the directory is empty, take a fresh snapshot,
+    # else, append to the last snapshot
     if [ $has_snapshots -eq 0 ] 
     then
         snapshot_dump
