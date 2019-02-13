@@ -46,8 +46,6 @@ monitor()
     info "Closing Monitor..."
 }
 
-# TODO: add monitoring option that checks for a not-responding log (e.g. the same entry for more than x seconds)
-
 monitor_forged()
 {
     # TODO: mostly for testing, can be removed after
