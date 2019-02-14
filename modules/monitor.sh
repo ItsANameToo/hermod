@@ -55,7 +55,7 @@ monitor_forged()
 {
     # TODO: mostly for testing, can be removed after
     if tail -n $monitor_lines $log_file | grep -q "Forged new block"; then
-        notify "[FORGED] Forged a new block!";
+        log "[FORGED] Forged a new block!";
 
         sleep $monitor_sleep_after_notif
     fi
