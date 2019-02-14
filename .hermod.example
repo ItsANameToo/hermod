@@ -21,8 +21,9 @@ monitor_sleep_after_notif=10                               # time to wait after 
 # -------------------------
 # Core
 # -------------------------
-core_path=$HOME/ark-core                                   # path to core's main directory (no trailing slash!)
+
 core_network=mainnet                                       # values: devnet, mainnet, testnet
+core_path=$HOME/ark-core                                   # path to core's main directory (no trailing slash!)
 core_log_path="$HOME/.local/state/ark-core/$core_network"  # path to where logs are stored (no trailing slash!)
 
 # -------------------------
