@@ -42,6 +42,8 @@ monitor()
 
         monitor_round_saved
 
+        monitor_fork
+
         monitor_last_line
 
         # Reduce CPU Overhead
@@ -152,19 +154,12 @@ monitor_network_rollback()
     fi
 }
 
-monitor_last_line()
+monitor_fork()
 {
-    new_last_line=$( tail -n 1 $log_file );
+    if tail -n $monitor_lines $log_file | grep -q "event 'FORK':"; then 
+        notify "[FORK] - Node has forked - Network might be unstable";
 
-    if [ "$new_last_line" == "$last_line" ]; then
-        last_line_count=$((last_line_count + 1))
-
-        if (($last_line_count > 3)); then
-            last_line_count=0;
-            notify "[HALTED] - Node logs have not updated in a while; going to sleep a little longer this time";
-
-            sleep 60
-        fi
+        sleep $monitor_sleep_after_notif
     fi
 }
 
@@ -179,5 +174,21 @@ monitor_round_saved()
         fi
         
         sleep $monitor_sleep_after_notif
+    fi
+}
+
+monitor_last_line()
+{
+    new_last_line=$( tail -n 1 $log_file );
+
+    if [ "$new_last_line" == "$last_line" ]; then
+        last_line_count=$((last_line_count + 1))
+
+        if (($last_line_count > 3)); then
+            last_line_count=0;
+            notify "[HALTED] - Node logs have not updated in a while; going to sleep a little longer this time";
+
+            sleep 60
+        fi
     fi
 }
