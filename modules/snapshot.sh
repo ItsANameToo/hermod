@@ -40,7 +40,7 @@ snapshot_dump()
 
     log "[SNAPSHOTS] Taking a fresh snapshot...";
 
-    yarn dump:$core_network
+    yarn dump:$core_network &
 
     log "[SNAPSHOTS] Done.";
 }
