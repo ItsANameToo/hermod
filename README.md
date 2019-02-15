@@ -1,14 +1,14 @@
 # hermod
 
-> Monitoring tool for Ark Core
+> Monitoring & Snapshot tool for Ark Core
 
-This tool is based on the monitoring capabilities of [Noah](https://github.com/faustbrian/noah), but adjusted to work with v2 of Ark.
+This tool is based on the monitoring and snapshot capabilities of [Noah](https://github.com/faustbrian/noah), but adjusted to work with v2 of Ark.
 
-The reason for not going with a core plugin but a bash script instead, is because the script can still notify you if core goes down for whatever reason, while the plugin would go down with it. Nonetheless, it might be possible that I'll create a core plugin out of some of the `hermod` features too, sometime in the future.
+The reason for not going with a core plugin but a bash script instead, is because the script can still notify you if core goes down for whatever reason, while the plugin would go down with it. Nonetheless, it is possible that a core plugin with a subset of `hermod` features might be created sometime in the future.
 
 ## Installation
 
-```
+```bash
 git clone https://github.com/ItsANameToo/hermod.git
 cd ~/hermod
 bash hermod.sh install
