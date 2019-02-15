@@ -25,7 +25,14 @@ setup_environment()
 
 check_configuration()
 {
-    # TODO: check if log file exists and is readable
+    # Based on https://stackoverflow.com/questions/6363441/check-if-a-file-exists-with-wildcard-in-shell-script
+    if [[! ls "${core_log_path}/*.log" 1> /dev/null 2>&1 ]]; then
+        abort 1 "log file [$monitor_lines] does not exist"
+    fi
+
+    if [[ $core_network != 'mainnet' && $core_network != 'devnet' ]]; then
+        abort 1 "core_network [$core_network] is invalid."
+    fi
 
     if (($monitor_lines <= 0)); then
         abort 1 "monitor_lines [$monitor_lines] has to be greater than 0."
@@ -33,5 +40,25 @@ check_configuration()
 
     if (($monitor_interval <= 0)); then
         abort 1 "monitor_interval [$monitor_interval] has to be greater than 0."
+    fi
+
+    if (($monitor_sleep_after_notif <= 0)); then
+        abort 1 "monitor_sleep_after_notif [$monitor_sleep_after_notif] has to be greater than 0."
+    fi
+
+    if (($monitor_sleep_halted <= 0)); then
+        abort 1 "monitor_sleep_halted [$monitor_sleep_halted] has to be greater than 0."
+    fi
+
+    if (($monitor_lines_halted <= 0)); then
+        abort 1 "monitor_lines_halted [$monitor_lines_halted] has to be greater than 0."
+    fi
+
+    if [ -z "$delegate_username" ]; then
+        abort 1 "delegate_username should not be empty."
+    fi
+
+    if [ -z "$delegate_public_key" ]; then
+        abort 1 "delegate_public_key should not be empty."
     fi
 }
