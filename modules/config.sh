@@ -25,9 +25,10 @@ setup_environment()
 
 check_configuration()
 {
-    # Based on https://stackoverflow.com/questions/6363441/check-if-a-file-exists-with-wildcard-in-shell-script
-    if [[! ls "${core_log_path}/*.log" 1> /dev/null 2>&1 ]]; then
-        abort 1 "log file [$monitor_lines] does not exist"
+
+    log_files=("${core_log_path}/*.log")
+    if [ ! -e ${log_files[0]} ]; then 
+        abort 1 "log file in specified folder [$core_log_path] does not exist"
     fi
 
     if [[ $core_network != 'mainnet' && $core_network != 'devnet' ]]; then
