@@ -41,7 +41,11 @@ hermod_log="${hermod_dir}/hermod.log"
 main()
 {
     setup_environment
-    check_configuration
+
+    # Allow incorrect config when passing the config parameter
+    if [[ ! "$1" = "config" ]]; then
+        check_configuration
+    fi
 
     parse_args "$@"
 

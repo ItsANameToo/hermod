@@ -15,7 +15,7 @@ setup_environment()
     if [ ! -f ${hermod_dir}/.hermod ]; then
         cp ${hermod_dir}/.hermod.example ${hermod_dir}/.hermod
 
-        warning "Yikes! A default configuration has been created, next you need to run the install command to get started."
+        warning "hermod has been installed and a default configuration was created. Next, you need to run 'bash hermod.sh config' to edit the default values."
     fi
 
     if [[ -e ${hermod_dir}/.hermod ]]; then

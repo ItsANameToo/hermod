@@ -18,7 +18,7 @@ monitor_lines=10                                           # number of lines to 
 monitor_interval=3                                         # time to wait after a log check in seconds, values > 1 work best with the last_line monitoring
 monitor_sleep_after_notif=10                               # time to wait after a notification was sent in seconds
 monitor_sleep_halted=30                                    # time to wait before checking again after the log seemed to have halted
-monitor_lines_halted=3                                     # number of times the line should not have changed before logs are considered halted. This can be calculate to a time value by multiplying with monitor_interval
+monitor_lines_halted=5                                     # number of times the line should not have changed before logs are considered halted. This can be calculate to a time value by multiplying with monitor_interval
 monitor_notification_prefix=                               # adds a prefix on notification messages
 
 # -------------------------
