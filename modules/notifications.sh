@@ -91,7 +91,8 @@ notify_via_twilio_message()
 notify()
 {
     local datetime=$(date '+%Y-%m-%d %H:%M:%S')
-    local message="[$datetime] $1"
+    local prefix=$([ -z "$monitor_notification_prefix" ] && echo "" || echo "[$monitor_notification_prefix]")
+    local message="[$datetime]$prefix $1"
 
     for driver in ${notification_drivers[@]}; do
         case $driver in
