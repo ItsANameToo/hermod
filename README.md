@@ -24,7 +24,7 @@ At a minimum, you should go over and fill in some of the following configuration
 
 ```bash
 # Notification settings, by default these should be fine, but you can decide to increase / reduce it to your liking
-monitor_lines=10
+monitor_lines=10 # if you have debug logs enabled, 20 lines is better
 monitor_interval=3
 monitor_sleep_after_notif=10
 monitor_lines_halted=5
@@ -42,7 +42,7 @@ core_log_path="$HOME/.local/state/ark-core/$core_network"
 snapshots_enable=true
 
 # How you would like to be notified. Don't forget to change this line to one (or more) ways in which you would like to be updated.
-notification_drivers=(log)  
+notification_drivers=(log slack discord)
 ```
 
 ### Snapshots
