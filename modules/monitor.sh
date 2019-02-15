@@ -19,8 +19,6 @@ monitor()
     log_file="${core_log_path}/*.log"
 
     while true; do
-        
-        monitor_forged
 
         monitor_quorum
 
@@ -53,16 +51,6 @@ monitor()
     done
 
     info "Closing Monitor..."
-}
-
-monitor_forged()
-{
-    # TODO: mostly for testing, can be removed after
-    if tail -n $monitor_lines $log_file | grep -q "Forged new block"; then
-        log "[FORGED] Forged a new block!";
-
-        sleep $monitor_sleep_after_notif
-    fi
 }
 
 monitor_quorum()
@@ -182,11 +170,11 @@ monitor_last_line()
     if [[ "$new_last_line" = "$last_line" ]]; then
         last_line_count=$(($last_line_count + 1))
 
-        if (($last_line_count >= 3)); then
+        if (($last_line_count >= $monitor_lines_halted)); then
             last_line_count=0;
             notify "[HALTED] - Node logs have not updated in a while; maybe the node has crashed";
 
-            sleep 60
+            sleep $monitor_sleep_halted
         fi
     else
         last_line_count=0

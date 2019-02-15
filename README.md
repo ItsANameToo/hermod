@@ -25,8 +25,9 @@ At a minimum, you should go over and fill in some of the following configuration
 ```bash
 # Notification settings, by default these should be fine, but you can decide to increase / reduce it to your liking
 monitor_lines=10
-monitor_interval=1
+monitor_interval=3
 monitor_sleep_after_notif=10
+monitor_lines_halted=5
 
 # Delegate info to properly filter the log messages. Both should be filled in with your delegate details.
 delegate_username=''
@@ -35,6 +36,7 @@ delegate_public_key=''
 # Core settings, set the path to core (usually $HOME/core or $HOME/ark-core), and the network (devnet or mainnet).
 core_path=$HOME/ark-core
 core_network=mainnet
+core_log_path="$HOME/.local/state/ark-core/$core_network"
 
 # Snapshot settings, enabling the snapshot module will automatically take snapshots and append blocks to existing snapshots.
 snapshots_enable=true
@@ -60,6 +62,10 @@ These are currently the following:
 * [Pushbullet](https://pushbullet.com/)
 * [Mailgun](https://mailgun.com/)
 * [Twillio](https://www.twilio.com/) - `twilio_message` will send you SMS, and `twilio_call` will call you when there's a problem with your node
+
+### Testing
+
+You can check whether you have confired your notifications correctly by running `bash hermod.sh test notify MESSAGE`. This will send `MESSAGE` to each of the notification drivers you've configured in the config.
 
 ## Commands
 
@@ -93,4 +99,4 @@ options:
 
 ## License
 
-[MIT](LICENSE) © ItsANameToo / Brian Faust
+[MIT](LICENSE) © ItsANameToo / vmunich / Brian Faust
