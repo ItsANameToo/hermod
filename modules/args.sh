@@ -58,6 +58,16 @@ parse_args()
 
             exit 1
         ;;
+        snapshot)
+            hermod_snapshot
+
+            exit 1
+        ;;
+        rollback)
+            hermod_rollback
+
+            exit 1
+        ;;
         help|*)
             hermod_help
 
