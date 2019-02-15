@@ -17,7 +17,6 @@
 hermod=$(basename "$0")
 hermod_dir="${HOME}/hermod"
 hermod_log="${hermod_dir}/hermod.log"
-. "${hermod_dir}/variables.sh"
 
 # -------------------------
 # Modules
@@ -30,6 +29,7 @@ hermod_log="${hermod_dir}/hermod.log"
 . "${hermod_dir}/modules/processes.sh"
 . "${hermod_dir}/modules/notifications.sh"
 . "${hermod_dir}/modules/monitor.sh"
+. "${hermod_dir}/modules/snapshot.sh"
 . "${hermod_dir}/modules/commands.sh"
 . "${hermod_dir}/modules/install.sh"
 . "${hermod_dir}/modules/args.sh"
