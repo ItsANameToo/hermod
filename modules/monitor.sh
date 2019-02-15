@@ -109,7 +109,7 @@ monitor_synced()
 
 monitor_stopped()
 {
-    if tail -n $monitor_lines $ark_log | grep -q -e "Disconnecting" -e "Stopping" -e "STOP" -e "The blockchain has been stopped"; then
+    if tail -n $monitor_lines $log_file | grep -q -e "Disconnecting" -e "Stopping" -e "STOP" -e "The blockchain has been stopped"; then
         notify "[STOPPING] - Node stopping / stopped";
 
         sleep $monitor_sleep_after_notif
@@ -118,7 +118,7 @@ monitor_stopped()
 
 monitor_started()
 {
-    if tail -n $monitor_lines $ark_log | grep -q -e "Starting Blockchain" -e "Verifying database integrity" -e "START"; then
+    if tail -n $monitor_lines $log_file | grep -q -e "Starting Blockchain" -e "Verifying database integrity" -e "START"; then
         notify "[STARTING] - Node starting / started";
 
         sleep $monitor_sleep_after_notif
@@ -179,7 +179,7 @@ monitor_last_line()
 {
     new_last_line=$( tail -n 1 $log_file );
 
-    if [[ "$new_last_line" = "$last_line" ]]; then
+    if [[ "$new_last_line" == "$last_line" ]]; then
         last_line_count=$(($last_line_count + 1))
 
         if (($last_line_count >= 3)); then
