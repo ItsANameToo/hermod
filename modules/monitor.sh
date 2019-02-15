@@ -179,7 +179,7 @@ monitor_last_line()
 {
     new_last_line=$( tail -n 1 $log_file );
 
-    if [[ "$new_last_line" == "$last_line" ]]; then
+    if [[ "$new_last_line" = "$last_line" ]]; then
         last_line_count=$(($last_line_count + 1))
 
         if (($last_line_count >= 3)); then
