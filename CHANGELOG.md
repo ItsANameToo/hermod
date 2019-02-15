@@ -2,8 +2,8 @@
 
 All notable changes to `hermod` will be documented in this file
 
-## Unreleased
-
+## [1.0.0] - 2019-02-15
+### Added
 - Initial version release of `hermod`
 - Monitoring capabilities based on log messages
 - Function log() now adds timestamp to lines
