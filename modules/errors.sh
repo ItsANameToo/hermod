@@ -12,6 +12,7 @@
 
 abort()
 {
+    echo "Error: $2" >&2 # Print to stderr
     error "Yikes! $2" >> $hermod_log 2>&1
     exit $1
 }

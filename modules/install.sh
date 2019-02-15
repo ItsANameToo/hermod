@@ -14,14 +14,6 @@ hermod_install()
 {
     heading "Starting Installation..."
 
-    if [ -f ${ark_dir}/.foreverignore ]; then
-        info "foreverignore already exists..."
-    else
-        heading "Installing foreverignore..."
-        echo "${ark_dir}/logs/*.log" > ${ark_dir}/.foreverignore;
-        success "Installation OK."
-    fi
-
     if [ -f ${hermod_dir}/.hermod ]; then
         info "Configuration already exists..."
     else
