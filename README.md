@@ -12,6 +12,7 @@ The reason for not going with a core plugin but a bash script instead, is becaus
 git clone https://github.com/ItsANameToo/hermod.git
 cd ~/hermod
 bash hermod.sh install
+bash hermod.sh config # See Configuration for more details
 bash hermod.sh start
 ```
 
