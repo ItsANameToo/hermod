@@ -18,5 +18,7 @@ abort()
 
 log()
 {
-    echo "$1" >> $hermod_log 2>&1
+    local datetime=$(date '+%Y-%m-%d %H:%M:%S')
+        
+    printf "[$datetime] $1\n" >> $hermod_log
 }
