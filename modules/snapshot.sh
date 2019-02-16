@@ -40,23 +40,33 @@ snapshot_dump()
 
     log "[SNAPSHOTS] Taking a fresh snapshot...";
 
-    yarn dump:$core_network &
+    yarn dump:$core_network 2>&1 | tee ${hermod_dir}/snapshot.log
 
-    log "[SNAPSHOTS] Done.";
+    if tail -n 5 ${hermod_dir}/snapshot.log | grep -q "Done in "; then 
+        log "[SNAPSHOTS] Done.";
+    else
+        snapshot_remove_most_recent
+        log "[SNAPSHOTS] Failed, see $hermod_dir/snapshot.log for details.";
+    fi
+    
 }
 
 snapshot_append()
 {
-    # get most recent snapshot
     most_recent_snapshot=$(ls -td * | head -1)
 
     cd "$core_path/packages/core-snapshots-cli"
 
     log "[SNAPSHOTS] Appending to snapshot: $most_recent_snapshot...";
 
-    yarn dump:$core_network --blocks $most_recent_snapshot
+    yarn dump:$core_network --blocks $most_recent_snapshot 2>&1 | tee ${hermod_dir}/snapshot.log
 
-    log "[SNAPSHOTS] Done.";
+    if tail -n 5 ${hermod_dir}/snapshot.log | grep -q "Done in "; then 
+        log "[SNAPSHOTS] Done.";
+    else
+        snapshot_remove_most_recent
+        log "[SNAPSHOTS] Failed, see $hermod_dir/snapshot.log for details.";
+    fi
 }
 
 snapshot_purge()
@@ -64,14 +74,13 @@ snapshot_purge()
     cd "$HOME/.local/share/ark-core/$core_network/snapshots"
 
     # delete old snapshots
-    ls -t | tail -n +$snapshots_retain | xargs rm -r
+    ls -t | tail -n +$snapshots_retain | xargs --no-run-if-empty rm -r
 }
 
 snapshot_rollback()
 {
     cd "$HOME/.local/share/ark-core/$core_network/snapshots"
 
-    # get most recent snapshot
     most_recent_snapshot=$(ls -td * | head -1)
 
     # trim the first 2 characters of the file name
@@ -94,4 +103,13 @@ snapshot_rollback()
     pm2 start all
 
     log "[SNAPSHOTS] Done.";
+}
+
+snapshot_remove_most_recent()
+{
+    cd "$HOME/.local/share/ark-core/$core_network/snapshots"
+
+    most_recent_snapshot=$(ls -td * | head -1)
+
+    rm -rf $most_recent_snapshot
 }
