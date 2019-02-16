@@ -8,4 +8,8 @@ All notable changes to `hermod` will be documented in this file
 - Monitoring capabilities based on log messages
 - Function log() now adds timestamp to lines
 - Removed variables.sh in favor of .hermod config file
-- Introduced the snapshot module
+- Introduced the snapshot 
+
+## [1.0.1] - 2019-02-16
+### Fixed
+- Snapshot module will remove broken snapshots before proceeding
