@@ -74,7 +74,7 @@ snapshot_purge()
     cd "$HOME/.local/share/ark-core/$core_network/snapshots"
 
     # delete old snapshots
-    ls -t | tail -n +$snapshots_retain | xargs rm -r
+    ls -t | tail -n +$snapshots_retain | xargs --no-run-if-empty rm -r
 }
 
 snapshot_rollback()
