@@ -36,32 +36,35 @@ snapshot()
 
 snapshot_dump()
 {
-    cd "$core_path/packages/core-snapshots-cli"
+    cd "$HOME"
 
     log "[SNAPSHOTS] Taking a fresh snapshot...";
 
-    yarn dump:$core_network 2>&1 | tee ${hermod_dir}/snapshot.log
+    ark snapshot:dump --network="$core_network" 2>&1 | tee ${hermod_dir}/snapshot.log
 
-    if tail -n 5 ${hermod_dir}/snapshot.log | grep -q "Done in "; then 
+    doneCount=$(tail -n 6 ${hermod_dir}/snapshot.log | grep -c "done")
+
+    if [ $doneCount -eq 2 ]; then
         log "[SNAPSHOTS] Done.";
     else
         snapshot_remove_most_recent
         log "[SNAPSHOTS] Failed, see $hermod_dir/snapshot.log for details.";
     fi
-    
 }
 
 snapshot_append()
 {
     most_recent_snapshot=$(ls -td * | head -1)
 
-    cd "$core_path/packages/core-snapshots-cli"
+    cd "$HOME"
 
     log "[SNAPSHOTS] Appending to snapshot: $most_recent_snapshot...";
 
-    yarn dump:$core_network --blocks $most_recent_snapshot 2>&1 | tee ${hermod_dir}/snapshot.log
+    ark snapshot:dump --network="$core_network" --blocks="$most_recent_snapshot" 2>&1 | tee ${hermod_dir}/snapshot.log
 
-    if tail -n 5 ${hermod_dir}/snapshot.log | grep -q "Done in "; then 
+    doneCount=$(tail -n 6 ${hermod_dir}/snapshot.log | grep -c "done")
+
+    if [ $doneCount -eq 2 ]; then
         log "[SNAPSHOTS] Done.";
     else
         snapshot_remove_most_recent
@@ -92,9 +95,9 @@ snapshot_rollback()
 
     log "[SNAPSHOTS] Rolling back the database to block $most_recent_snapshot";
 
-    cd "$core_path/packages/core-snapshots-cli"
+    cd "$HOME"
 
-    yarn rollback:$core_network --height $most_recent_snapshot
+    ark snapshot:rollback --network="$core_network" --height="$most_recent_snapshot"
 
     log "[SNAPSHOTS] Done.";
 
