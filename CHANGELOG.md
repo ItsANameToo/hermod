@@ -2,7 +2,7 @@
 
 All notable changes to `hermod` will be documented in this file
 
-## [1.0.2] - 2019-03-11
+## [1.1.0] - 2019-03-11
 ### Fixed
 - Make snapshot module work with new core 2.2 CLI
 
