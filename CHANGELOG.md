@@ -2,6 +2,14 @@
 
 All notable changes to `hermod` will be documented in this file
 
+## [1.0.2] - 2019-03-11
+### Fixed
+- Make snapshot module work with new core 2.2 CLI
+
+## [1.0.1] - 2019-02-16
+### Fixed
+- Snapshot module will remove broken snapshots before proceeding
+
 ## [1.0.0] - 2019-02-15
 ### Added
 - Initial version release of `hermod`
@@ -9,7 +17,3 @@ All notable changes to `hermod` will be documented in this file
 - Function log() now adds timestamp to lines
 - Removed variables.sh in favor of .hermod config file
 - Introduced the snapshot 
-
-## [1.0.1] - 2019-02-16
-### Fixed
-- Snapshot module will remove broken snapshots before proceeding
