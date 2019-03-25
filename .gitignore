@@ -1,5 +1,5 @@
 .hermod
 hermod.log
 data/snapshot.txt
-
 .DS_Store
+snapshot.log
