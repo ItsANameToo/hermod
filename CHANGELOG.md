@@ -2,6 +2,10 @@
 
 All notable changes to `hermod` will be documented in this file
 
+## [1.2.0] - 2019-03-26
+### Added
+- Introduced `hermod share` to facilitate sharing snapshots with others
+
 ## [1.1.0] - 2019-03-11
 ### Fixed
 - Make snapshot module work with new core 2.2 CLI
@@ -16,4 +20,4 @@ All notable changes to `hermod` will be documented in this file
 - Monitoring capabilities based on log messages
 - Function log() now adds timestamp to lines
 - Removed variables.sh in favor of .hermod config file
-- Introduced the snapshot 
+- Introduced the snapshot module

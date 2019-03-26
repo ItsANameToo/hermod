@@ -50,6 +50,10 @@ notification_drivers=(log slack discord)
 
 When rounds are saved on core, hermod will take snapshots, or append to the most recent one. It is enabled by default and it will keep the 5 most recent snapshots. Older snapshots are deleted. Make sure that you have enough storage space. 
 
+#### Sharing Snapshots
+
+If you need share a snapshot with someone, `hermod` facilitates it. By running `hermod share`, the command will archive the most recent snapshot, and host it on an URL that you can share with others. To be able to use this command, you must have at least one snapshot (you can run `hermod snapshot` to take one), and port `8080` must be open. 
+
 ### Notifications
 
 There are a couple of services that you can use to get notified by the script.
@@ -89,6 +93,7 @@ options:
     alias                     Create a bash alias for hermod.
     snapshot                  Take a new snapshot, or append to the most recent one.
     rollback                  Roll back to the most recent snapshot.
+    share                     Hosts the most recent snapshot on a temporary URL.
 ```
 
 ## Credits

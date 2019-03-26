@@ -68,6 +68,11 @@ parse_args()
 
             exit 1
         ;;
+        share)
+            hermod_share
+
+            exit 1
+        ;;
         help|*)
             hermod_help
 
