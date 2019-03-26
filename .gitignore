@@ -3,3 +3,5 @@ hermod.log
 data/snapshot.txt
 .DS_Store
 snapshot.log
+snapshot-verify.log
+snapshots/*
