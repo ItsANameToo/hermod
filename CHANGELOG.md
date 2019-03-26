@@ -13,3 +13,7 @@ All notable changes to `hermod` will be documented in this file
 ## [1.0.1] - 2019-02-16
 ### Fixed
 - Snapshot module will remove broken snapshots before proceeding
+
+## [1.0.2] - 2019-03-26
+### Added
+- Introduced `hermod share` to facilitate sharing snapshots with others
