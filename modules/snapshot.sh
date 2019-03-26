@@ -118,3 +118,46 @@ snapshot_remove_most_recent()
 
     rm -rf $most_recent_snapshot
 }
+
+snapshot_share()
+{
+    # create share directory if it doesn't exist yet
+    mkdir -p "$hermod_dir/snapshots"
+
+    cd "$HOME/.local/share/ark-core/$core_network/snapshots"
+
+    most_recent_snapshot=$(ls -td * | head -1)
+
+    echo "[SNAPSHOTS-SHARE] Verifying snapshot...";
+
+    ark snapshot:verify  --network="$core_network" --blocks="$most_recent_snapshot" 2>&1 | tee ${hermod_dir}/snapshot-verify.log
+
+    successCount=$(tail -n 6 ${hermod_dir}/snapshot-verify.log | grep -c "succesfully verified")
+
+    if [ $successCount -eq 2 ]; then
+        echo "[SNAPSHOTS-SHARE] Snapshot $most_recent_snapshot is valid.";
+        rm ${hermod_dir}/snapshot-verify.log
+
+        # combine snapshot files into a single file
+        tar cvf "$hermod_dir/snapshots/$most_recent_snapshot.tar" "$most_recent_snapshot" > /dev/null && cd "$hermod_dir/snapshots" 
+
+        # start webserver
+        echo "[SNAPSHOTS-SHARE] Starting webserver...";
+        npx http-server -p 8080 > /dev/null &
+
+        # start tunnel
+        echo "[SNAPSHOTS-SHARE] Starting tunnel...";
+        npx localtunnel -p 8080 &
+
+        echo "[SNAPSHOTS-SHARE] Running on port 8080. When you're done, kill this command with CTRL + C to stop the webserver and tunnel.";
+
+        while true
+        do
+            # Keeps the script running. The webserver and tunnel will stay up as long as this script is running.
+            sleep 3
+        done
+
+    else
+        log "[SNAPSHOTS] Snapshot $most_recent_snapshot has errors, see $hermod_dir/snapshot-verify.log for details.";
+    fi
+}

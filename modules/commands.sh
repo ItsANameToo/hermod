@@ -114,6 +114,11 @@ hermod_rollback()
     snapshot_rollback
 }
 
+hermod_share()
+{
+    snapshot_share
+}
+
 hermod_help()
 {
     cat << EOF
@@ -135,5 +140,6 @@ options:
     alias                     Create a bash alias for hermod.
     snapshot                  Take a new snapshot, or append to the most recent one.
     rollback                  Roll back to the most recent snapshot.
+    share                     Hosts the most recent snapshot on a temporary URL.
 EOF
 }
