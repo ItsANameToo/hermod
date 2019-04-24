@@ -48,11 +48,11 @@ notification_drivers=(log slack discord)
 
 ### Snapshots
 
-When rounds are saved on core, hermod will take snapshots, or append to the most recent one. It is enabled by default and it will keep the 5 most recent snapshots. Older snapshots are deleted. Make sure that you have enough storage space. 
+When rounds are saved on core, hermod will take snapshots, or append to the most recent one. It is enabled by default and it will keep the 5 most recent snapshots. Older snapshots are deleted. Make sure that you have enough storage space.
 
 #### Sharing Snapshots
 
-If you need share a snapshot with someone, `hermod` facilitates it. By running `hermod share`, the command will archive the most recent snapshot, and host it on an URL that you can share with others. To be able to use this command, you must have at least one snapshot (you can run `hermod snapshot` to take one), and port `8080` must be open. 
+If you need share a snapshot with someone, `hermod` facilitates it. By running `hermod share`, the command will archive the most recent snapshot, and host it on an URL that you can share with others. To be able to use this command, you must have at least one snapshot (you can run `hermod snapshot` to take one), and port `8080` must be open.
 
 ### Notifications
 
@@ -95,6 +95,14 @@ options:
     rollback                  Roll back to the most recent snapshot.
     share                     Hosts the most recent snapshot on a temporary URL.
 ```
+
+## Upgrading
+
+When upgrading from v1.x.x to v2.x.x, you should make the following changes:
+
+- In your `.hermod` configuration file, you should add `core_processes=<number>`, where `<number>` is either `2` (if you run `ark-relay` and `ark-forger` as separate processes, or `1` if you run the combined `ark-core` process). You can see an example of this in the [`.hermod.example`](https://github.com/ItsANameToo/hermod/blob/master/.hermod.example#L30) file.
+
+Make sure to restart `hermod` to have the changes take effect!
 
 ## Credits
 
