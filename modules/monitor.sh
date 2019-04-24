@@ -16,7 +16,7 @@ monitor()
 
     last_line='';
     last_line_count=0;
-    if [["$core_processes" -eq 1]]
+    if (("$core_processes" == 1))
     then
         forger_log="${core_log_path}/*core-current.log"
         relay_log="${core_log_path}/*core-current.log"
