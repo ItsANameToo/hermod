@@ -2,6 +2,10 @@
 
 All notable changes to `hermod` will be documented in this file
 
+## [2.0.0] - 2019-04-24
+### Changed
+- Changed the log file names that are checked, as core 2.3 introduced new log filenames and structure. This is a breaking change as `hermod` will no longer work with versions that use the previous filenames.
+
 ## [1.2.0] - 2019-03-26
 ### Added
 - Introduced `hermod share` to facilitate sharing snapshots with others

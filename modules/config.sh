@@ -27,12 +27,20 @@ check_configuration()
 {
 
     log_files=("${core_log_path}/*.log")
-    if [ ! -e ${log_files[0]} ]; then 
+    if [ ! -e ${log_files[0]} ]; then
         abort 1 "log file in specified folder [$core_log_path] does not exist"
     fi
 
     if [[ $core_network != 'mainnet' && $core_network != 'devnet' ]]; then
         abort 1 "core_network [$core_network] is invalid."
+    fi
+
+    if [ -z "$core_processes" ]; then
+        abort 1 "core_processes should not be empty."
+    fi
+
+    if (($core_processes != 1 && $core_processes != 2)); then
+        abort 1 "core_processes [$core_processes] has to be set to 1 or 2."
     fi
 
     if (($monitor_lines <= 0)); then
