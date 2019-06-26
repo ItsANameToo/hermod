@@ -44,7 +44,7 @@ snapshot_dump()
 
     doneCount=$(tail -n 6 ${hermod_dir}/snapshot.log | grep -c "done")
 
-    if [ $doneCount -eq 2 ]; then
+    if [ $doneCount -eq 3 ]; then
         log "[SNAPSHOTS] Done.";
     else
         snapshot_remove_most_recent
@@ -64,7 +64,7 @@ snapshot_append()
 
     doneCount=$(tail -n 6 ${hermod_dir}/snapshot.log | grep -c "done")
 
-    if [ $doneCount -eq 2 ]; then
+    if [ $doneCount -eq 3 ]; then
         log "[SNAPSHOTS] Done.";
     else
         snapshot_remove_most_recent
