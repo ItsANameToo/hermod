@@ -27,6 +27,7 @@ monitor_notification_prefix=                               # adds a prefix on no
 
 core_network=mainnet                                       # values: devnet, mainnet, testnet
 core_path=$HOME/ark-core                                   # path to core's main directory (no trailing slash!)
+core_processes=2                                           # amount of core processes that you run (ark-relay + ark-forger = 2, ark-core = 1)
 core_log_path="$HOME/.local/state/ark-core/$core_network"  # path to where logs are stored (no trailing slash!)
 
 # -------------------------
