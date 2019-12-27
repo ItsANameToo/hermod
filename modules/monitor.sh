@@ -65,10 +65,14 @@ monitor_quorum()
 {
     if tail -n $monitor_lines $forger_log | grep -q "Fork 6 - Not enough quorum to forge next block"; then
         notify "[NO QUORUM] - Fork 6; Not enough quorum to forge";
+
+        sleep $monitor_sleep_after_notif
     fi
 
     if tail -n $monitor_lines $forger_log | grep -q "Network reach is not sufficient to get quorum"; then
         notify "[NO QUORUM] - Insufficient network reach for quorum";
+
+        sleep $monitor_sleep_after_notif
     fi
 }
 
@@ -85,6 +89,8 @@ monitor_disregarded()
 {
     if tail -n $monitor_lines $relay_log | grep -q "disregarded because already in blockchain"; then
         notify "[BLOCK DISREGARDED] - Block disregarded because already in blockchain";
+
+        sleep $monitor_sleep_after_notif
     fi
 }
 
