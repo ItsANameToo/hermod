@@ -34,13 +34,14 @@ monitor_lines_halted=5
 delegate_username=''
 delegate_public_key=''
 
+# Snapshot settings, enabling the snapshot module will automatically take snapshots and append blocks to existing snapshots.
+# Note: only enable automatic snapshots on relay nodes!
+snapshots_enable=true
+
 # Core settings, set the path to core (usually $HOME/core or $HOME/ark-core), and the network (devnet or mainnet).
 core_path=$HOME/ark-core
 core_network=mainnet
 core_log_path="$HOME/.local/state/ark-core/$core_network"
-
-# Snapshot settings, enabling the snapshot module will automatically take snapshots and append blocks to existing snapshots.
-snapshots_enable=true
 
 # How you would like to be notified. Don't forget to change this line to one (or more) ways in which you would like to be updated.
 notification_drivers=(log slack discord)
@@ -48,7 +49,9 @@ notification_drivers=(log slack discord)
 
 ### Snapshots
 
-When rounds are saved on core, hermod will take snapshots, or append to the most recent one. It is enabled by default and it will keep the 5 most recent snapshots. Older snapshots are deleted. Make sure that you have enough storage space.
+When rounds are saved on core, hermod will take snapshots, or append to the most recent one. It will keep the 5 most recent snapshots and older snapshots are deleted. Make sure that you have enough storage space on your node!
+
+With the introduction of core 2.6, snapshots can only be taken when core is shut down, which `hermod` will handle for you. Due to the nature of having to shut down core, it is STRONGLY advised to only enable automatic snapshots on relay nodes and it will be disabled by default. Of course it is always possible to manually create a snapshot with `hermod snapshot`, but please remember that this will temporarily shutdown core too!
 
 #### Sharing Snapshots
 
