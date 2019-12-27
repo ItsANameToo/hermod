@@ -101,6 +101,13 @@ options:
 
 ## Upgrading
 
+When upgrading from v2.x.x to v2.1.0, you should double check the following:
+
+- in earlier `hermod` versions, automatic snapshots are enabled by default. Please **disable** this on forging nodes, as core 2.6 will require a full shutdown to be able to take a snapshot.
+- you will have to set a `snapshots_rounds` variable in your `.env` to indicate after how many rounds a snapshot should be taken
+
+---
+
 When upgrading from v1.x.x to v2.x.x, you should make the following changes:
 
 - In your `.hermod` configuration file, you should add `core_processes=<number>`, where `<number>` is either `2` (if you run `ark-relay` and `ark-forger` as separate processes, or `1` if you run the combined `ark-core` process). You can see an example of this in the [`.hermod.example`](https://github.com/ItsANameToo/hermod/blob/master/.hermod.example#L30) file.

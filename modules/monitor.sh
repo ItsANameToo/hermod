@@ -16,6 +16,7 @@ monitor()
 
     last_line='';
     last_line_count=0;
+    rounds_count=0;
     if (("$core_processes" == 1))
     then
         forger_log="${core_log_path}/*core-current.log"
@@ -162,8 +163,12 @@ monitor_round_saved()
 
         if [[ $snapshots_enabled == "true" ]];
         then
-            # run snapshot() function when rounds are saved
-            snapshot
+            rounds_count=$(($rounds_count + 1))
+            if (($rounds_count > $snapshots_rounds)); then
+                rounds_count=0;
+                # run snapshot() function when rounds are saved
+                snapshot
+            fi
         fi
 
         sleep $monitor_sleep_after_notif

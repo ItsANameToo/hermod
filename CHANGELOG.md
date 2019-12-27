@@ -4,7 +4,7 @@ All notable changes to `hermod` will be documented in this file
 
 ## [2.1.0] - unreleased
 ### Changed
-- disable automatic snapshots after each round, as core needs to be shut down for snapshots to be taken
+- automatically shutdown core before taking a snapshot and start it again after it's done.
 
 ## [2.0.0] - 2019-04-24
 ### Changed

@@ -63,6 +63,10 @@ check_configuration()
         abort 1 "monitor_lines_halted [$monitor_lines_halted] has to be greater than 0."
     fi
 
+    if (($snapshots_rounds <= 0)); then
+        abort 1 "snapshots_rounds [$snapshots_rounds] has to be greater than 0."
+    fi
+
     if [ -z "$delegate_username" ]; then
         abort 1 "delegate_username should not be empty."
     fi
