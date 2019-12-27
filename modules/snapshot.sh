@@ -42,7 +42,13 @@ snapshot_dump()
 
     log "[SNAPSHOTS] Stopping core...";
 
-    pm2 stop all
+    if (("$core_processes" == 1))
+    then
+        ark core:stop
+    else
+        ark forger:stop
+        ark relay:stop
+    fi
 
     ark snapshot:dump --network="$core_network" 2>&1 | tee ${hermod_dir}/snapshot.log
 
@@ -57,7 +63,13 @@ snapshot_dump()
 
     log "[SNAPSHOTS] Starting core...";
 
-    pm2 start all
+    if (("$core_processes" == 1))
+    then
+        ark core:start
+    else
+        ark forger:start
+        ark relay:start
+    fi
 }
 
 snapshot_append()
@@ -70,7 +82,13 @@ snapshot_append()
 
     log "[SNAPSHOTS] Stopping core...";
 
-    pm2 stop all
+    if (("$core_processes" == 1))
+    then
+        ark core:stop
+    else
+        ark forger:stop
+        ark relay:stop
+    fi
 
     ark snapshot:dump --network="$core_network" --blocks="$most_recent_snapshot" 2>&1 | tee ${hermod_dir}/snapshot.log
 
@@ -85,7 +103,13 @@ snapshot_append()
 
     log "[SNAPSHOTS] Starting core...";
 
-    pm2 start all
+    if (("$core_processes" == 1))
+    then
+        ark core:start
+    else
+        ark forger:start
+        ark relay:start
+    fi
 }
 
 snapshot_purge()
@@ -109,7 +133,13 @@ snapshot_rollback()
 
     log "[SNAPSHOTS] Stopping core...";
 
-    pm2 stop all
+    if (("$core_processes" == 1))
+    then
+        ark core:stop
+    else
+        ark forger:stop
+        ark relay:stop
+    fi
 
     log "[SNAPSHOTS] Rolling back the database to block $most_recent_snapshot";
 
@@ -121,7 +151,13 @@ snapshot_rollback()
 
     log "[SNAPSHOTS] Starting core...";
 
-    pm2 start all
+    if (("$core_processes" == 1))
+    then
+        ark core:start
+    else
+        ark forger:start
+        ark relay:start
+    fi
 
     log "[SNAPSHOTS] Done.";
 }
