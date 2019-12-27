@@ -104,7 +104,7 @@ options:
 When upgrading from v2.x.x to v2.1.0, you should double check the following:
 
 - in earlier `hermod` versions, automatic snapshots are enabled by default. Please **disable** this on forging nodes, as core 2.6 will require a full shutdown to be able to take a snapshot.
-- you will have to set a `snapshots_rounds` variable in your `.env` to indicate after how many rounds a snapshot should be taken
+- you will have to set a `snapshots_rounds` variable in your `.hermod` to indicate after how many rounds a snapshot should be taken
 
 ---
 
