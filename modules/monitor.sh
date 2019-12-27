@@ -105,7 +105,7 @@ monitor_synced()
 
 monitor_stopped()
 {
-    if tail -n $monitor_lines $relay_log | grep -q -e "Disconnecting" -e "Stopping" -e "STOP" -e "The blockchain has been stopped"; then
+    if tail -n $monitor_lines $relay_log | grep -q -e "Stopping" -e "STOP" -e "The blockchain has been stopped"; then
         notify "[STOPPING] - Node stopping / stopped";
 
         sleep $monitor_sleep_after_notif
@@ -164,7 +164,7 @@ monitor_round_saved()
         if [[ $snapshots_enabled == "true" ]];
         then
             rounds_count=$(($rounds_count + 1))
-            if (($rounds_count > $snapshots_rounds)); then
+            if (($rounds_count >= $snapshots_rounds)); then
                 rounds_count=0;
                 # run snapshot() function when rounds are saved
                 snapshot
