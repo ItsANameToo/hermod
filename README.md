@@ -37,6 +37,7 @@ delegate_public_key=''
 # Snapshot settings, enabling the snapshot module will automatically take snapshots and append blocks to existing snapshots.
 # Note: only enable automatic snapshots on relay nodes!
 snapshots_enable=true
+snapshots_rounds=5 # Every round is ~6 minutes
 
 # Core settings, set the path to core (usually $HOME/core or $HOME/ark-core), and the network (devnet or mainnet).
 core_path=$HOME/ark-core

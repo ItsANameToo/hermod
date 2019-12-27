@@ -5,6 +5,8 @@ All notable changes to `hermod` will be documented in this file
 ## [2.1.0] - unreleased
 ### Changed
 - automatically shutdown core before taking a snapshot and start it again after it's done.
+- fixed incorrect snapshot done count
+- fixed an issue where insufficient quorum error would not cause a monitor sleep
 
 ## [2.0.0] - 2019-04-24
 ### Changed
