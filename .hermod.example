@@ -41,8 +41,9 @@ delegate_public_key=''                                     # public key of the d
 # Snapshots
 # -------------------------
 
-snapshots_enabled=true                                     # set to true to enable the snapshot module
-snapshots_retain=5                                         # how many snapshots we'll store in this server
+snapshots_enabled=false                                     # set to true to enable the snapshot module
+snapshots_retain=5                                          # how many snapshots we'll store in this server
+snapshots_rounds=5                                          # after how many rounds a snapshots gets taken
 
 # -------------------------
 # [Notifications] Driver

@@ -16,6 +16,7 @@ monitor()
 
     last_line='';
     last_line_count=0;
+    rounds_count=0;
     if (("$core_processes" == 1))
     then
         forger_log="${core_log_path}/*core-current.log"
@@ -64,10 +65,14 @@ monitor_quorum()
 {
     if tail -n $monitor_lines $forger_log | grep -q "Fork 6 - Not enough quorum to forge next block"; then
         notify "[NO QUORUM] - Fork 6; Not enough quorum to forge";
+
+        sleep $monitor_sleep_after_notif
     fi
 
     if tail -n $monitor_lines $forger_log | grep -q "Network reach is not sufficient to get quorum"; then
         notify "[NO QUORUM] - Insufficient network reach for quorum";
+
+        sleep $monitor_sleep_after_notif
     fi
 }
 
@@ -84,6 +89,8 @@ monitor_disregarded()
 {
     if tail -n $monitor_lines $relay_log | grep -q "disregarded because already in blockchain"; then
         notify "[BLOCK DISREGARDED] - Block disregarded because already in blockchain";
+
+        sleep $monitor_sleep_after_notif
     fi
 }
 
@@ -104,7 +111,7 @@ monitor_synced()
 
 monitor_stopped()
 {
-    if tail -n $monitor_lines $relay_log | grep -q -e "Disconnecting" -e "Stopping" -e "STOP" -e "The blockchain has been stopped"; then
+    if tail -n $monitor_lines $relay_log | grep -q -e "Stopping" -e "STOP" -e "The blockchain has been stopped"; then
         notify "[STOPPING] - Node stopping / stopped";
 
         sleep $monitor_sleep_after_notif
@@ -162,8 +169,12 @@ monitor_round_saved()
 
         if [[ $snapshots_enabled == "true" ]];
         then
-            # run snapshot() function when rounds are saved
-            snapshot
+            rounds_count=$(($rounds_count + 1))
+            if (($rounds_count >= $snapshots_rounds)); then
+                rounds_count=0;
+                # run snapshot() function when rounds are saved
+                snapshot
+            fi
         fi
 
         sleep $monitor_sleep_after_notif
