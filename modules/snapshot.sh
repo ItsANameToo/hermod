@@ -24,7 +24,7 @@ snapshot()
 
     # if the directory is empty, take a fresh snapshot,
     # else, append to the last snapshot
-    if [ $has_snapshots -eq 0 ] 
+    if [ $has_snapshots -eq 0 ]
     then
         snapshot_dump
     else
@@ -40,15 +40,35 @@ snapshot_dump()
 
     log "[SNAPSHOTS] Taking a fresh snapshot...";
 
+    log "[SNAPSHOTS] Stopping core...";
+
+    if (("$core_processes" == 1))
+    then
+        ark core:stop
+    else
+        ark forger:stop
+        ark relay:stop
+    fi
+
     ark snapshot:dump --network="$core_network" 2>&1 | tee ${hermod_dir}/snapshot.log
 
     doneCount=$(tail -n 6 ${hermod_dir}/snapshot.log | grep -c "done")
 
-    if [ $doneCount -eq 2 ]; then
+    if [ $doneCount -eq 3 ]; then
         log "[SNAPSHOTS] Done.";
     else
         snapshot_remove_most_recent
         log "[SNAPSHOTS] Failed, see $hermod_dir/snapshot.log for details.";
+    fi
+
+    log "[SNAPSHOTS] Starting core...";
+
+    if (("$core_processes" == 1))
+    then
+        ark core:start
+    else
+        ark forger:start
+        ark relay:start
     fi
 }
 
@@ -60,15 +80,35 @@ snapshot_append()
 
     log "[SNAPSHOTS] Appending to snapshot: $most_recent_snapshot...";
 
+    log "[SNAPSHOTS] Stopping core...";
+
+    if (("$core_processes" == 1))
+    then
+        ark core:stop
+    else
+        ark forger:stop
+        ark relay:stop
+    fi
+
     ark snapshot:dump --network="$core_network" --blocks="$most_recent_snapshot" 2>&1 | tee ${hermod_dir}/snapshot.log
 
     doneCount=$(tail -n 6 ${hermod_dir}/snapshot.log | grep -c "done")
 
-    if [ $doneCount -eq 2 ]; then
+    if [ $doneCount -eq 3 ]; then
         log "[SNAPSHOTS] Done.";
     else
         snapshot_remove_most_recent
         log "[SNAPSHOTS] Failed, see $hermod_dir/snapshot.log for details.";
+    fi
+
+    log "[SNAPSHOTS] Starting core...";
+
+    if (("$core_processes" == 1))
+    then
+        ark core:start
+    else
+        ark forger:start
+        ark relay:start
     fi
 }
 
@@ -93,7 +133,13 @@ snapshot_rollback()
 
     log "[SNAPSHOTS] Stopping core...";
 
-    pm2 stop all
+    if (("$core_processes" == 1))
+    then
+        ark core:stop
+    else
+        ark forger:stop
+        ark relay:stop
+    fi
 
     log "[SNAPSHOTS] Rolling back the database to block $most_recent_snapshot";
 
@@ -105,7 +151,13 @@ snapshot_rollback()
 
     log "[SNAPSHOTS] Starting core...";
 
-    pm2 start all
+    if (("$core_processes" == 1))
+    then
+        ark core:start
+    else
+        ark forger:start
+        ark relay:start
+    fi
 
     log "[SNAPSHOTS] Done.";
 }
@@ -139,7 +191,7 @@ snapshot_share()
         rm ${hermod_dir}/snapshot-verify.log
 
         # combine snapshot files into a single file
-        tar cvf "$hermod_dir/snapshots/$most_recent_snapshot.tar" "$most_recent_snapshot" > /dev/null && cd "$hermod_dir/snapshots" 
+        tar cvf "$hermod_dir/snapshots/$most_recent_snapshot.tar" "$most_recent_snapshot" > /dev/null && cd "$hermod_dir/snapshots"
 
         # start webserver
         echo "[SNAPSHOTS-SHARE] Starting webserver...";

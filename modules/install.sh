@@ -46,5 +46,9 @@ hermod_install()
         info "pm2 already exists..."
     fi
 
+    heading "Installing alias..."
+    echo "alias hermod='bash ${hermod_dir}/hermod.sh'" | tee -a ${HOME}/.bashrc
+    source ${HOME}/.bashrc
+
     success "Installation complete!"
 }
